@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <!-- Squircle Rounded Badge Background -->
+  <rect width="512" height="512" rx="128" fill="url(#favGrad)" />
+  <!-- Perfectly Centered Megaphone / Bullhorn Icon -->
+  <g fill="#ffffff" transform="translate(57.2, 76.8) scale(0.70)">
+    <path d="M480 32c-12.9 0-24.6 7.8-29.6 19.8L384 192H288L158.1 49.9c-10.7-11.5-26.1-17.9-42.1-17.9C83.7 32 56 59.7 56 92c0 8.7 1.9 17.2 5.5 25.1L128 256 61.5 394.9C57.9 402.8 56 411.3 56 420c0 32.3 27.7 60 60 60 16 0 31.4-6.4 42.1-17.9L288 320h96l66.4 140.2c5 12 16.7 19.8 29.6 19.8 17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32z"/>
+  </g>
+</svg>
