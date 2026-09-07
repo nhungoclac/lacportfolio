@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lạc Ngọc Như - AI Automation & Make.com</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2" />
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- FLOATING GLASS DOCK HEADER -->
+    <header class="fixed-header">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="nav-logo-badge">
+            <img src="favicon.svg" alt="Logo" class="nav-logo-img" />
+          </div>
+          <span class="nav-name">Lạc Ngọc Như</span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav class="nav-bar" id="navBar">
+          <a href="index.html" class="nav-link"
+            ><i class="fas fa-user-circle"></i> Giới thiệu</a
+          >
+          <a href="campaigns.html" class="nav-link"
+            ><i class="fas fa-chart-pie"></i> Chiến dịch</a
+          >
+          <a href="design.html" class="nav-link"
+            ><i class="fas fa-paint-brush"></i> Thiết kế</a
+          >
+          <a href="ai.html" class="nav-link active"
+            ><i class="fas fa-robot"></i> AI Automation</a
+          >
+          <a href="standalone.html" class="nav-link"
+            ><i class="fas fa-layer-group"></i> Sản phẩm & Kỹ năng khác</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- 1. INTRO HERO SECTION -->
+      <section class="section" style="margin-top: 0; padding-top: 0">
+        <div class="ai-hero-card">
+          <div class="ai-hero-header">
+            <span class="ai-badge"
+              ><i class="fas fa-wand-magic-sparkles"></i> AI Workflow &amp;
+              Automation</span
+            >
+            <h1 class="ai-hero-title">
+              Tự động hóa Quy trình Marketing với Make.com &amp; AI
+            </h1>
+            <p class="ai-hero-desc">
+              Project cá nhân để tự tìm hiểu workflow automation. Xây dựng các
+              kịch bản tự động hóa end-to-end cho quy trình Marketing: Quét tin
+              tức RSS từ Internet &rarr; AI tự động lên ý tưởng, học giọng văn
+              thương hiệu &amp; viết caption &rarr; Sinh ảnh minh họa bằng
+              Leonardo AI &rarr; Gửi duyệt qua Telegram Bot &rarr; Tự động hẹn
+              giờ và đăng bài viết trực tiếp lên Fanpage Facebook.
+            </p>
+
+            <div class="ai-tech-stack">
+              <span class="tech-pill pill-make"
+                ><i class="fas fa-bolt"></i> Make.com</span
+              >
+              <span class="tech-pill pill-gemini"
+                ><i class="fas fa-brain"></i> Gemini API (Google AI)</span
+              >
+              <span class="tech-pill pill-leonardo"
+                ><i class="fas fa-paint-brush"></i> Leonardo.Ai API</span
+              >
+              <span class="tech-pill pill-telegram"
+                ><i class="fab fa-telegram"></i> Telegram Bot</span
+              >
+              <span class="tech-pill pill-gsheet"
+                ><i class="fas fa-table"></i> Google Sheets</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. QUY TRÌNH TỰ ĐỘNG HÓA CHI TIẾT (MAKE.COM PROJECTS) -->
+      <section class="section">
+        <h2 class="section-title">Chi tiết Kịch bản & Quy trình Make.com</h2>
+        <div class="ai-projects-list">
+          <!-- STEP 1: Overview -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make1.png"
+                alt="Overview Scenario Make.com"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Make.com+Overview'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">Tổng quan workflow trên Make.com</h3>
+              <p class="ai-project-desc">
+                Cấu trúc luồng xử lý chính kết nối liên hoàn các nền tảng: Đọc
+                dữ liệu nguồn tin mới qua RSS &rarr; Đưa qua Google AI Studio
+                (Gemini API) xử lý ngôn ngữ &rarr; Gọi Leonardo AI tạo hình ảnh
+                &rarr; Gửi preview duyệt bài tới Telegram Bot &rarr; Ghi thông
+                tin vào Google Sheet &rarr; Đăng bài tự động lên Fanpage
+                Facebook.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 2: Quản lý nguồn tin -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make2.png"
+                alt="Google Sheet & RSS Feed"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=RSS+Feed'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">Quản lý các bài đã đăng</h3>
+              <p class="ai-project-desc">
+                Bài viết hoàn chỉnh sẽ được tự động đăng lên Fanpage và trả về
+                để lưu trữ/quản lý trong Google Sheets.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 3: Google Sheet Database -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make3.png"
+                alt="Google Sheets Database"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Google+Sheets'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">AI học giọng văn</h3>
+              <p class="ai-project-desc">
+                Tổng hợp một số bài viết mẫu của con người để AI học giọng văn
+                và ch ra output tự nhiên nhất.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 4: Leonardo API -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make4.png"
+                alt="Leonardo AI API"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Leonardo+AI'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">
+                Tự động Tạo Ảnh Minh họa Chất lượng cao bằng Leonardo AI API
+              </h3>
+              <p class="ai-project-desc">
+                Tích hợp API của Leonardo.Ai để biến ý tưởng bài viết thành các
+                hình ảnh thiết kế độc đáo. Hệ thống tự động tối ưu hóa câu lệnh
+                Prompt, chọn style nghệ thuật và xuất ảnh đúng kích thước chuẩn
+                Facebook Post.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 5: Gemini API -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make5.png"
+                alt="Google AI Studio Gemini API"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Gemini+API'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">Lấy API Google</h3>
+              <p class="ai-project-desc">
+                Lấy API tại Google AI Studio để hoàn thiện bước học giọng văn,
+                phân tích đoạn văn, trả về caption, tự prompt ảnh.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 6: Telegram Bot -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make6.png"
+                alt="Telegram Bot Preview"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Telegram+Bot'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">
+                Gửi Thông báo Preview trực tiếp qua Telegram Bot
+              </h3>
+              <p class="ai-project-desc">
+                Khi đăng công khai, Telegram Bot tự động gửi bản xem trước tới
+                điện thoại của người quản lý.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 7: Facebook Auto Post -->
+          <div class="ai-project-card">
+            <div class="ai-project-img-wrapper">
+              <img
+                src="photo/make7.png"
+                alt="Bài đăng tự động trên Facebook"
+                onerror="
+                  this.src =
+                    'https://via.placeholder.com/1000x600?text=Facebook+Post'
+                "
+              />
+            </div>
+            <div class="ai-project-content">
+              <h3 class="ai-project-title">
+                Kết quả Bài viết Tự động Đăng hoàn chỉnh trên Fanpage
+              </h3>
+              <p class="ai-project-desc">
+                Bài viết hoàn chỉnh bao gồm nội dung chữ, hình ảnh sinh từ AI và
+                tự động đăng lên Fanpage Facebook.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-note"><i class="fas fa-robot"></i> AI Automation</div>
+    </div>
+
+    <button
+      id="back-to-top"
+      class="back-to-top hidden"
+      aria-label="Trở về đầu trang"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <script src="script.js"></script>
+  </body>
+</html>

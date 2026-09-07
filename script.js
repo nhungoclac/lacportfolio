@@ -335,10 +335,22 @@ function initImageLightbox() {
 
   document.addEventListener("click", function (e) {
     const img = e.target.closest(
-      ".brief-img-wrapper img, .slide-item img, .gallery-item img, .zoomable-img, .work-sample-item img",
+      ".brief-img-wrapper img, .slide-item img, .gallery-item img, .zoomable-img, .work-sample-item img, .ai-project-img-wrapper img",
     );
     if (!img || !img.src) return;
     if (img.closest("a[href]")) return;
+
+    // Ảnh thuộc trang AI Automation
+    const aiProjects = img.closest(".ai-projects-list");
+    if (aiProjects) {
+      const aiImgs = Array.from(
+        aiProjects.querySelectorAll(".ai-project-img-wrapper img"),
+      );
+      const gallerySrcs = aiImgs.map((i) => i.src);
+      const clickedIdx = aiImgs.indexOf(img);
+      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, null);
+      return;
+    }
 
     // Ảnh thuộc work-samples trên trang chủ
     const workSamples = img.closest(".work-samples");

@@ -2108,3 +2108,218 @@ body {
   font-weight: 500;
 }
 
+/* ===== TRANG AI AUTOMATION & MAKE.COM ===== */
+.ai-hero-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 1.4rem;
+  padding: 2.2rem 2rem;
+  color: #ffffff;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(2, 132, 199, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.ai-hero-title {
+  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #bae6fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ai-hero-desc {
+  color: #94a3b8;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 950px;
+}
+
+.ai-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+
+.tech-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pill-make { color: #d946ef; border-color: rgba(217, 70, 239, 0.4); }
+.pill-gemini { color: #10b981; border-color: rgba(16, 185, 129, 0.4); }
+.pill-leonardo { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
+.pill-telegram { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
+.pill-gsheet { color: #22c55e; border-color: rgba(34, 197, 94, 0.4); }
+.pill-meta { color: #3b82f6; border-color: rgba(59, 130, 246, 0.4); }
+
+.ai-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.ai-project-card {
+  background: #ffffff;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -6px rgba(15, 23, 42, 0.06);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  transition: all 0.3s ease;
+}
+
+.ai-project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.12);
+  border-color: #cbd5e1;
+}
+
+@media (max-width: 900px) {
+  .ai-project-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ai-project-img-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  background: #f8fafc;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #e2e8f0;
+}
+
+@media (max-width: 900px) {
+  .ai-project-img-wrapper {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    min-height: 250px;
+  }
+}
+
+.ai-project-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #f8fafc;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+  padding: 0.6rem;
+}
+
+.ai-project-img-wrapper:hover img {
+  transform: scale(1.02);
+}
+
+.ai-img-zoom-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-project-content {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ai-step-tag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  border: 1px solid #e0f2fe;
+  padding: 0.3rem 0.8rem;
+  border-radius: 30px;
+  width: fit-content;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ai-project-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.8rem;
+  line-height: 1.35;
+}
+
+.ai-project-desc {
+  color: #475569;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.ai-project-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 0.9rem;
+}
+
+.ai-project-features span {
+  font-size: 0.86rem;
+  color: #334155;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.ai-project-features i {
+  color: #10b981;
+  font-size: 0.9rem;
+}
+
+
