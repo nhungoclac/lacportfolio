@@ -868,25 +868,25 @@ const PROJECTS_DATA = {
       "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
     featuredPosts: [
       {
-        caption: "Bài đăng Khởi động & Thông báo chương trình Tháng 10 Dịu Dàng",
+        caption: "Bài đăng Khởi động & Thông báo chương trình",
         imgs: ["photo/2010/thongbao.png"],
       },
       {
-        caption: "Bài đăng Thông báo quà tặng Hoa kẹo mút & Voucher giảm 10%",
+        caption: "Bài đăng Thông báo",
         imgs: ["photo/2010/thongbaoluon.png"],
       },
       {
-        caption: "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
+        caption:
+          "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
         imgs: ["photo/2010/keugoi1.png", "photo/2010/keugoi2.png"],
       },
       {
-        caption: "Bài đăng Khoe những bó hoa kẹo mút handmade dành tặng các nàng",
+        caption: "Bài đăng Khoe những bó hoa kẹo mút handmade",
         imgs: ["photo/2010/khoequa1.png", "photo/2010/khoequa2.png"],
       },
     ],
     photos: [
-      { src: "photo/2010.jpg", title: "Banner chiến dịch 20/10" },
-      { src: "photo/20102.png", title: "Bài viết ưu đãi quà tặng 20/10" },
+      { src: "photo/2010/ketqua.png", title: "Báo cáo thống kê kết quả & doanh thu thực tế chiến dịch 20/10" },
     ],
     videos: [
       {
