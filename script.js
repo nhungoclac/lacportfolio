@@ -886,7 +886,10 @@ const PROJECTS_DATA = {
       },
     ],
     photos: [
-      { src: "photo/2010/ketqua.png", title: "Báo cáo thống kê kết quả & doanh thu thực tế chiến dịch 20/10" },
+      {
+        src: "photo/2010/ketqua.png",
+        title: "Báo cáo doanh thu thực tế chiến dịch 20/10",
+      },
     ],
     videos: [
       {
@@ -917,17 +920,60 @@ const PROJECTS_DATA = {
     title: "Đồ án Thương mại xã hội (Tạp Hóa Content)",
     date: "10/2025 - 12/2025",
     tagline:
-      '"Xây dựng Fanpage Tạp hóa Content từ con số 0 với kế hoạch nội dung đa dạng."',
+      "Xây dựng Fanpage Tạp hóa Content từ con số 0 với kế hoạch nội dung đa dạng. TA: Học sinh sinh viên.",
     problem:
-      "Xây dựng thương hiệu trang Tạp hóa Content thu hút người làm truyền thông trẻ.",
+      "Chú trọng ở mảng video nên cần tập hợp nhân sự quay/dựng, lên kịch bản liên tục. Xây kênh từ số 0 để phục vụ cho buổi MEGA LIVE nên cần thường xuyên tối ưu content.",
     strategy:
-      "Triển khai luồng nội dung đa dạng: Kiến thức Content, Meme hài hước văn phòng, Case study phân tích.",
+      "Triển khai luồng nội dung đa dạng: Unboxing, review, viral clip, teaser, ảnh thông báo,...",
     sheet:
       "https://docs.google.com/spreadsheets/d/11hDVcBBFUSz9cr09Bz_EY0ZAwz9vE-gbU1U3S9Yrgqo/edit?gid=1420815595#gid=1420815595",
+    featuredPosts: [
+      {
+        caption: "Bài đăng Nhá hàng MEGA LIVE 11/11 Tạp Hóa Content",
+        imgs: ["photo/THC/thongbaomega.png"],
+      },
+      {
+        caption: "Bài đăng Tiết lộ Minigame phiên MEGA LIVE 17/12",
+        imgs: ["photo/THC/thongbaolive.png"],
+      },
+      {
+        caption: "Bài đăng Series Mỗi ngày 1 Review sản phẩm",
+        imgs: ["photo/THC/review.png"],
+      },
+      {
+        caption: "Bài đăng Minigame Giải đề Tạp hóa nhận quà hóa to",
+        imgs: ["photo/THC/minigame.png"],
+      },
+      {
+        caption: "Bài đăng Quảng bá sản phẩm Chén sứ gia dụng",
+        imgs: ["photo/THC/chensu.png"],
+      },
+      {
+        caption: "Bài đăng Thông báo Livestream & Hậu trường săn deal",
+        imgs: ["photo/THC/dailylive.png", "photo/THC/dailylivee.png"],
+      },
+      {
+        caption: "Bài đăng Tổng kết phiên MEGA LIVE 17/12",
+        imgs: ["photo/THC/tongket.png"],
+      },
+    ],
     photos: [
-      { src: "photo/thct.png", title: "Quản lý Fanpage Tạp hóa Content" },
-      { src: "photo/thct1.png", title: "Kế hoạch truyền thông Fanpage" },
-      { src: "photo/report1.png", title: "Overview báo cáo Fanpage" },
+      { src: "photo/report1.png", title: "Overview báo cáo Fanpage Tạp Hóa Content" },
+      { src: "photo/THC/tongketreal.jpg", title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12" },
+    ],
+    videos: [
+      {
+        title: "Clip vui quảng cáo snack",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2030950817718218%2F&show_text=false&width=267&t=0",
+      },
+      {
+        title: "Teaser MEGA LIVE 11/11",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2126008008208266%2F&show_text=false&width=267&t=0",
+      },
+      {
+        title: "Clip vui quảng cáo giấy Topgia",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1322399539581048%2F&show_text=false&width=267&t=0",
+      },
     ],
     stats: [
       { num: "> 100", label: "Bài đăng (gồm reels, ảnh, bài viết, story)" },
@@ -1111,7 +1157,7 @@ function initProjectDetailPage() {
               (v) => `
             <div class="reel-card">
               <div class="reel-embed">
-                <iframe src="${v.src}" scrolling="no" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <iframe src="${v.src}" width="267" height="476" style="border: none; overflow: hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
               </div>
               <div class="reel-caption">${formatCaptionHTML(v.title)}</div>
             </div>
