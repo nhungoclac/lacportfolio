@@ -730,8 +730,10 @@ const PROJECTS_DATA = {
       },
     ],
     photos: [
-      { src: "photo/xdcc.jpg", title: "Poster Vòng quay may mắn" },
-      { src: "photo/xdcc2.png", title: "Bảng kế hoạch & thực thi chiến dịch" },
+      {
+        src: "photo/XĐCC/doanhthu.png",
+        title: "Báo cáo theo dõi doanh thu thực tế",
+      },
     ],
     videos: [
       {
@@ -855,23 +857,53 @@ const PROJECTS_DATA = {
   "camp-2010": {
     badge: '<i class="fas fa-store"></i> Lucas Combo',
     title: "Tháng 10 Dịu Dàng - Trao Nàng Yêu Thương",
-    date: "10/2025",
+    date: "18/10/2025 - 20/10/2025",
     tagline:
-      '"Chương trình ưu đãi mua combo tặng quà ý nghĩa dịp Phụ nữ Việt Nam 20/10."',
+      "Tặng hoa kẹo mút (handmade) & Voucher giảm 10% cho khách hàng nữ ghé mua hàng trong 3 ngày diễn ra chương trình.",
     problem:
-      "Kích cầu mua sắm quà tặng Phụ nữ Việt Nam 20/10 tại thương hiệu Lucas Combo.",
+      "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng. Làm thủ công quà tặng nên cần tính toán đủ số lượng.",
     strategy:
-      "Xây dựng gói Combo quà tặng kèm thiệp thiết kế riêng + bài viết gợi ý quà tặng chạm cảm xúc.",
+      "Lên kịch bản video dạng dẫn dắt câu chuyện + hình ảnh hậu trường + cập nhật hình ảnh khách hàng thực tế.",
     execution:
-      "Lập kế hoạch nội dung trên Google Sheet, sản xuất chuỗi video Reels & thiết kế poster quà tặng 20/10, kết hợp ưu đãi tại cửa hàng.",
+      "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
+    featuredPosts: [
+      {
+        caption: "Bài đăng Khởi động & Thông báo chương trình Tháng 10 Dịu Dàng",
+        imgs: ["photo/2010/thongbao.png"],
+      },
+      {
+        caption: "Bài đăng Thông báo quà tặng Hoa kẹo mút & Voucher giảm 10%",
+        imgs: ["photo/2010/thongbaoluon.png"],
+      },
+      {
+        caption: "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
+        imgs: ["photo/2010/keugoi1.png", "photo/2010/keugoi2.png"],
+      },
+      {
+        caption: "Bài đăng Khoe những bó hoa kẹo mút handmade dành tặng các nàng",
+        imgs: ["photo/2010/khoequa1.png", "photo/2010/khoequa2.png"],
+      },
+    ],
     photos: [
       { src: "photo/2010.jpg", title: "Banner chiến dịch 20/10" },
       { src: "photo/20102.png", title: "Bài viết ưu đãi quà tặng 20/10" },
     ],
     videos: [
       {
-        title: "Video Quảng cáo 20/10 Lucas Combo",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1132298642055627%2F&show_text=false&width=267&t=0",
+        title: "Quảng cáo chiến dịch 20/10",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1873461660221906%2F&show_text=false&width=267&t=0",
+      },
+      {
+        title: "Clip vui cho chiến dịch 20/10",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1706983176651990%2F&show_text=false&width=267&t=0",
+      },
+      {
+        title: "Quảng cáo chiến dịch 20/10 (ads)",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1475473590229817%2F&show_text=false&width=267&t=0",
+      },
+      {
+        title: "Hậu trường chuẩn bị quà 20/10",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1987813311760464%2F&show_text=false&width=267&t=0",
       },
     ],
     stats: [
