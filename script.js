@@ -711,6 +711,24 @@ const PROJECTS_DATA = {
       "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
     sheet:
       "https://docs.google.com/spreadsheets/d/1ZKpP-XwpTRJh86EiEFHs0XhB-CHrNXfi/edit?gid=1498389441",
+    featuredPosts: [
+      {
+        caption: "Bài đăng Khởi động chiến dịch Xoay Đi Chờ Chi",
+        imgs: ["photo/XĐCC/thongbao.png"],
+      },
+      {
+        caption: "Bài đăng Nhắc nhở ưu đãi Voucher & Vòng quay may mắn",
+        imgs: ["photo/XĐCC/remind1.png"],
+      },
+      {
+        caption: "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (1)",
+        imgs: ["photo/XĐCC/cuoingay1.png"],
+      },
+      {
+        caption: "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (2)",
+        imgs: ["photo/XĐCC/cuoingay2.png"],
+      },
+    ],
     photos: [
       { src: "photo/xdcc.jpg", title: "Poster Vòng quay may mắn" },
       { src: "photo/xdcc2.png", title: "Bảng kế hoạch & thực thi chiến dịch" },
