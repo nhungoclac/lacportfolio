@@ -41,7 +41,38 @@ function initPortfolioEngine() {
   initBackToTop();
   initProjectDetailPage();
   initLocketGalleries();
+  initBriefSliders();
   initCaptionFormatter();
+  adjustVideoAspectRatios();
+}
+
+function adjustVideoAspectRatios() {
+  document.querySelectorAll(".reel-embed").forEach((embed) => {
+    const iframe = embed.querySelector("iframe");
+    if (!iframe) return;
+
+    let width = parseFloat(iframe.getAttribute("width"));
+    let height = parseFloat(iframe.getAttribute("height"));
+
+    if (!width || !height) {
+      const src = iframe.getAttribute("src") || "";
+      const widthMatch = src.match(/[?&]width=(\d+)/);
+      const heightMatch = src.match(/[?&]height=(\d+)/);
+      if (widthMatch && heightMatch) {
+        width = parseFloat(widthMatch[1]);
+        height = parseFloat(heightMatch[1]);
+      }
+    }
+
+    if (width && height && height > 0) {
+      embed.style.width = `${width}px`;
+      embed.style.height = `${height}px`;
+      const card = embed.closest(".reel-card");
+      if (card && !card.classList.contains("landscape-card")) {
+        card.style.width = `${width}px`;
+      }
+    }
+  });
 }
 
 function formatCaptionHTML(text) {
@@ -174,6 +205,61 @@ function initLocketGalleries() {
   });
 }
 
+// Xử lý slider ảnh cho trang Brief & Sản phẩm (.brief-slider)
+function initBriefSliders() {
+  document.querySelectorAll(".brief-slider").forEach((slider) => {
+    const slides = slider.querySelectorAll(".slide-item");
+    const prevBtn = slider.querySelector(".prev-btn");
+    const nextBtn = slider.querySelector(".next-btn");
+    const counter = slider.querySelector(".slider-counter");
+
+    if (slides.length <= 1) {
+      if (prevBtn) prevBtn.style.display = "none";
+      if (nextBtn) nextBtn.style.display = "none";
+      if (counter) counter.style.display = "none";
+      return;
+    }
+
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.add("active");
+        } else {
+          slide.classList.remove("active");
+        }
+      });
+      if (counter) {
+        counter.style.display = "block";
+        counter.textContent = `${index + 1}/${slides.length}`;
+      }
+    }
+
+    showSlide(0);
+
+    if (prevBtn) {
+      prevBtn.style.display = "flex";
+      prevBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.style.display = "flex";
+      nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+      });
+    }
+  });
+}
+
 // 3. Trình xem ảnh toàn màn hình (Full-screen Lightbox Engine)
 function initImageLightbox() {
   let lightbox = document.getElementById("image-lightbox");
@@ -198,6 +284,7 @@ function initImageLightbox() {
 
   let currentGallery = [];
   let currentIndex = 0;
+  let activeSliderSyncFn = null;
 
   function updateLightboxImage() {
     if (!currentGallery || currentGallery.length === 0) return;
@@ -213,11 +300,16 @@ function initImageLightbox() {
       nextBtn.style.display = "none";
       counter.style.display = "none";
     }
+
+    if (activeSliderSyncFn) {
+      activeSliderSyncFn(currentIndex);
+    }
   }
 
-  function openLightbox(gallery, index) {
+  function openLightbox(gallery, index, syncFn) {
     currentGallery = gallery;
     currentIndex = index;
+    activeSliderSyncFn = syncFn || null;
     updateLightboxImage();
     lightbox.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -258,7 +350,7 @@ function initImageLightbox() {
       );
       const gallerySrcs = sampleImgs.map((i) => i.src);
       const clickedIdx = sampleImgs.indexOf(img);
-      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0);
+      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, null);
       return;
     }
 
@@ -266,7 +358,7 @@ function initImageLightbox() {
     if (workSampleItem) {
       e.preventDefault();
       e.stopPropagation();
-      openLightbox([img.src], 0);
+      openLightbox([img.src], 0, null);
       return;
     }
 
@@ -282,11 +374,31 @@ function initImageLightbox() {
       if (activeImg && locketImgs.includes(activeImg)) {
         clickedIdx = locketImgs.indexOf(activeImg);
       }
-      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0);
+      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, null);
       return;
     }
 
-    openLightbox([img.src], 0);
+    const slider = img.closest(".brief-slider");
+    if (slider) {
+      const slideImgs = Array.from(slider.querySelectorAll(".slide-item img"));
+      const gallerySrcs = slideImgs.map((i) => i.src);
+      const clickedIdx = slideImgs.indexOf(img);
+
+      const syncFn = (idx) => {
+        const slides = slider.querySelectorAll(".slide-item");
+        const cardCounter = slider.querySelector(".slider-counter");
+        slides.forEach((s, i) => {
+          if (i === idx) s.classList.add("active");
+          else s.classList.remove("active");
+        });
+        if (cardCounter) cardCounter.textContent = `${idx + 1}/${slides.length}`;
+      };
+
+      openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, syncFn);
+      return;
+    }
+
+    openLightbox([img.src], 0, null);
   });
 
   prevBtn.addEventListener("click", function (e) {

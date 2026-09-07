@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lạc Ngọc Như - Thiết kế</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2" />
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- FLOATING GLASS DOCK HEADER -->
+    <header class="fixed-header">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="nav-logo-badge">
+            <img src="favicon.svg" alt="Logo" class="nav-logo-img" />
+          </div>
+          <span class="nav-name">Lạc Ngọc Như</span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <nav class="nav-bar" id="navBar">
+          <a href="index.html" class="nav-link"
+            ><i class="fas fa-user-circle"></i> Giới thiệu</a
+          >
+          <a href="campaigns.html" class="nav-link"
+            ><i class="fas fa-chart-pie"></i> Chiến dịch</a
+          >
+          <a href="design.html" class="nav-link active"
+            ><i class="fas fa-paint-brush"></i> Thiết kế</a
+          >
+          <a href="standalone.html" class="nav-link"
+            ><i class="fas fa-layer-group"></i> Sản phẩm & Kỹ năng khác</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- TIÊU ĐỀ TRANG -->
+      <section class="section" style="margin-top: 0; padding-top: 0">
+        <h2 class="section-title">Ấn phẩm thiết kế</h2>
+
+        <div class="design-grid">
+          <!-- CARD 1: Xoay Đi Chờ Chi -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/xdcc.jpg"
+                  alt="Xoay Đi Chờ Chi 1"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=XDCC+1'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Quảng bá Xoay Đi Chờ Chi</h3>
+              <p>Ảnh thông báo chiến dịch Xoay Đi Chờ Chi trên Fanpage Lucas</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+                <span class="tool-tag">Cartoonify</span>
+                <span class="tool-tag">TypeExtrude</span>
+              </div>
+              <a
+                href="https://www.facebook.com/photo/?fbid=1230514615782535&set=a.564615045705832"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết gốc
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 2: Chiến dịch 20/10 -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/2010.jpg"
+                  alt="20/10 Poster 1"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=20/10+1'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Quảng bá chiến dịch 20/10</h3>
+              <p>
+                Ảnh thông báo chiến dịch Tháng 10 dịu dàng - Trao nàng yêu
+                thương
+              </p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+                <span class="tool-tag">Cartoonify</span>
+                <span class="tool-tag">TypeExtrude</span>
+              </div>
+              <a
+                href="https://www.facebook.com/photo/?fbid=1267744212059575&set=a.564615045705832"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết gốc
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 3: Blog ảnh (5 ảnh) -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/blog 1.jpg"
+                  alt="Blog 1"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=Blog+1'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/blog 2.jpg"
+                  alt="Blog 2"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=Blog+2'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/blog 3.jpg"
+                  alt="Blog 3"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=Blog+3'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/blog 4.jpg"
+                  alt="Blog 4"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=Blog+4'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/blog 5.jpg"
+                  alt="Blog 5"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=Blog+5'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/5</div>
+            </div>
+            <div class="design-info">
+              <h3>Ảnh bài blog</h3>
+              <p>
+                Chụp và thiết kế lại để gắn vào bài SEO của website lucas.vn
+              </p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a href="#" class="design-link">
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 4: Thumbnail (5 ảnh) -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/thumb 1.jpg"
+                  alt="Thumb 1"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Thumb+1'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/thumb 2.jpg"
+                  alt="Thumb 2"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Thumb+2'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/thumb 3.jpg"
+                  alt="Thumb 3"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Thumb+3'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/thumb 4.jpg"
+                  alt="Thumb 4"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Thumb+4'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/thumb 5.jpg"
+                  alt="Thumb 5"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Thumb+5'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/5</div>
+            </div>
+            <div class="design-info">
+              <h3>Ảnh thumbnail</h3>
+              <p>Ảnh thumbnail để gắn vào bài SEO của website lucas.vn</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a href="#" class="design-link">
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 5: Delifood Mix Khô (4 ảnh) -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/1.jpg"
+                  alt="Delifood 1"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Delifood+1'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/2.jpg"
+                  alt="Delifood 2"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Delifood+2'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/3.jpg"
+                  alt="Delifood 3"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Delifood+3'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/4.jpg"
+                  alt="Delifood 4"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Delifood+4'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/4</div>
+            </div>
+            <div class="design-info">
+              <h3>Delifood</h3>
+              <p>
+                Quảng cáo sản phẩm bằng cách giới thiệu các món ăn có thể mix
+                với khô
+              </p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/18JukKKxKL/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 6: Delifood Khô Chay -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/khochay.jpg"
+                  alt="Khô Chay"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Kho+Chay'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Delifood</h3>
+              <p>
+                Thiết kế ảnh cho bài viết quảng cáo sản phẩm mới (các món khô
+                chay)
+              </p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/1am6xRHBcL/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 7: Delifood Khô Bò Cay -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/delifood2.jpg"
+                  alt="Khô Bò Cay"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x300?text=Delifood+2'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Delifood</h3>
+              <p>Thiết kế ảnh cho bài viết quảng cáo khô bò cay</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/1EQRUZBdGW/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 8: TMXH Mega Live 1 -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/tmxh.jpg"
+                  alt="TMXH Mega Live 1"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=TMXH+1'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Thương mại xã hội</h3>
+              <p>Thiết kế ảnh cho truyền thông trước phiên MEGA LIVE</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/photo?fbid=122115561363056493&set=a.122103934815056493"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 9: TMXH Minigame -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/tmxh1.jpg"
+                  alt="TMXH Minigame"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=TMXH+2'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Thương mại xã hội</h3>
+              <p>Thiết kế ảnh truyền thông Minigame trước phiên MEGA LIVE</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/photo.php?fbid=122115177627056493&set=pb.61581694814856.-2207520000&type=3"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 10: TMXH Tổng kết -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/tmxh2.jpg"
+                  alt="TMXH Tổng kết"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=TMXH+3'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Thương mại xã hội</h3>
+              <p>Thiết kế ảnh tổng kết phiên MEGA LIVE</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/1Dcq2SHZM3/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 11: Quản trị sự kiện - Top 3 -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/bku4.jpg"
+                  alt="Bật Ký Ức Top 3"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+4'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/1</div>
+            </div>
+            <div class="design-info">
+              <h3>Quản trị sự kiện</h3>
+              <p>Bài chúc mừng Top 3 Bật Ký Ức</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/1DSRpc2x7N/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+
+          <!-- CARD 12: Quản trị sự kiện - Bật Ký Ức (6 ảnh) -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">
+              <div class="gallery-item active">
+                <img
+                  src="photo/bku5.jpg"
+                  alt="BKU 5"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+5'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/bku6.jpg"
+                  alt="BKU 6"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+6'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/bku7.jpg"
+                  alt="BKU 7"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+7'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/bku8.jpg"
+                  alt="BKU 8"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+8'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/bku9.jpg"
+                  alt="BKU 9"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+9'
+                  "
+                />
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="photo/bku10.jpg"
+                  alt="BKU 10"
+                  onerror="
+                    this.src = 'https://via.placeholder.com/400x300?text=BKU+10'
+                  "
+                />
+              </div>
+              <div class="gallery-counter">1/6</div>
+            </div>
+            <div class="design-info">
+              <h3>Quản trị sự kiện</h3>
+              <p>Truyền thông cho sự kiện Bật Ký Ức</p>
+              <div class="design-tools">
+                <span class="tool-tag">Canva Pro</span>
+              </div>
+              <a
+                href="https://www.facebook.com/share/p/14W3o4HVfpP/"
+                target="_blank"
+                class="design-link"
+              >
+                <i class="fab fa-facebook"></i> Xem bài viết
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <div class="footer-note">
+        <i class="fas fa-paint-brush"></i> Click vào ảnh để xem thêm phiên bản
+        hoặc phóng to
+      </div>
+    </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button
+      id="back-to-top"
+      class="back-to-top hidden"
+      aria-label="Trở về đầu trang"
+    >
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
