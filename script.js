@@ -44,6 +44,23 @@ function initPortfolioEngine() {
   initBriefSliders();
   initCaptionFormatter();
   adjustVideoAspectRatios();
+  initRealtimeClock();
+}
+
+function initRealtimeClock() {
+  const clockElem = document.getElementById("clock-time");
+  if (!clockElem) return;
+
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    clockElem.textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
 }
 
 function adjustVideoAspectRatios() {
@@ -54,22 +71,23 @@ function adjustVideoAspectRatios() {
     let width = parseFloat(iframe.getAttribute("width"));
     let height = parseFloat(iframe.getAttribute("height"));
 
-    if (!width || !height) {
-      const src = iframe.getAttribute("src") || "";
-      const widthMatch = src.match(/[?&]width=(\d+)/);
-      const heightMatch = src.match(/[?&]height=(\d+)/);
-      if (widthMatch && heightMatch) {
-        width = parseFloat(widthMatch[1]);
-        height = parseFloat(heightMatch[1]);
-      }
+    const src = iframe.getAttribute("src") || "";
+    const widthMatch = src.match(/[?&]width=(\d+)/);
+    const heightMatch = src.match(/[?&]height=(\d+)/);
+    if (widthMatch && heightMatch) {
+      width = parseFloat(widthMatch[1]);
+      height = parseFloat(heightMatch[1]);
     }
 
     if (width && height && height > 0) {
-      embed.style.width = `${width}px`;
-      embed.style.height = `${height}px`;
+      embed.style.aspectRatio = `${width} / ${height}`;
+      embed.style.width = "100%";
+      embed.style.height = "auto";
+      const isVertical = width < height;
+      const targetW = isVertical ? 205 : 265;
       const card = embed.closest(".reel-card");
       if (card && !card.classList.contains("landscape-card")) {
-        card.style.width = `${width}px`;
+        card.style.width = `${targetW}px`;
       }
     }
   });
@@ -335,7 +353,7 @@ function initImageLightbox() {
 
   document.addEventListener("click", function (e) {
     const img = e.target.closest(
-      ".brief-img-wrapper img, .slide-item img, .gallery-item img, .zoomable-img, .work-sample-item img, .ai-project-img-wrapper img",
+      ".brief-img-wrapper img, .slide-item img, .gallery-item img, .zoomable-img, .work-sample-item img, .ai-project-img-wrapper img, .campaign-thumb-wrapper img",
     );
     if (!img || !img.src) return;
     if (img.closest("a[href]")) return;
@@ -688,6 +706,11 @@ const PROJECTS_DATA = {
         link: "https://www.facebook.com/share/p/1C67HM1eAv/",
       },
       {
+        src: "photo/90NTC/dhqs13.jpg",
+        title: "Đại hội quay số Tuần 13",
+        link: "https://www.facebook.com/share/p/1FRwkzhHpj/",
+      },
+      {
         src: "photo/90NTC/nutribest.jpg",
         title: "Tổng kết 90NTC cho riêng NutriBest Health",
         link: "https://www.facebook.com/share/p/19Njf9wK2e/",
@@ -696,11 +719,6 @@ const PROJECTS_DATA = {
         src: "photo/90NTC/top6.jpg",
         title: "Vinh danh Top 6 chung cuộc",
         link: "https://www.facebook.com/share/p/1BjMzCm8ia/",
-      },
-      {
-        src: "photo/90NTC/dhqs13.jpg",
-        title: "Đại hội quay số Tuần 13",
-        link: "https://www.facebook.com/share/p/1FRwkzhHpj/",
       },
     ],
     videos: [
@@ -944,11 +962,11 @@ const PROJECTS_DATA = {
     videos: [
       {
         title: "Video AI Veo3 Ads - Quảng cáo khóa học",
-        src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F618290484501869%2F&show_text=false",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F618290484501869%2F&show_text=false&width=267&t=0",
       },
       {
         title: "Video Gemini AI - Hướng dẫn tạo kịch bản",
-        src: "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1697285934509172%2F&show_text=false",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1697285934509172%2F&show_text=false&width=267&t=0",
       },
     ],
     stats: [
@@ -1082,8 +1100,8 @@ const PROJECTS_DATA = {
       },
     ],
     photos: [
-      { src: "photo/report1.png", title: "Overview báo cáo Fanpage Tạp Hóa Content" },
-      { src: "photo/THC/tongketreal.jpg", title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12" },
+      { src: "photo/report1.png", title: "Overview báo cáo Fanpage Tạp Hóa Content", maxWidth: "410px" },
+      { src: "photo/THC/tongketreal.jpg", title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12", maxWidth: "280px" },
     ],
     videos: [
       {
@@ -1144,11 +1162,13 @@ function initProjectDetailPage() {
   document.title = `Lạc Ngọc Như - ${p.title}`;
 
   let html = `
-    <div class="campaign-card" style="border-left: 5px solid #0284c7;">
-      <div class="campaign-header-row">
-        <div class="campaign-title">
+    <div class="project-detail-header-card">
+      <div class="project-detail-header-row">
+        <div class="project-detail-title-group">
           ${p.badge ? `<span class="campaign-brand-badge">${p.badge}</span>` : ""}
           <h1 style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0; display: inline-flex; align-items: center; gap: 0.5rem;">${p.title}</h1>
+          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="btn-campaign-action btn-secondary" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-table"></i> Google Sheet chiến dịch</a>` : ""}
+          ${p.briefLink ? `<a href="${p.briefLink}" class="btn-campaign-action btn-secondary" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-file-alt"></i> Xem Chi Tiết Brief & Output</a>` : ""}
         </div>
         <div class="campaign-date">${p.date}</div>
       </div>
@@ -1162,37 +1182,42 @@ function initProjectDetailPage() {
         ${p.strategy ? `<div class="psr-box"><div class="psr-label"><i class="fas fa-lightbulb"></i> Core Strategy / Ý tưởng</div><div class="psr-text">${p.strategy}</div></div>` : ""}
         ${p.execution ? `<div class="psr-box"><div class="psr-label"><i class="fas fa-layer-group"></i> Multi-Format Execution</div><div class="psr-text">${p.execution}</div></div>` : ""}
       </div>
-
-      <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 1rem 0;">
-        ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="btn-campaign-action btn-secondary"><i class="fas fa-table"></i> Google Sheet chiến dịch</a>` : ""}
-        ${p.briefLink ? `<a href="${p.briefLink}" class="btn-campaign-action btn-secondary"><i class="fas fa-file-alt"></i> Xem Chi Tiết Brief & Output</a>` : ""}
-      </div>
+    </div>
   `;
 
-  // Render 1: Bài đăng nổi bật (từ meme.html)
+  // Render 1: Bài đăng nổi bật
   if (p.featuredPosts && p.featuredPosts.length > 0) {
+    const isSingle = p.featuredPosts.length === 1;
     html += `
       <div style="margin-top: 2.5rem;">
-        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1rem;">Bài Đăng Nổi Bật</h2>
-        <div class="meme-grid">
+        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Bài Đăng Nổi Bật</h2>
+        <div style="${
+          isSingle
+            ? "max-width: 540px;"
+            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
+        }">
           ${p.featuredPosts
             .map(
               (post) => `
-            <div class="meme-card">
-              <div class="locket-gallery">
+            <div class="brief-edge-card" style="${isSingle ? "max-width: 540px; width: 100%;" : ""}">
+              <div class="locket-gallery brief-edge-gallery">
                 ${post.imgs
                   .map(
                     (imgSrc, idx) => `
                   <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                    <img src="${imgSrc}" alt="${post.caption}" />
+                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" />
                   </div>
                 `,
                   )
                   .join("")}
                 <div class="gallery-counter">1/${post.imgs.length}</div>
               </div>
-              <div class="meme-caption">
-                <p>${formatCaptionHTML(post.caption)}</p>
+              <div class="brief-edge-body">
+                <div class="brief-edge-header">
+                  <div class="brief-edge-title" style="font-size: 0.92rem; line-height: 1.5; color: #1e293b;">
+                    ${formatCaptionHTML(post.caption)}
+                  </div>
+                </div>
               </div>
             </div>
           `,
@@ -1205,67 +1230,58 @@ function initProjectDetailPage() {
 
   // Render 2: Từ Brief cho đến Thành phẩm (từ brief.html)
   if (p.briefToOutput && p.briefToOutput.length > 0) {
+    const isSingle = p.briefToOutput.length === 1;
     html += `
       <div style="margin-top: 2.5rem;">
-        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1rem;">Từ Brief Cho Đến Thành Phẩm</h2>
+        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Từ Brief Cho Đến Thành Phẩm</h2>
+        <div style="${
+          isSingle
+            ? "max-width: 540px;"
+            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
+        }">
         ${p.briefToOutput
-          .map(
-            (b) => `
-          <div class="brief-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1.2rem; padding: 1.5rem; margin-bottom: 1.8rem; box-shadow: 0 4px 16px -6px rgba(15, 23, 42, 0.05);">
-            <div class="brief-card-title" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: #0f172a;">
-              <i class="fas fa-folder-open" style="color: #0284c7; margin-right: 0.5rem;"></i>
-              <a href="${b.link}" target="_blank" rel="noopener noreferrer" class="brief-title-link">
-                ${b.title} <i class="fas fa-external-link-alt" style="font-size: 0.85rem; color: #0284c7; margin-left: 0.3rem;"></i>
-              </a>
+          .map((b) => {
+            const allImgs = [
+              ...(b.thumb ? [b.thumb] : []),
+              ...(b.briefImgs || []),
+              ...(b.resultImgs || []),
+            ];
+            return `
+          <div class="brief-edge-card" style="${isSingle ? "max-width: 540px; width: 100%;" : ""}">
+            <div class="locket-gallery brief-edge-gallery">
+              ${allImgs
+                .map(
+                  (imgSrc, idx) => `
+                <div class="gallery-item ${idx === 0 ? "active" : ""}">
+                  <img src="${imgSrc}" alt="${b.title}" class="brief-edge-img" />
+                </div>
+              `,
+                )
+                .join("")}
+              <div class="gallery-counter">1/${allImgs.length}</div>
             </div>
 
-            <div class="brief-card-grid">
-              <div>
-                <div class="brief-col-header">Brief Yêu Cầu</div>
-                <div class="locket-gallery" style="height: 320px; border-radius: 0.8rem; overflow: hidden;">
-                  ${b.briefImgs
-                    .map(
-                      (img, idx) => `
-                    <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                      <img src="${img}" alt="Brief Image" />
-                    </div>
-                  `,
-                    )
-                    .join("")}
-                  <div class="gallery-counter">1/${b.briefImgs.length}</div>
+            <div class="brief-edge-body">
+              <div class="brief-edge-header">
+                <div class="brief-edge-title">
+                  <i class="fas fa-folder-open" style="color: #0284c7; margin-right: 0.4rem;"></i>
+                  <a href="${b.link}" target="_blank" rel="noopener noreferrer" class="brief-title-link">${b.title}</a>
                 </div>
+                ${b.note ? `<div class="brief-edge-note">${b.note}</div>` : ""}
               </div>
-              <div>
-                <div class="brief-col-header">Loạt Ảnh Thành Quả</div>
-                <div class="locket-gallery" style="height: 320px; border-radius: 0.8rem; overflow: hidden;">
-                  ${b.resultImgs
-                    .map(
-                      (img, idx) => `
-                    <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                      <img src="${img}" alt="Result Image" />
-                    </div>
-                  `,
-                    )
-                    .join("")}
-                  <div class="gallery-counter">1/${b.resultImgs.length}</div>
-                </div>
-              </div>
-            </div>
 
-            <div class="brief-footer" style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed #e2e8f0; flex-wrap: wrap; gap: 1rem;">
-              <div class="brief-stats" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12); white-space: nowrap; display: inline-flex; align-items: center;">
-                  <span><i class="fas fa-eye" style="margin-right: 0.4rem;"></i>${b.views} Lượt xem</span>
-                </div>
-                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12); white-space: nowrap; display: inline-flex; align-items: center;">
-                  <span><i class="fas fa-users" style="margin-right: 0.4rem;"></i>${b.reach} Người xem</span>
+              <div class="brief-edge-footer">
+                <div class="brief-edge-stats">
+                  ${b.views ? `<span class="brief-stat-pill"><i class="fas fa-eye"></i> ${b.views} Lượt xem</span>` : ""}
+                  ${b.reach ? `<span class="brief-stat-pill"><i class="fas fa-users"></i> ${b.reach} Người xem</span>` : ""}
                 </div>
               </div>
             </div>
           </div>
-        `,
-          )
+        `;
+          })
           .join("")}
+        </div>
       </div>
     `;
   }
@@ -1277,16 +1293,22 @@ function initProjectDetailPage() {
         <h3 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1rem;">Video Reels của Chiến dịch</h3>
         <div class="reels-grid">
           ${p.videos
-            .map(
-              (v) => `
-            <div class="reel-card">
-              <div class="reel-embed">
-                <iframe src="${v.src}" width="267" height="476" style="border: none; overflow: hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            .map((v) => {
+              const wMatch = (v.src || "").match(/[?&]width=(\d+)/);
+              const hMatch = (v.src || "").match(/[?&]height=(\d+)/);
+              const origW = wMatch ? parseInt(wMatch[1]) : 267;
+              const origH = hMatch ? parseInt(hMatch[1]) : 476;
+              const isVertical = origW < origH;
+              const targetW = isVertical ? 205 : 265;
+              return `
+            <div class="reel-card" style="width: ${targetW}px;">
+              <div class="reel-embed" style="width: 100%; aspect-ratio: ${origW} / ${origH};">
+                <iframe src="${v.src}" width="${origW}" height="${origH}" style="border: none; overflow: hidden; width: 100%; height: 100%;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
               </div>
               <div class="reel-caption">${formatCaptionHTML(v.title)}</div>
             </div>
-          `,
-            )
+          `;
+            })
             .join("")}
         </div>
       </div>
@@ -1295,32 +1317,50 @@ function initProjectDetailPage() {
 
   // Render Photos belonging to this project
   if (p.photos && p.photos.length > 0) {
+    const isSingle = p.photos.length === 1;
+    const isFour = p.photos.length === 4;
+    const minColWidth = p.photos.length <= 2 ? "285px" : "260px";
+
+    let containerStyle = "";
+    if (isSingle) {
+      containerStyle = "max-width: 680px; margin: 0 auto; display: block;";
+    } else if (isFour) {
+      containerStyle = "display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start; width: 100%;";
+    } else {
+      containerStyle = "display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: start; overflow-x: visible;";
+    }
+
     html += `
-      <div style="margin-top: 2rem;">
-        <h3 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.6rem; display: inline-block;">
+      <div style="margin-top: 2.5rem;">
+        <h3 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem; display: inline-block;">
           KẾT QUẢ CHIẾN DỊCH
-          <span style="display: block; font-size: 0.85rem; font-weight: 500; text-transform: none; letter-spacing: normal; color: #64748b; margin-top: 0.35rem;">
-          </span>
         </h3>
-        <div class="work-samples" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem; overflow-x: visible;">
+        <div class="work-samples" style="${containerStyle}">
           ${p.photos
             .map(
               (img) => `
-            ${
-              img.link
-                ? `
-              <a href="${img.link}" target="_blank" rel="noopener noreferrer" class="work-sample-item" style="width: 100%; text-decoration: none;">
-                <img src="${img.src}" alt="${img.title}" style="height: 280px; object-fit: contain; background: #f8fafc;" />
-                <span><i class="fas fa-external-link-alt" style="font-size: 0.8rem; color: #0284c7; margin-right: 4px;"></i> ${formatCaptionHTML(img.title)}</span>
-              </a>
-            `
-                : `
-              <div class="work-sample-item" style="width: 100%;">
-                <img src="${img.src}" alt="${img.title}" style="height: 280px; object-fit: contain; background: #f8fafc;" />
-                <span>${formatCaptionHTML(img.title)}</span>
+              <div class="work-sample-item frameless" style="${
+                isSingle
+                  ? "max-width: 680px; width: 100%;"
+                  : isFour
+                  ? "width: 100%; max-width: 100%;"
+                  : img.maxWidth
+                  ? `max-width: ${img.maxWidth}; width: 100%; flex: 1 1 ${img.maxWidth};`
+                  : `max-width: ${minColWidth}; width: 100%; flex: 1 1 ${minColWidth};`
+              }">
+                <img src="${img.src}" alt="${img.title}" />
+                ${
+                  img.link
+                    ? `
+                  <a href="${img.link}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block;">
+                    <span><i class="fas fa-external-link-alt" style="font-size: 0.75rem; color: #0284c7; margin-right: 4px;"></i> ${formatCaptionHTML(img.title)}</span>
+                  </a>
+                `
+                    : `
+                  <span>${formatCaptionHTML(img.title)}</span>
+                `
+                }
               </div>
-            `
-            }
           `,
             )
             .join("")}
@@ -1333,6 +1373,7 @@ function initProjectDetailPage() {
   container.innerHTML = html;
   initLocketGalleries();
   initCaptionFormatter();
+  adjustVideoAspectRatios();
 }
 
 // Tawk.to Live Chat Script
