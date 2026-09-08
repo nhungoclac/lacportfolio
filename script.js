@@ -1,4 +1,4 @@
-// script.js - Portfolio Ver 2 Interactive Engine
+﻿// script.js - Portfolio Ver 2 Interactive Engine
 
 function initPortfolioEngine() {
   // 1. Kéo chuột cho carousel ảnh
@@ -45,6 +45,60 @@ function initPortfolioEngine() {
   initCaptionFormatter();
   adjustVideoAspectRatios();
   initRealtimeClock();
+  initCounterAnimation();
+}
+
+function initCounterAnimation() {
+  const counters = document.querySelectorAll(".dash-num[data-target]");
+  if (!counters.length) return;
+
+  function formatNumber(num) {
+    // Format with dots as thousand separators (Vietnamese style)
+    return num.toLocaleString("de-DE"); // de-DE uses dots as thousand separator
+  }
+
+  function animateCounter(el) {
+    if (el.dataset.animated) return; // Run only once
+    el.dataset.animated = "true";
+
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || "";
+    const duration = 1800; // ms
+    const startTime = performance.now();
+
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuart(progress);
+      const current = Math.floor(eased * target);
+      el.textContent = formatNumber(current) + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = formatNumber(target) + suffix;
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
 }
 
 function initRealtimeClock() {
@@ -1174,29 +1228,30 @@ function initProjectDetailPage() {
   document.title = `Lạc Ngọc Như - ${p.title}`;
 
   let html = `
-    <div class="project-detail-header-card">
-      <div class="project-detail-header-row">
-        <div class="project-detail-title-group">
-          ${p.badge ? `<span class="campaign-brand-badge">${p.badge}</span>` : ""}
-          <h1 style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0; display: inline-flex; align-items: center; gap: 0.5rem;">${p.title}</h1>
-          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="btn-campaign-action btn-outline-blue" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-table"></i> ${p.sheetLabel || "Google Sheet chiến dịch"}</a>` : ""}
-          ${p.briefLink ? `<a href="${p.briefLink}" class="btn-campaign-action btn-outline-blue" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-file-alt"></i> Xem Chi Tiết Brief & Output</a>` : ""}
+    <div class="pdh-card">
+      <div class="pdh-top">
+        <div class="pdh-title-row">
+                    <h1 class="pdh-title">${p.title}</h1>
         </div>
-        <div class="campaign-date">${p.date}</div>
+        <div class="pdh-meta-row">
+          <span class="pdh-date"><i class="fas fa-calendar-alt"></i> ${p.date}</span>
+          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet chien dich"}</a>` : ""}
+          ${p.briefLink ? `<a href="${p.briefLink}" class="pdh-sheet-btn"><i class="fas fa-file-alt"></i> Xem Brief &amp; Output</a>` : ""}
+        </div>
       </div>
-      <div class="campaign-tagline">${p.tagline}</div>
 
-      <div class="psr-grid">
-        <div class="psr-box">
-          <div class="psr-label"><i class="fas fa-bullseye"></i> Problem / Thử thách</div>
-          <div class="psr-text">${p.problem || "Tối ưu hóa chiến dịch truyền thông."}</div>
+      <p class="pdh-tagline">${p.tagline}</p>
+
+      <div class="pdh-psr-grid">
+        <div class="pdh-psr-box">
+          <div class="pdh-psr-label pdh-psr-problem"><i class="fas fa-bullseye"></i> Problem / Thử thách</div>
+          <div class="pdh-psr-text">${p.problem || "Toi uu hoa chien dich truyen thong."}</div>
         </div>
-        ${p.strategy ? `<div class="psr-box"><div class="psr-label"><i class="fas fa-lightbulb"></i> Core Strategy / Ý tưởng</div><div class="psr-text">${p.strategy}</div></div>` : ""}
-        ${p.execution ? `<div class="psr-box"><div class="psr-label"><i class="fas fa-layer-group"></i> Multi-Format Execution</div><div class="psr-text">${p.execution}</div></div>` : ""}
+        ${p.strategy ? `<div class="pdh-psr-box"><div class="pdh-psr-label pdh-psr-strategy"><i class="fas fa-lightbulb"></i> Core Strategy / Ý tưởng</div><div class="pdh-psr-text">${p.strategy}</div></div>` : ""}
+        ${p.execution ? `<div class="pdh-psr-box"><div class="pdh-psr-label pdh-psr-exec"><i class="fas fa-layer-group"></i> Multi-Format Execution</div><div class="pdh-psr-text">${p.execution}</div></div>` : ""}
       </div>
     </div>
   `;
-
   // Render 1: Từ Brief cho đến Thành phẩm (từ brief.html)
   if (p.briefToOutput && p.briefToOutput.length > 0) {
     const isSingle = p.briefToOutput.length === 1;
