@@ -421,7 +421,8 @@ function initImageLightbox() {
           if (i === idx) s.classList.add("active");
           else s.classList.remove("active");
         });
-        if (cardCounter) cardCounter.textContent = `${idx + 1}/${slides.length}`;
+        if (cardCounter)
+          cardCounter.textContent = `${idx + 1}/${slides.length}`;
       };
 
       openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, syncFn);
@@ -579,6 +580,7 @@ const PROJECTS_DATA = {
       "Đóng góp >50 bài viết Social, viết Brief thiết kế hình ảnh, viết Script video.",
     sheet:
       "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=973473861#gid=973473861",
+    sheetLabel: "Google Sheet bài đăng",
 
     // Phần 1: Bài đăng nổi bật (Dữ liệu từ meme.html)
     featuredPosts: [
@@ -673,7 +675,7 @@ const PROJECTS_DATA = {
           "photo/brief-77-result01.png",
           "photo/brief-77-meta.png",
         ],
-        note: "Sales event Siêu Sale 7/7 trong chiến dịch 90NTC",
+        note: "Sales event Siêu Sale 7/7 trong 90 Ngày Tốc Chiến",
         views: "> 2.400",
         reach: "> 1.100",
       },
@@ -682,7 +684,7 @@ const PROJECTS_DATA = {
         link: "https://www.facebook.com/share/p/1Bk5cq4dXX/",
         briefImgs: ["photo/90NTC/gap.png"],
         resultImgs: ["photo/90NTC/gap-meta.png", "photo/90NTC/gap-meta1.png"],
-        note: "Sales event Siêu Sale 7/7 trong chiến dịch 90NTC",
+        note: "Đếm ngược 7 ngày kết thúc 90 Ngày Tốc Chiến",
         views: "> 1.700",
         reach: "> 1.000",
       },
@@ -694,7 +696,7 @@ const PROJECTS_DATA = {
           "photo/90NTC/dailotrian-meta.png",
           "photo/90NTC/dailotrian-meta1.png",
         ],
-        note: "Sales event Siêu Sale 7/7 trong chiến dịch 90NTC",
+        note: "Nhắc nhở vào app nhận vinh danh 90 Ngày Tốc Chiến",
         views: "> 2.000",
         reach: "> 1.200",
       },
@@ -757,6 +759,7 @@ const PROJECTS_DATA = {
       "Đóng góp >30 bài viết truyền thông: bao gồm cap cho teaser, poster, official video, storytelling,...",
     sheet:
       "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=458713564#gid=458713564",
+    sheetLabel: "Google Sheet bài đăng",
 
     // Phần 1: Bài đăng nổi bật (Dữ liệu từ meme.html)
     featuredPosts: [
@@ -1101,8 +1104,16 @@ const PROJECTS_DATA = {
       },
     ],
     photos: [
-      { src: "photo/report1.png", title: "Overview báo cáo Fanpage Tạp Hóa Content", maxWidth: "410px" },
-      { src: "photo/THC/tongketreal.jpg", title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12", maxWidth: "280px" },
+      {
+        src: "photo/report1.png",
+        title: "Overview báo cáo Fanpage Tạp Hóa Content",
+        maxWidth: "410px",
+      },
+      {
+        src: "photo/THC/tongketreal.jpg",
+        title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12",
+        maxWidth: "280px",
+      },
     ],
     videos: [
       {
@@ -1168,8 +1179,8 @@ function initProjectDetailPage() {
         <div class="project-detail-title-group">
           ${p.badge ? `<span class="campaign-brand-badge">${p.badge}</span>` : ""}
           <h1 style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin: 0; display: inline-flex; align-items: center; gap: 0.5rem;">${p.title}</h1>
-          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="btn-campaign-action btn-secondary" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-table"></i> Google Sheet chiến dịch</a>` : ""}
-          ${p.briefLink ? `<a href="${p.briefLink}" class="btn-campaign-action btn-secondary" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-file-alt"></i> Xem Chi Tiết Brief & Output</a>` : ""}
+          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="btn-campaign-action btn-outline-blue" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-table"></i> ${p.sheetLabel || "Google Sheet chiến dịch"}</a>` : ""}
+          ${p.briefLink ? `<a href="${p.briefLink}" class="btn-campaign-action btn-outline-blue" style="font-size: 0.82rem; padding: 0.4rem 0.95rem;"><i class="fas fa-file-alt"></i> Xem Chi Tiết Brief & Output</a>` : ""}
         </div>
         <div class="campaign-date">${p.date}</div>
       </div>
@@ -1325,9 +1336,11 @@ function initProjectDetailPage() {
     if (isSingle) {
       containerStyle = "max-width: 680px; margin: 0 auto; display: block;";
     } else if (isFour) {
-      containerStyle = "display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start; width: 100%;";
+      containerStyle =
+        "display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start; width: 100%;";
     } else {
-      containerStyle = "display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: start; overflow-x: visible;";
+      containerStyle =
+        "display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: start; overflow-x: visible;";
     }
 
     html += `
@@ -1343,10 +1356,10 @@ function initProjectDetailPage() {
                 isSingle
                   ? "max-width: 680px; width: 100%;"
                   : isFour
-                  ? "width: 100%; max-width: 100%;"
-                  : img.maxWidth
-                  ? `max-width: ${img.maxWidth}; width: 100%; flex: 1 1 ${img.maxWidth};`
-                  : `max-width: ${minColWidth}; width: 100%; flex: 1 1 ${minColWidth};`
+                    ? "width: 100%; max-width: 100%;"
+                    : img.maxWidth
+                      ? `max-width: ${img.maxWidth}; width: 100%; flex: 1 1 ${img.maxWidth};`
+                      : `max-width: ${minColWidth}; width: 100%; flex: 1 1 ${minColWidth};`
               }">
                 <img src="${img.src}" alt="${img.title}" />
                 ${
@@ -1388,4 +1401,3 @@ var Tawk_API = Tawk_API || {},
   s1.setAttribute("crossorigin", "*");
   s0.parentNode.insertBefore(s1, s0);
 })();
-
