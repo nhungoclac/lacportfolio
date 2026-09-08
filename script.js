@@ -640,6 +640,7 @@ const PROJECTS_DATA = {
       {
         title: "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (3)",
         link: "https://www.facebook.com/share/p/1b5tBqBDZW/",
+        thumb: "photo/thumb/test.jpg",
         briefImgs: ["photo/brief-brand.png", "photo/brief-brand01.png"],
         resultImgs: [
           "photo/brief-brand-result.png",
@@ -1221,7 +1222,6 @@ function initProjectDetailPage() {
             <div class="brief-edge-body">
               <div class="brief-edge-header">
                 <div class="brief-edge-title">
-                  <i class="fas fa-folder-open" style="color: #0284c7; margin-right: 0.4rem;"></i>
                   <a href="${b.link}" target="_blank" rel="noopener noreferrer" class="brief-title-link">${b.title}</a>
                 </div>
                 ${b.note ? `<div class="brief-edge-note">${b.note}</div>` : ""}
