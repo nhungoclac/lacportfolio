@@ -1107,12 +1107,12 @@ const PROJECTS_DATA = {
       {
         src: "photo/report1.png",
         title: "Overview báo cáo Fanpage Tạp Hóa Content",
-        maxWidth: "410px",
+        maxWidth: "460px",
       },
       {
         src: "photo/THC/tongketreal.jpg",
         title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12",
-        maxWidth: "280px",
+        maxWidth: "460px",
       },
     ],
     videos: [
