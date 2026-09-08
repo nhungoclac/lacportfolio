@@ -884,11 +884,11 @@ const PROJECTS_DATA = {
       },
       {
         title: "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F796570512734331%2F&show_text=false&width=267&t=0",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F24538925582408921%2F&show_text=false&width=267&t=0",
       },
       {
         title: "Quảng cáo túi chống sốc & chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1110318384082275%2F&show_text=false&width=267&t=0",
+        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F798628676364303%2F&show_text=false&width=267&t=0",
       },
       {
         title: "Clip vui cho chiến dịch Xoay Đi Chờ Chi",
@@ -1185,50 +1185,7 @@ function initProjectDetailPage() {
     </div>
   `;
 
-  // Render 1: Bài đăng nổi bật
-  if (p.featuredPosts && p.featuredPosts.length > 0) {
-    const isSingle = p.featuredPosts.length === 1;
-    html += `
-      <div style="margin-top: 2.5rem;">
-        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Bài Đăng Nổi Bật</h2>
-        <div style="${
-          isSingle
-            ? "max-width: 540px;"
-            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
-        }">
-          ${p.featuredPosts
-            .map(
-              (post) => `
-            <div class="brief-edge-card" style="${isSingle ? "max-width: 540px; width: 100%;" : ""}">
-              <div class="locket-gallery brief-edge-gallery">
-                ${post.imgs
-                  .map(
-                    (imgSrc, idx) => `
-                  <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" />
-                  </div>
-                `,
-                  )
-                  .join("")}
-                <div class="gallery-counter">1/${post.imgs.length}</div>
-              </div>
-              <div class="brief-edge-body">
-                <div class="brief-edge-header">
-                  <div class="brief-edge-title" style="font-size: 0.92rem; line-height: 1.5; color: #1e293b;">
-                    ${formatCaptionHTML(post.caption)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          `,
-            )
-            .join("")}
-        </div>
-      </div>
-    `;
-  }
-
-  // Render 2: Từ Brief cho đến Thành phẩm (từ brief.html)
+  // Render 1: Từ Brief cho đến Thành phẩm (từ brief.html)
   if (p.briefToOutput && p.briefToOutput.length > 0) {
     const isSingle = p.briefToOutput.length === 1;
     html += `
@@ -1281,6 +1238,49 @@ function initProjectDetailPage() {
         `;
           })
           .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  // Render 2: Bài đăng nổi bật
+  if (p.featuredPosts && p.featuredPosts.length > 0) {
+    const isSingle = p.featuredPosts.length === 1;
+    html += `
+      <div style="margin-top: 2.5rem;">
+        <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Bài Đăng Nổi Bật</h2>
+        <div style="${
+          isSingle
+            ? "max-width: 540px;"
+            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
+        }">
+          ${p.featuredPosts
+            .map(
+              (post) => `
+            <div class="brief-edge-card" style="${isSingle ? "max-width: 540px; width: 100%;" : ""}">
+              <div class="locket-gallery brief-edge-gallery">
+                ${post.imgs
+                  .map(
+                    (imgSrc, idx) => `
+                  <div class="gallery-item ${idx === 0 ? "active" : ""}">
+                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" />
+                  </div>
+                `,
+                  )
+                  .join("")}
+                <div class="gallery-counter">1/${post.imgs.length}</div>
+              </div>
+              <div class="brief-edge-body">
+                <div class="brief-edge-header">
+                  <div class="brief-edge-title" style="font-size: 0.92rem; line-height: 1.5; color: #1e293b;">
+                    ${formatCaptionHTML(post.caption)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `,
+            )
+            .join("")}
         </div>
       </div>
     `;
