@@ -1528,6 +1528,28 @@ body {
   transform: translateY(-2px);
 }
 
+.zalo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  background: #0284c7;
+  color: #ffffff;
+  border-radius: 5px;
+  font-weight: 800;
+  font-size: 11px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  line-height: 1;
+  font-style: normal;
+  transition: all 0.25s ease;
+}
+
+.contact-btn:hover .zalo-icon {
+  background: #ffffff;
+  color: #0284c7;
+}
+
 .footer-note {
   text-align: center;
   margin-top: 2.5rem;
@@ -2085,7 +2107,8 @@ body {
 }
 
 .stat-box {
-  flex: 1 1 180px;
+  flex: 0 0 auto;
+  white-space: nowrap;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 0.9rem;
@@ -2321,5 +2344,6 @@ body {
   color: #10b981;
   font-size: 0.9rem;
 }
+
 
 

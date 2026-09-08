@@ -1253,11 +1253,11 @@ function initProjectDetailPage() {
             </div>
 
             <div class="brief-footer" style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed #e2e8f0; flex-wrap: wrap; gap: 1rem;">
-              <div class="brief-stats" style="display: flex; gap: 1rem;">
-                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12);">
+              <div class="brief-stats" style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12); white-space: nowrap; display: inline-flex; align-items: center;">
                   <span><i class="fas fa-eye" style="margin-right: 0.4rem;"></i>${b.views} Lượt xem</span>
                 </div>
-                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12);">
+                <div class="stat-box" style="background: #f0f9ff; border: 1.5px solid #bae6fd; padding: 0.45rem 1.1rem; border-radius: 24px; font-size: 0.98rem; font-weight: 700; color: #0284c7; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12); white-space: nowrap; display: inline-flex; align-items: center;">
                   <span><i class="fas fa-users" style="margin-right: 0.4rem;"></i>${b.reach} Người xem</span>
                 </div>
               </div>
@@ -1347,3 +1347,4 @@ var Tawk_API = Tawk_API || {},
   s1.setAttribute("crossorigin", "*");
   s0.parentNode.insertBefore(s1, s0);
 })();
+
