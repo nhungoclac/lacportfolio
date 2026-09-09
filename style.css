@@ -2353,7 +2353,30 @@ body {
   transform: translateY(-2px);
 }
 
+@keyframes navSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ===== BRIEF & SẢN PHẨM / DELIVERABLES ===== */
+.brief-edge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.8rem;
+  align-items: stretch;
+}
+
+.brief-edge-grid.single-card {
+  max-width: 540px;
+  grid-template-columns: 1fr;
+}
+
 .brief-edge-card {
   background: #ffffff;
   border-radius: 1.25rem;
@@ -3293,10 +3316,21 @@ body {
 }
 
 /* =========================================================
-   TỐI ƯU HIỂN THỊ TRÊN ĐIỆN THOẠI & MÁY TÍNH BẢNG
-   Mục tiêu: khối nào nhét vừa 2 cột thì nhét, đừng kéo dài một dọc.
-   Đặt ở cuối file để ghi đè các @media phía trên.
+   TỐI ƯU HIỂN THỊ TOÀN DIỆN TRÊN ĐIỆN THOẠI & MÁY TÍNH BẢNG
+   Ghi đè tất cả các rule phía trên để bảo đảm giao diện điện thoại hoàn hảo.
    ========================================================= */
+
+/* Ngăn ngừa tràn trang theo chiều ngang */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 /* ---------- MÁY TÍNH BẢNG (600px – 1024px) ---------- */
 @media (min-width: 600px) and (max-width: 1024px) {
@@ -3312,18 +3346,23 @@ body {
     gap: 1.1rem;
   }
 
+  .brief-edge-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.2rem;
+  }
+
   .design-grid {
     column-count: 2;
   }
 
   .skills-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.85rem;
   }
 
   .dashboard-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.9rem;
+    gap: 0.85rem;
   }
 
   .dash-num {
@@ -3331,32 +3370,145 @@ body {
   }
 }
 
-/* ---------- ĐIỆN THOẠI (dưới 600px) ---------- */
-@media (max-width: 599px) {
-  /* Khối kỹ năng: 15 mục xếp một dọc rất dài -> chia 2 cột */
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+/* ---------- TOÀN BỘ THIẾT BỊ DI ĐỘNG (DƯỚI 768px) ---------- */
+@media (max-width: 768px) {
+  body {
+    padding: 0.5rem 0.5rem 2.5rem 0.5rem;
   }
 
-  .skill-item {
-    padding: 0.75rem 0.65rem;
+  .container {
+    padding: 0.85rem 0.65rem;
+    margin: 0 auto;
+    border-radius: 0.9rem;
+    width: 100%;
+    max-width: 100%;
   }
 
-  .skill-name {
+  /* Fixed Header */
+  .fixed-header {
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.65rem;
+  }
+
+  .nav-name {
+    font-size: 1.05rem;
+  }
+
+  .nav-toggle {
+    width: 38px;
+    height: 38px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+  }
+
+  .nav-bar {
+    top: calc(100% + 8px);
+    padding: 0.6rem;
+    border-radius: 14px;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  .nav-link.active {
+    background: #f0f9ff;
+    color: #0284c7;
+  }
+
+  .nav-link:hover {
+    background: #f8fafc;
+    color: #0284c7;
+  }
+
+  /* Intro Section */
+  .intro {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 0.95rem;
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .avatar {
+    margin: 0 auto;
+    width: 110px;
+    height: 110px;
+    flex: 0 0 110px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .info-header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .info h1 {
+    font-size: 1.55rem;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .info .slogan {
+    text-align: center;
+    border-left: none;
+    border-bottom: 2px solid #0284c7;
+    padding-left: 0;
+    padding-bottom: 0.35rem;
+    margin: 0.4rem auto 0.85rem;
+    max-width: 100%;
+    font-size: 0.86rem;
+  }
+
+  .info-details {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 0.8rem;
+    width: 100%;
+  }
+
+  .info-details span {
     font-size: 0.82rem;
-    gap: 0.45rem;
-    line-height: 1.3;
+    white-space: normal;
   }
 
-  /* 3 thẻ số liệu: 2 thẻ trên một hàng, thẻ cuối chiếm trọn bề ngang */
+  /* Section Title */
+  .section-title {
+    font-size: 1.35rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+  }
+
+  /* 3 Thẻ Dashboard: 2 cột gọn gàng */
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
   }
 
   .dash-card {
-    padding: 0.95rem 0.75rem;
+    padding: 0.85rem 0.7rem;
+    border-radius: 0.85rem;
   }
 
   .dash-card:last-child {
@@ -3364,7 +3516,7 @@ body {
   }
 
   .dash-num {
-    font-size: 1.5rem;
+    font-size: 1.45rem;
   }
 
   .dash-label {
@@ -3377,47 +3529,467 @@ body {
     line-height: 1.4;
   }
 
-  /* Ảnh thì xếp 2 cột thoải mái */
-  .work-samples,
-  .meme-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.7rem;
+  /* Marketer DNA */
+  .dna-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
 
-  .design-grid {
-    column-count: 2;
-    column-gap: 0.7rem;
-  }
-
-  /* Thông tin liên hệ: cho xuống hàng ngang thay vì mỗi dòng một mục */
-  .info-details {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.4rem 0.85rem;
-  }
-
-  .info-details span {
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-
-  /* Thẻ Marketer DNA nhiều chữ, để 1 cột nhưng thu gọn lại cho đỡ cao */
   .dna-card {
-    padding: 1rem;
+    padding: 1rem 0.95rem;
+    border-radius: 0.95rem;
+  }
+
+  .dna-title {
+    font-size: 1.02rem;
   }
 
   .dna-desc {
     font-size: 0.84rem;
-    line-height: 1.5;
+    line-height: 1.55;
+  }
+
+  /* Kỹ năng */
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .skill-item {
+    padding: 0.75rem 0.6rem;
+    border-radius: 0.85rem;
+  }
+
+  .skill-name {
+    font-size: 0.82rem;
+    gap: 0.4rem;
+  }
+
+  .skill-name i,
+  .skill-name .icon-meta-svg {
+    font-size: 1.5rem !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  /* Học vấn */
+  .education-card {
+    padding: 1.1rem 1rem;
+    border-radius: 1rem;
+    gap: 0.85rem;
+  }
+
+  .edu-card-top {
+    gap: 0.85rem;
+  }
+
+  .edu-badge-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+  }
+
+  .edu-degree {
+    font-size: 1.05rem;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+  }
+
+  .edu-pill {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  /* Danh sách chiến dịch (campaigns.html) */
+  .cmp-hero {
+    flex-direction: column;
+    padding: 1.4rem 1.1rem;
+    gap: 1.1rem;
+    margin-bottom: 1.8rem;
+    border-radius: 1.1rem;
+  }
+
+  .cmp-hero-title {
+    font-size: 1.6rem;
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+
+  .cmp-hero-sub {
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  .cmp-hero-stats {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.8rem 1rem;
+    border-radius: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .cmp-hero-stat-num {
+    font-size: 1.4rem;
+  }
+
+  .cmp-hero-stat-lbl {
+    font-size: 0.7rem;
+  }
+
+  .cmp-list {
+    gap: 2.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .cmp-block,
+  .cmp-block-reverse {
+    grid-template-columns: 1fr !important;
+    gap: 1.1rem;
+  }
+
+  .cmp-block-reverse .cmp-block-img-col {
+    order: 1 !important;
+  }
+
+  .cmp-block-reverse .cmp-block-body {
+    order: 2 !important;
+  }
+
+  .cmp-block-img-wrap {
+    border-radius: 1rem;
+    aspect-ratio: 16 / 9;
+  }
+
+  .cmp-block-title {
+    font-size: 1.22rem;
+  }
+
+  .cmp-block-desc {
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  .cmp-stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .cmp-stat-card {
+    min-width: 0;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.85rem;
+  }
+
+  .cmp-stat-val {
+    font-size: 1.2rem;
+  }
+
+  .cmp-stat-lbl {
+    font-size: 0.7rem;
+  }
+
+  .cmp-cta-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.88rem;
+    border-radius: 999px;
+  }
+
+  /* Chi tiết chiến dịch (project.html) */
+  .pdh-card {
+    padding: 1.2rem 1.1rem;
+    border-radius: 1.1rem;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .pdh-title {
+    font-size: 1.32rem;
+    line-height: 1.3;
+  }
+
+  .pdh-meta-row {
+    gap: 0.5rem;
+  }
+
+  .pdh-sheet-btn {
+    font-size: 0.75rem;
+    padding: 0.28rem 0.75rem;
+  }
+
+  .pdh-tagline {
+    font-size: 0.85rem;
+    padding: 0.75rem 0.85rem;
+    line-height: 1.6;
+  }
+
+  .pdh-psr-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem;
+  }
+
+  .pdh-psr-box {
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.8rem;
+  }
+
+  .pdh-psr-label {
+    font-size: 0.72rem;
+  }
+
+  .pdh-psr-text {
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  /* Brief to Output & Deliverables */
+  .brief-edge-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+  }
+
+  .brief-edge-card {
+    border-radius: 1rem;
+    width: 100% !important;
+  }
+
+  .brief-edge-gallery {
+    aspect-ratio: 16 / 9;
+  }
+
+  .brief-edge-body {
+    padding: 0.95rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .brief-edge-title {
+    font-size: 0.98rem;
+  }
+
+  .brief-edge-note {
+    font-size: 0.82rem;
+  }
+
+  .brief-edge-footer {
+    padding-top: 0.65rem;
+  }
+
+  .brief-stat-pill {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  /* Design Gallery (design.html): Hiển thị thông tin rõ ràng dưới ảnh thay vì ẩn hover */
+  .design-card {
+    border-radius: 1rem;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+  }
+
+  .design-info {
+    position: static;
+    opacity: 1;
+    transform: none;
+    background: #ffffff;
+    padding: 0.9rem 1rem 1rem;
+    pointer-events: auto;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .design-info h3 {
+    color: #0f172a;
+    font-size: 0.98rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .design-info p {
+    color: #475569;
+    font-size: 0.82rem;
+    margin-bottom: 0.6rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .tool-tag {
+    background: #f0f9ff;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .design-link {
+    background: #f0f9ff;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* AI Automation (ai.html) */
+  .ai-hero-card {
+    padding: 1.4rem 1.1rem;
+    border-radius: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ai-hero-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+
+  .ai-hero-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .tech-pill {
+    padding: 0.32rem 0.7rem;
+    font-size: 0.76rem;
+  }
+
+  .ai-project-card {
+    grid-template-columns: 1fr !important;
+    border-radius: 1rem;
+  }
+
+  .ai-project-img-wrapper {
+    min-height: 180px;
+    max-height: 240px;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .ai-project-content {
+    padding: 1.1rem 1rem;
+  }
+
+  .ai-project-title {
+    font-size: 1.1rem;
+  }
+
+  .ai-project-desc {
+    font-size: 0.85rem;
+  }
+
+  .ai-project-features span {
+    font-size: 0.8rem;
+  }
+
+  /* Video Reels */
+  .reels-grid {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .reel-card {
+    border-radius: 0.85rem;
+    max-width: 100%;
+  }
+
+  /* Lightbox Overlay */
+  .lightbox-nav {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .lightbox-prev {
+    left: 8px;
+  }
+
+  .lightbox-next {
+    right: 8px;
+  }
+
+  .lightbox-close {
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+
+  .lightbox-counter {
+    bottom: 14px;
+    font-size: 0.78rem;
+    padding: 0.25rem 0.8rem;
+  }
+
+  .lightbox-content {
+    max-width: 95vw;
+    max-height: 80vh;
+  }
+
+  /* Nút Back to Top */
+  #back-to-top,
+  .back-to-top {
+    bottom: 20px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+  }
+
+  /* Nút liên hệ */
+  .contact-links {
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .contact-btn {
+    flex: 1 1 calc(50% - 0.6rem);
+    justify-content: center;
+    padding: 0.65rem 1rem;
+    font-size: 0.84rem;
   }
 }
 
-/* ---------- MÀN HÌNH RẤT HẸP (dưới 360px) ---------- */
-@media (max-width: 359px) {
-  .skills-grid,
-  .work-samples,
+/* ---------- ĐIỆN THOẠI THÔNG DỤNG (DƯỚI 560px) ---------- */
+@media (max-width: 559px) {
+  /* Chiến dịch tiêu biểu trên trang chủ xếp 1 cột rõ nét, thumbnail lớn 16:9 */
+  .work-samples {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .work-sample-item {
+    border-radius: 1rem;
+  }
+
+  .work-sample-item span {
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+  }
+
+  /* Meme grid 1 cột để đọc chữ caption rõ ràng */
   .meme-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  /* Design grid 1 cột masonry */
+  .design-grid {
+    column-count: 1 !important;
+  }
+
+  /* Nút liên hệ full width */
+  .contact-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------- MÀN HÌNH RẤT HẸP (DƯỚI 360px) ---------- */
+@media (max-width: 359px) {
+  .skills-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3425,7 +3997,12 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .design-grid {
-    column-count: 1;
+  .dash-card:last-child {
+    grid-column: auto;
+  }
+
+  .cmp-stats-row {
+    grid-template-columns: 1fr;
   }
 }
+

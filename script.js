@@ -1413,11 +1413,7 @@ function initProjectDetailPage() {
     html += `
       <div style="margin-top: 2.5rem;">
         <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Từ Brief Cho Đến Thành Phẩm</h2>
-        <div style="${
-          isSingle
-            ? "max-width: 540px;"
-            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
-        }">
+        <div class="brief-edge-grid ${isSingle ? "single-card" : ""}">
         ${p.briefToOutput
           .map((b) => {
             const allImgs = [
@@ -1470,11 +1466,7 @@ function initProjectDetailPage() {
     html += `
       <div style="margin-top: 2.5rem;">
         <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem;">Bài Đăng Nổi Bật</h2>
-        <div style="${
-          isSingle
-            ? "max-width: 540px;"
-            : "display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;"
-        }">
+        <div class="brief-edge-grid ${isSingle ? "single-card" : ""}">
           ${p.featuredPosts
             .map(
               (post) => `
