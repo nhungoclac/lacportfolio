@@ -1,4 +1,4 @@
-﻿// script.js - Portfolio Ver 2 Interactive Engine
+// script.js - Portfolio Ver 2 Interactive Engine
 
 function initPortfolioEngine() {
   // 1. Kéo chuột cho carousel ảnh
