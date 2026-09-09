@@ -220,6 +220,7 @@ function initLocketGalleries() {
 
     let currentIndex = 0;
     items.forEach((item, index) => {
+      item.classList.remove("slide-down", "next-ready", "showing", "active");
       item.style.zIndex = index === 0 ? 2 : 1;
       if (index === 0) item.classList.add("active");
     });
