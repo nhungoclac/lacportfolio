@@ -41,6 +41,51 @@
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
     }
 
+    /* Nút sắp xếp ảnh trên từng ô thumbnail */
+    .admin-mini-thumb-item {
+      position: relative;
+    }
+
+    .admin-ord-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      background: rgba(15, 23, 42, 0.72);
+      padding: 2px 0;
+    }
+
+    .admin-ord-btn {
+      border: none;
+      background: transparent;
+      color: #fff;
+      font-size: 0.62rem;
+      line-height: 1;
+      padding: 1px 3px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .admin-ord-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .admin-ord-num {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      background: #0284c7;
+      color: #fff;
+      font-size: 0.58rem;
+      font-weight: 800;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
     .admin-bar-inner {
       max-width: 1200px;
       margin: 0 auto;
@@ -1691,6 +1736,136 @@
     });
 
     // --- RENDER GIAO DIỆN PROJECT.HTML NGUYÊN BẢN KÈM BỘ CÔNG CỤ GẮN ẢNH ADMIN ---
+    // ============================================================
+    // SẮP XẾP / ĐẶT ẢNH BÌA / XOÁ ẢNH TRONG TRANG CHI TIẾT CHIẾN DỊCH
+    // ============================================================
+    function getImgListRef(kind, ownerIdx) {
+      if (!activeProjectData) return null;
+      if (kind === 'post') {
+        const p = activeProjectData.featuredPosts[ownerIdx];
+        if (!p) return null;
+        if (!p.imgs) p.imgs = [];
+        return p.imgs;
+      }
+      const b = activeProjectData.briefToOutput[ownerIdx];
+      if (!b) return null;
+      if (kind === 'brief') {
+        if (!b.briefImgs) b.briefImgs = [];
+        return b.briefImgs;
+      }
+      if (kind === 'result') {
+        if (!b.resultImgs) b.resultImgs = [];
+        return b.resultImgs;
+      }
+      return null;
+    }
+
+    window.moveImgInList = function(kind, ownerIdx, i, dir) {
+      const list = getImgListRef(kind, ownerIdx);
+      if (!list) return;
+      const j = i + dir;
+      if (j < 0 || j >= list.length) return;
+      const tmp = list[i];
+      list[i] = list[j];
+      list[j] = tmp;
+      renderProjectDetailClone();
+    };
+
+    window.deleteImgInList = function(kind, ownerIdx, i) {
+      const list = getImgListRef(kind, ownerIdx);
+      if (!list || !list[i]) return;
+      list.splice(i, 1);
+      renderProjectDetailClone();
+    };
+
+    // Đặt làm ảnh bìa: bài đăng thì đưa lên đầu mảng, đề mục brief thì đẩy vào ô thumb
+    window.makeCoverImg = function(kind, ownerIdx, i) {
+      if (kind === 'post') {
+        const list = getImgListRef('post', ownerIdx);
+        if (!list || i <= 0 || !list[i]) return;
+        const [pick] = list.splice(i, 1);
+        list.unshift(pick);
+        renderProjectDetailClone();
+        showToast('Đã đặt ảnh này làm ảnh bìa của bài đăng.', 'success');
+        return;
+      }
+
+      const b = activeProjectData.briefToOutput[ownerIdx];
+      const list = getImgListRef(kind, ownerIdx);
+      if (!b || !list || !list[i]) return;
+      const [pick] = list.splice(i, 1);
+      const cu = b.thumb;
+      b.thumb = pick;
+      // Ảnh bìa cũ không mất, đẩy lại vào đầu danh sách vừa lấy ra
+      if (cu) list.unshift(cu);
+      renderProjectDetailClone();
+      showToast('Đã đặt ảnh này làm ảnh bìa của đề mục.', 'success');
+    };
+
+    window.clearBriefThumb = function(bIdx) {
+      const b = activeProjectData.briefToOutput[bIdx];
+      if (!b || !b.thumb) return;
+      if (!b.briefImgs) b.briefImgs = [];
+      b.briefImgs.unshift(b.thumb);
+      b.thumb = '';
+      renderProjectDetailClone();
+      showToast('Đã gỡ ảnh bìa, ảnh được trả về danh sách Ảnh Bản Brief.', 'info');
+    };
+
+    window.handleBriefThumbChange = function(e, bIdx) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const b = activeProjectData.briefToOutput[bIdx];
+      if (!b) return;
+
+      const cleanName = 'photo/' + sanitizeFileName(file.name);
+      pendingFileObjects.push({ file: file, cleanName: cleanName });
+      LOCAL_PREVIEW_CACHE[cleanName] = URL.createObjectURL(file);
+      ALL_DETECTED_PHOTOS.add(cleanName);
+
+      if (b.thumb) {
+        if (!b.briefImgs) b.briefImgs = [];
+        b.briefImgs.unshift(b.thumb);
+      }
+      b.thumb = cleanName;
+
+      file.arrayBuffer().then(buf => {
+        const bytes = new Uint8Array(buf);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+        PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(it => it.path !== cleanName);
+        PENDING_CHANGES.newImages.push({ path: cleanName, content: btoa(binary) });
+        updatePendingUI();
+      }).catch(err => console.error(err));
+
+      if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+
+      renderProjectDetailClone();
+      showToast('Đã đặt ảnh bìa mới cho đề mục.', 'success');
+      e.target.value = '';
+    };
+
+    // Ô ảnh nhỏ kèm nút: ◀ lùi, ★ đặt làm bìa, ▶ tiến, × xoá
+    function thumbCellHtml(src, i, total, kind, ownerIdx, showCover) {
+      const off = ' style="opacity:.25;pointer-events:none;"';
+      const back = i > 0 ? '' : off;
+      const fwd = i < total - 1 ? '' : off;
+      const cover = showCover
+        ? `<button type="button" class="admin-ord-btn" title="Đặt làm ảnh bìa" onclick="makeCoverImg('${kind}', ${ownerIdx}, ${i})"${i > 0 ? '' : off}>&#9733;</button>`
+        : '';
+      return `
+        <div class="admin-mini-thumb-item">
+          <img src="${getImgPreviewSrc(src)}" onerror="handleImgError(this)" />
+          <button type="button" class="admin-thumb-del" onclick="deleteImgInList('${kind}', ${ownerIdx}, ${i})">&times;</button>
+          <span class="admin-ord-num">${i + 1}</span>
+          <div class="admin-ord-bar">
+            <button type="button" class="admin-ord-btn" title="Lùi lại" onclick="moveImgInList('${kind}', ${ownerIdx}, ${i}, -1)"${back}>&#9664;</button>
+            ${cover}
+            <button type="button" class="admin-ord-btn" title="Tiến lên" onclick="moveImgInList('${kind}', ${ownerIdx}, ${i}, 1)"${fwd}>&#9654;</button>
+          </div>
+        </div>`;
+    }
+
     function renderProjectDetailClone() {
       const container = document.getElementById('projectDetailCloneContainer');
       const p = activeProjectData;
@@ -1760,12 +1935,9 @@
                 </div>
               `).join('');
 
-              const miniThumbsHtml = allImgs.map((imgSrc, iIdx) => `
-                <div class="admin-mini-thumb-item">
-                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
-                  <button type="button" class="admin-thumb-del" onclick="deletePostImg(${pIdx}, ${iIdx})">&times;</button>
-                </div>
-              `).join('');
+              const miniThumbsHtml = allImgs
+                .map((imgSrc, iIdx) => thumbCellHtml(imgSrc, iIdx, allImgs.length, 'post', pIdx, true))
+                .join('');
 
               return `
                 <div class="brief-edge-card">
@@ -1835,19 +2007,15 @@
                 </div>
               `).join('');
 
-              const briefMiniThumbs = (b.briefImgs || []).map((imgSrc, iIdx) => `
-                <div class="admin-mini-thumb-item">
-                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
-                  <button type="button" class="admin-thumb-del" onclick="deleteBriefImg(${bIdx}, ${iIdx})">&times;</button>
-                </div>
-              `).join('');
+              const briefList = b.briefImgs || [];
+              const briefMiniThumbs = briefList
+                .map((imgSrc, iIdx) => thumbCellHtml(imgSrc, iIdx, briefList.length, 'brief', bIdx, true))
+                .join('');
 
-              const resultMiniThumbs = (b.resultImgs || []).map((imgSrc, iIdx) => `
-                <div class="admin-mini-thumb-item">
-                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
-                  <button type="button" class="admin-thumb-del" onclick="deleteResultImg(${bIdx}, ${iIdx})">&times;</button>
-                </div>
-              `).join('');
+              const resultList = b.resultImgs || [];
+              const resultMiniThumbs = resultList
+                .map((imgSrc, iIdx) => thumbCellHtml(imgSrc, iIdx, resultList.length, 'result', bIdx, true))
+                .join('');
 
               return `
                 <div class="brief-edge-card">
@@ -1878,6 +2046,27 @@
 
                   <!-- THANH CÔNG CỤ GẮN ẢNH BRIEF VÀ THÀNH PHẨM -->
                   <div class="admin-card-toolbar">
+                    <div style="border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.55rem; margin-bottom: 0.25rem;">
+                      <div class="admin-toolbar-row">
+                        <span style="font-size: 0.76rem; font-weight: 700; color: #b45309;">
+                          <i class="fas fa-star"></i> Ảnh bìa (hiện đầu tiên)
+                        </span>
+                        <label class="admin-btn-sm" style="cursor: pointer;">
+                          <i class="fas fa-cloud-arrow-up"></i> ${b.thumb ? 'Đổi ảnh bìa' : 'Chọn ảnh bìa'}
+                          <input type="file" accept="image/*" style="display: none;" onchange="handleBriefThumbChange(event, ${bIdx})" />
+                        </label>
+                      </div>
+                      <div class="admin-mini-thumbs">
+                        ${b.thumb
+                          ? `<div class="admin-mini-thumb-item">
+                               <img src="${getImgPreviewSrc(b.thumb)}" onerror="handleImgError(this)" />
+                               <button type="button" class="admin-thumb-del" title="Gỡ ảnh bìa" onclick="clearBriefThumb(${bIdx})">&times;</button>
+                               <span class="admin-ord-num" style="background:#b45309;">bìa</span>
+                             </div>`
+                          : '<span style="font-size:0.72rem;color:#94a3b8;">Chưa đặt ảnh bìa — bấm ★ trên ảnh bên dưới để chọn</span>'}
+                      </div>
+                    </div>
+
                     <div>
                       <div class="admin-toolbar-row">
                         <span style="font-size: 0.76rem; font-weight: 700; color: #0369a1;">
@@ -2501,14 +2690,17 @@
     function reFieldTag(tag, cls, inner) {
       // Cho phép thuộc tính khác đứng trước class (vd: <a href=... class=...>)
       const head = '<' + tag + '[^>]*class="' + cls + '"[^>]*>';
+      // Prettier hay xuống dòng ngay trong thẻ đóng nên phải chấp nhận khoảng trắng trước dấu lớn
       if (inner) {
-        return new RegExp('(' + head + '[^]*?<' + inner + '>)([^]*?)(</' + inner + '>)');
+        return new RegExp('(' + head + '[^]*?<' + inner + '[^>]*>)([^]*?)(</' + inner + '[^>]*>)');
       }
-      return new RegExp('(' + head + ')([^]*?)(</' + tag + '>)');
+      return new RegExp('(' + head + ')([^]*?)(</' + tag + '[^>]*>)');
     }
 
     function reCardOpen(cls) {
-      return new RegExp('<div class="' + cls + '"[^>]*>', 'g');
+      // Thẻ có thể mang thêm class khác (vd: "reel-card landscape-card")
+      // hoặc thuộc tính khác đứng trước class, nên phải khớp theo token.
+      return new RegExp('<div[^>]*class="(?:[^"]* )?' + cls + '(?: [^"]*)?"[^>]*>', 'g');
     }
 
     // Cắt vùng mã nguồn của từng thẻ, chặn ở thẻ kế tiếp hoặc hết section
@@ -2564,11 +2756,21 @@
           });
 
           const imgs = [];
-          el.querySelectorAll('img').forEach(im => {
-            imgs.push({ src: im.getAttribute('src') || '', newSrc: null });
+          el.querySelectorAll('img').forEach((im, ii) => {
+            imgs.push({ src: im.getAttribute('src') || '', newSrc: null, tplIndex: ii });
           });
 
-          cards.push({ fields: fields, imgs: imgs });
+          // Chỉ thẻ có .locket-gallery mới thêm/xoá được ảnh; thẻ 1 ảnh thì chỉ đổi.
+          // Không dò được vùng mã nguồn thì khoá luôn, tuyệt đối không ghi mò.
+          const segText = seg ? seg.text : '';
+          const hasGallery = segText.indexOf('class="locket-gallery') !== -1;
+
+          cards.push({
+            fields: fields,
+            imgs: imgs,
+            hasGallery: hasGallery,
+            origImgs: imgs.map(x => x.src)
+          });
         });
 
         state.groups.push({ name: g.name, cardClass: g.cardClass, cards: cards });
@@ -2594,15 +2796,40 @@
 
         grp.cards.forEach((card, ci) => {
           let imgsHtml = '';
+          const total = card.imgs.length;
           card.imgs.forEach((im, ii) => {
             const shown = getImgPreviewSrc(im.newSrc || im.src);
             const args = K + ', ' + gi + ', ' + ci + ', ' + ii;
-            imgsHtml += '<div style="position:relative;width:84px;height:84px;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">'
+            const off = ' style="opacity:.25;pointer-events:none;"';
+            const back = ii > 0 ? '' : off;
+            const fwd = ii < total - 1 ? '' : off;
+
+            imgsHtml += '<div class="admin-mini-thumb-item" style="width:84px;height:84px;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">'
               + '<img src="' + shown + '" onerror="handleImgError(this)" style="width:100%;height:100%;object-fit:cover;" />'
-              + '<label title="Đổi ảnh này" style="position:absolute;left:0;right:0;bottom:0;background:rgba(2,132,199,.92);color:#fff;font-size:0.62rem;font-weight:700;text-align:center;padding:3px 0;cursor:pointer;">'
-              + 'Đổi ảnh<input type="file" accept="image/*" style="display:none;" onchange="handleSimplePageImg(event, ' + args + ')" />'
-              + '</label></div>';
+              + '<span class="admin-ord-num">' + (ii + 1) + '</span>';
+
+            if (card.hasGallery) {
+              imgsHtml += '<button type="button" class="admin-thumb-del" title="Xoá ảnh này" onclick="deleteSimpleImg(' + args + ')">&times;</button>';
+            }
+
+            imgsHtml += '<div class="admin-ord-bar">'
+              + (card.hasGallery
+                  ? '<button type="button" class="admin-ord-btn" title="Lùi lại" onclick="moveSimpleImg(' + args + ', -1)"' + back + '>&#9664;</button>'
+                  : '')
+              + '<label class="admin-ord-btn" title="Đổi ảnh này" style="cursor:pointer;">&#9998;'
+              + '<input type="file" accept="image/*" style="display:none;" onchange="handleSimplePageImg(event, ' + args + ')" /></label>'
+              + (card.hasGallery
+                  ? '<button type="button" class="admin-ord-btn" title="Tiến lên" onclick="moveSimpleImg(' + args + ', 1)"' + fwd + '>&#9654;</button>'
+                  : '')
+              + '</div></div>';
           });
+
+          if (card.hasGallery) {
+            imgsHtml += '<label title="Thêm ảnh mới vào thẻ này" style="width:84px;height:84px;border:2px dashed #cbd5e1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#0284c7;font-size:0.66rem;font-weight:700;gap:2px;background:#f8fafc;">'
+              + '<i class="fas fa-plus"></i> Thêm ảnh'
+              + '<input type="file" multiple accept="image/*" style="display:none;" onchange="addSimpleImg(event, ' + K + ', ' + gi + ', ' + ci + ')" />'
+              + '</label>';
+          }
 
           let fieldsHtml = '';
           card.fields.forEach((f, fi) => {
@@ -2677,6 +2904,90 @@
       showToast('Đã đổi ảnh. Nhớ bấm Cập nhật lên GitHub.', 'success');
     };
 
+    // --- SẮP XẾP / THÊM / XOÁ ẢNH TRÊN CÁC TRANG DẠNG THẺ LẶP ---
+    function markSimpleDirty(pageKey) {
+      PENDING_CHANGES[pageKey] = true;
+      updatePendingUI();
+      const cfg = SIMPLE_PAGES.find(pp => pp.key === pageKey);
+      if (cfg) renderSimplePage(cfg);
+    }
+
+    window.moveSimpleImg = function(pageKey, gi, ci, ii, dir) {
+      const card = PAGE_STATE[pageKey].groups[gi].cards[ci];
+      const j = ii + dir;
+      if (j < 0 || j >= card.imgs.length) return;
+      const tmp = card.imgs[ii];
+      card.imgs[ii] = card.imgs[j];
+      card.imgs[j] = tmp;
+      markSimpleDirty(pageKey);
+    };
+
+    window.deleteSimpleImg = function(pageKey, gi, ci, ii) {
+      const card = PAGE_STATE[pageKey].groups[gi].cards[ci];
+      if (card.imgs.length <= 1) {
+        showToast('Phải giữ lại ít nhất 1 ảnh. Hãy dùng nút "Đổi ảnh" thay vì xoá.', 'error');
+        return;
+      }
+      if (!confirm('Xoá ảnh này khỏi thẻ?')) return;
+      card.imgs.splice(ii, 1);
+      markSimpleDirty(pageKey);
+    };
+
+    window.addSimpleImg = function(ev, pageKey, gi, ci) {
+      const files = Array.from(ev.target.files || []);
+      if (!files.length) return;
+      const card = PAGE_STATE[pageKey].groups[gi].cards[ci];
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file: file, cleanName: cleanName });
+        LOCAL_PREVIEW_CACHE[cleanName] = URL.createObjectURL(file);
+        ALL_DETECTED_PHOTOS.add(cleanName);
+
+        card.imgs.push({ src: cleanName, newSrc: null, tplIndex: null });
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(it => it.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: btoa(binary) });
+          updatePendingUI();
+        }).catch(err => console.error(err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      markSimpleDirty(pageKey);
+      renderPhotoHubList();
+      showToast('Đã thêm ' + files.length + ' ảnh vào thẻ.', 'success');
+      ev.target.value = '';
+    };
+
+    // Dựng lại toàn bộ các thẻ .gallery-item theo đúng thứ tự đang thấy trên app
+    function rebuildGalleryHtml(segText, card) {
+      const items = segText.match(/<div class="gallery-item[^"]*">[^]*?<\/div>/g);
+      if (!items || !items.length) return null;
+
+      const firstPos = segText.indexOf(items[0]);
+      const lastItem = items[items.length - 1];
+      const lastPos = segText.lastIndexOf(lastItem) + lastItem.length;
+      if (firstPos === -1 || lastPos <= firstPos) return null;
+
+      const newItems = card.imgs.map((im, i) => {
+        const base = (im.tplIndex !== null && items[im.tplIndex]) ? items[im.tplIndex] : items[0];
+        let it = base.replace(/(<img[^>]*?src=")[^"]*(")/, '$1' + (im.newSrc || im.src) + '$2');
+        it = it.replace(/class="gallery-item[^"]*"/, 'class="gallery-item' + (i === 0 ? ' active' : '') + '"');
+        return it;
+      });
+
+      const joiner = String.fromCharCode(10) + '              ';
+      let out = segText.slice(0, firstPos) + newItems.join(joiner) + segText.slice(lastPos);
+      out = out.replace(/(<div class="gallery-counter">)[^<]*(<\/div>)/,
+        '$1' + '1/' + card.imgs.length + '$2');
+      return out;
+    }
+
     function generateUpdatedSimplePage(cfg, originalHtml) {
       const st = PAGE_STATE[cfg.key];
       if (!st) return originalHtml;
@@ -2685,7 +2996,11 @@
       st.groups.forEach(grp => {
         for (let i = 0; i < grp.cards.length; i++) {
           const card = grp.cards[i];
-          const hasEdit = card.fields.some(f => f.safe && f.dirty) || card.imgs.some(im => im.newSrc);
+          const origSnap = card.origImgs || [];
+          const hasEdit = card.fields.some(f => f.safe && f.dirty)
+            || card.imgs.some(im => im.newSrc)
+            || card.imgs.length !== origSnap.length
+            || card.imgs.some((im, k) => im.tplIndex !== k);
           if (!hasEdit) continue;
 
           const segs = sliceCards(out, grp.cardClass);
@@ -2707,16 +3022,36 @@
             });
           });
 
-          let n = 0;
-          txt = txt.replace(/<img([^>]*?)src="([^"]*)"/g, function(all, attrs, src) {
-            const im = card.imgs[n++];
-            if (!im || !im.newSrc || im.newSrc === src) return all;
-            if (src !== im.src) {
-              PUSH_CONFLICTS.push(cfg.file + ' → ảnh ' + src);
-              return all;
+          const orig = card.origImgs || [];
+          const doiThuTu = card.imgs.length !== orig.length
+            || card.imgs.some((im, k) => im.tplIndex !== k);
+
+          if (card.hasGallery && doiThuTu) {
+            // Nguồn phải còn khớp lúc nạp thì mới dám dựng lại
+            const srcHienTai = (txt.match(/<img[^>]*?src="([^"]*)"/g) || [])
+              .map(x => x.replace(/[^]*src="/, '').replace(/"[^]*/, ''));
+            const conKhop = srcHienTai.length === orig.length
+              && srcHienTai.every((v, k) => v === orig[k]);
+
+            if (!conKhop) {
+              PUSH_CONFLICTS.push(cfg.file + ' → thứ tự ảnh của một thẻ');
+            } else {
+              const rebuilt = rebuildGalleryHtml(txt, card);
+              if (rebuilt) txt = rebuilt;
+              else PUSH_CONFLICTS.push(cfg.file + ' → không dựng lại được gallery');
             }
-            return '<img' + attrs + 'src="' + im.newSrc + '"';
-          });
+          } else {
+            let n = 0;
+            txt = txt.replace(/<img([^>]*?)src="([^"]*)"/g, function(all, attrs, src) {
+              const im = card.imgs[n++];
+              if (!im || !im.newSrc || im.newSrc === src) return all;
+              if (src !== im.src) {
+                PUSH_CONFLICTS.push(cfg.file + ' → ảnh ' + src);
+                return all;
+              }
+              return '<img' + attrs + 'src="' + im.newSrc + '"';
+            });
+          }
 
           out = out.slice(0, seg.start) + txt + out.slice(seg.end);
         }
