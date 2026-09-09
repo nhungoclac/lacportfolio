@@ -621,597 +621,746 @@ function initBackToTop() {
 // 7. Project Detail Page Dynamic Renderer
 const PROJECTS_DATA = {
   "camp-90ntc": {
-    badge: '<i class="fas fa-bullhorn"></i> Droppii',
-    title: "Hỗ trợ 90 Ngày Tốc Chiến ",
-    date: "05/2026 - 07/2026",
-    tagline:
-      "Chiến dịch thúc đẩy bán hàng kéo dài 3 tháng của Droppii, với NutriBest Health là nhà tài trợ độc quyền, đồng hành qua các hoạt động marketing, ưu đãi và tương tác cùng đối tác.",
-    problem:
-      "Làm thế nào để duy trì động lực bán hàng của đối tác trong 90 ngày và đưa NutriBest Health trở thành thương hiệu nổi bật trong chiến dịch?",
-    strategy:
-      "Tạo phần thưởng vinh danh + Truyền thông hình ảnh chuyên nghiệp + Video Reels tạo hiệu ứng lan tỏa động lực thi đua.",
-    execution:
-      "Đóng góp >50 bài viết Social, viết Brief thiết kế hình ảnh, viết Script video.",
-    sheet:
-      "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=973473861#gid=973473861",
-    sheetLabel: "Google Sheet bài đăng",
-
-    // Phần 1: Bài đăng nổi bật (Dữ liệu từ meme.html)
-    featuredPosts: [
+    "badge": "<i class=\"fas fa-bullhorn\"></i> Droppii",
+    "title": "Hỗ trợ 90 Ngày Tốc Chiến ",
+    "date": "05/2026 - 07/2026",
+    "tagline": "Chiến dịch thúc đẩy bán hàng kéo dài 3 tháng của Droppii, với NutriBest Health là nhà tài trợ độc quyền, đồng hành qua các hoạt động marketing, ưu đãi và tương tác cùng đối tác.",
+    "problem": "Làm thế nào để duy trì động lực bán hàng của đối tác trong 90 ngày và đưa NutriBest Health trở thành thương hiệu nổi bật trong chiến dịch?",
+    "strategy": "Tạo phần thưởng vinh danh + Truyền thông hình ảnh chuyên nghiệp + Video Reels tạo hiệu ứng lan tỏa động lực thi đua.",
+    "execution": "Đóng góp >50 bài viết Social, viết Brief thiết kế hình ảnh, viết Script video.",
+    "sheet": "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=973473861#gid=973473861",
+    "sheetLabel": "Google Sheet bài đăng",
+    "featuredPosts": [
       {
-        caption:
-          "Caption cho clip quảng bá NutriBest Health (160.000 lượt xem)",
-        imgs: ["photo/90NTC/pdpvideo.png", "photo/90NTC/pdpvideo-meta.png"],
+        "caption": "Caption cho clip quảng bá NutriBest Health (160.000 lượt xem)",
+        "imgs": [
+          "photo/90NTC/pdpvideo.png",
+          "photo/90NTC/pdpvideo-meta.png"
+        ]
       },
       {
-        caption:
-          "Caption cho Sales Event - Ngày hội NutriBest Health 20/6 (63.000 lượt xem)",
-        imgs: ["photo/90NTC/2006.png", "photo/90NTC/2006-meta.png"],
+        "caption": "Caption cho Sales Event - Ngày hội NutriBest Health 20/6 (63.000 lượt xem)",
+        "imgs": [
+          "photo/90NTC/2006.png",
+          "photo/90NTC/2006-meta.png"
+        ]
       },
       {
-        caption:
-          "Caption cho Minigame Ngày hội NutriBest Health 23/5 (28.000 lượt xem)",
-        imgs: ["photo/90NTC/minigame.png", "photo/90NTC/minigame-meta.png"],
+        "caption": "Caption cho Minigame Ngày hội NutriBest Health 23/5 (28.000 lượt xem)",
+        "imgs": [
+          "photo/90NTC/minigame.png",
+          "photo/90NTC/minigame-meta.png"
+        ]
       },
       {
-        caption:
-          "Caption cho bài Nhìn lại 90 Ngày Tốc Chiến 2026 (2.400 lượt xem)",
-        imgs: ["photo/90NTC/nhinlai.png", "photo/90NTC/nhinlai-meta.png"],
-      },
+        "caption": "Caption cho bài Nhìn lại 90 Ngày Tốc Chiến 2026 (2.400 lượt xem)",
+        "imgs": [
+          "photo/90NTC/nhinlai.png",
+          "photo/90NTC/nhinlai-meta.png"
+        ]
+      }
     ],
-
-    // Phần 2: Từ Brief cho đến Thành phẩm (Dữ liệu từ brief.html)
-    briefToOutput: [
+    "briefToOutput": [
       {
-        title: "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (1)",
-        link: "https://www.facebook.com/share/p/1JapKjw8bA/",
-        briefImgs: ["photo/90NTC/branding1.png", "photo/90NTC/branding12.png"],
-        resultImgs: [
+        "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (1)",
+        "link": "https://www.facebook.com/share/p/1JapKjw8bA/",
+        "briefImgs": [
+          "photo/90NTC/branding1.png",
+          "photo/90NTC/branding12.png"
+        ],
+        "resultImgs": [
           "photo/90NTC/branding1-meta.png",
           "photo/90NTC/branding1-meta1.png",
-          "photo/90NTC/branding1-meta2.png",
+          "photo/90NTC/branding1-meta2.png"
         ],
-        note: "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
-        views: "> 3.000",
-        reach: "> 1.500",
+        "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
+        "views": "> 3.000",
+        "reach": "> 1.500",
+        "thumb": "photo/thumb_branding_1.png"
       },
       {
-        title: "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (2)",
-        link: "https://www.facebook.com/share/p/1DMgtAf6i3/",
-        briefImgs: [
+        "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (2)",
+        "link": "https://www.facebook.com/share/p/1DMgtAf6i3/",
+        "briefImgs": [
           "photo/90NTC/branding2-brief.png",
           "photo/90NTC/branding2-brief1.png",
           "photo/90NTC/branding2-brief2.png",
-          "photo/90NTC/branding2-brief3.png",
+          "photo/90NTC/branding2-brief3.png"
         ],
-        resultImgs: [
+        "resultImgs": [
           "photo/90NTC/branding2.png",
           "photo/90NTC/branding21.png",
-          "photo/90NTC/branding2-meta.png",
+          "photo/90NTC/branding2-meta.png"
         ],
-        note: "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
-        views: "> 2.700",
-        reach: "> 1.300",
+        "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
+        "views": "> 2.700",
+        "reach": "> 1.300",
+        "thumb": "photo/thumb_branding_2.png"
       },
       {
-        title: "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (3)",
-        link: "https://www.facebook.com/share/p/1b5tBqBDZW/",
-        thumb: "photo/thumb/test.jpg",
-        briefImgs: ["photo/brief-brand.png", "photo/brief-brand01.png"],
-        resultImgs: [
+        "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (3)",
+        "link": "https://www.facebook.com/share/p/1b5tBqBDZW/",
+        "thumb": "photo/thumb_branding_3.png",
+        "briefImgs": [
+          "photo/thumb/test.jpg",
+          "photo/brief-brand.png",
+          "photo/brief-brand01.png"
+        ],
+        "resultImgs": [
           "photo/brief-brand-result.png",
           "photo/brief-brand-result01.png",
-          "photo/brief-brand-meta.png",
+          "photo/brief-brand-meta.png"
         ],
-        note: "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
-        views: "> 2.200",
-        reach: "> 1.200",
+        "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
+        "views": "> 2.200",
+        "reach": "> 1.200"
       },
       {
-        title: "Bài Minigame 90NTC",
-        link: "https://www.facebook.com/DroppiiOfficialPage/posts/pfbid02rx5NhLXYPphrjpZnDKow8MYjiEMAKwRYbfBpWo1ePSHsZaqfUMbDw74TvthEGpwil",
-        briefImgs: ["photo/brief-nu.png"],
-        resultImgs: [
+        "title": "Bài Minigame 90NTC",
+        "link": "https://www.facebook.com/DroppiiOfficialPage/posts/pfbid02rx5NhLXYPphrjpZnDKow8MYjiEMAKwRYbfBpWo1ePSHsZaqfUMbDw74TvthEGpwil",
+        "briefImgs": [
+          "photo/brief-nu.png"
+        ],
+        "resultImgs": [
           "photo/brief-nu-result.png",
           "photo/brief-nu01.png",
-          "photo/brief-nu-meta.png",
+          "photo/brief-nu-meta.png"
         ],
-        note: "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
-        views: "> 2.900",
-        reach: "> 1.400",
+        "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
+        "views": "> 2.900",
+        "reach": "> 1.400",
+        "thumb": "photo/thumb_minigame.png"
       },
       {
-        title: "Double Day 7/7",
-        link: "https://www.facebook.com/share/p/199SHkXHek/",
-        briefImgs: ["photo/brief-77.png"],
-        resultImgs: [
+        "title": "Double Day 7/7",
+        "link": "https://www.facebook.com/share/p/199SHkXHek/",
+        "briefImgs": [
+          "photo/brief-77.png"
+        ],
+        "resultImgs": [
           "photo/brief-77-result.png",
           "photo/brief-77-result01.png",
-          "photo/brief-77-meta.png",
+          "photo/brief-77-meta.png"
         ],
-        note: "Sales event Siêu Sale 7/7 trong 90 Ngày Tốc Chiến",
-        views: "> 2.400",
-        reach: "> 1.100",
+        "note": "Sales event Siêu Sale 7/7 trong 90 Ngày Tốc Chiến",
+        "views": "> 2.400",
+        "reach": "> 1.100",
+        "thumb": "photo/thumb_77.png"
       },
       {
-        title: "News 7 ngày về đích",
-        link: "https://www.facebook.com/share/p/1Bk5cq4dXX/",
-        briefImgs: ["photo/90NTC/gap.png"],
-        resultImgs: ["photo/90NTC/gap-meta.png", "photo/90NTC/gap-meta1.png"],
-        note: "Đếm ngược 7 ngày kết thúc 90 Ngày Tốc Chiến",
-        views: "> 1.700",
-        reach: "> 1.000",
+        "title": "News 7 ngày về đích",
+        "link": "https://www.facebook.com/share/p/1Bk5cq4dXX/",
+        "briefImgs": [
+          "photo/90NTC/gap.png"
+        ],
+        "resultImgs": [
+          "photo/90NTC/gap-meta.png",
+          "photo/90NTC/gap-meta1.png"
+        ],
+        "note": "Đếm ngược 7 ngày kết thúc 90 Ngày Tốc Chiến",
+        "views": "> 1.700",
+        "reach": "> 1.000",
+        "thumb": "photo/thumb_news_ve_dich.png"
       },
       {
-        title: "News Đại lộ tri ân",
-        link: "https://www.facebook.com/share/p/1E55y8iQWy/",
-        briefImgs: ["photo/90NTC/dailotrian.png"],
-        resultImgs: [
+        "title": "News Đại lộ tri ân",
+        "link": "https://www.facebook.com/share/p/1E55y8iQWy/",
+        "briefImgs": [
+          "photo/90NTC/dailotrian.png"
+        ],
+        "resultImgs": [
           "photo/90NTC/dailotrian-meta.png",
-          "photo/90NTC/dailotrian-meta1.png",
+          "photo/90NTC/dailotrian-meta1.png"
         ],
-        note: "Nhắc nhở vào app nhận vinh danh 90 Ngày Tốc Chiến",
-        views: "> 2.000",
-        reach: "> 1.200",
-      },
+        "note": "Nhắc nhở vào app nhận vinh danh 90 Ngày Tốc Chiến",
+        "views": "> 2.000",
+        "reach": "> 1.200",
+        "thumb": "photo/thumb_news_dai_lo.png"
+      }
     ],
-
-    photos: [
+    "photos": [
       {
-        src: "photo/90NTC/tongketall.jpg",
-        title: "Tổng kết 90NTC",
-        link: "https://www.facebook.com/share/p/1C67HM1eAv/",
+        "src": "photo/90NTC/tongketall.jpg",
+        "title": "Tổng kết 90NTC",
+        "link": "https://www.facebook.com/share/p/1C67HM1eAv/"
       },
       {
-        src: "photo/90NTC/dhqs13.jpg",
-        title: "Đại hội quay số Tuần 13",
-        link: "https://www.facebook.com/share/p/1FRwkzhHpj/",
+        "src": "photo/90NTC/dhqs13.jpg",
+        "title": "Đại hội quay số Tuần 13",
+        "link": "https://www.facebook.com/share/p/1FRwkzhHpj/"
       },
       {
-        src: "photo/90NTC/nutribest.jpg",
-        title: "Tổng kết 90NTC cho riêng NutriBest Health",
-        link: "https://www.facebook.com/share/p/19Njf9wK2e/",
+        "src": "photo/90NTC/nutribest.jpg",
+        "title": "Tổng kết 90NTC cho riêng NutriBest Health",
+        "link": "https://www.facebook.com/share/p/19Njf9wK2e/"
       },
       {
-        src: "photo/90NTC/top6.jpg",
-        title: "Vinh danh Top 6 chung cuộc",
-        link: "https://www.facebook.com/share/p/1BjMzCm8ia/",
-      },
+        "src": "photo/90NTC/top6.jpg",
+        "title": "Vinh danh Top 6 chung cuộc",
+        "link": "https://www.facebook.com/share/p/1BjMzCm8ia/"
+      }
     ],
-    videos: [
+    "videos": [
       {
-        title: "Remind Ngày hội NutriBest Health (2.400 views)",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1284679383544296%2F&show_text=false&width=476&t=0",
+        "title": "Remind Ngày hội NutriBest Health (2.400 views)",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1284679383544296%2F&show_text=false&width=476&t=0"
       },
       {
-        title: "Teaser sale 7/7 (97.000 views)",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1655116209118584%2F&show_text=false&width=476&t=0",
+        "title": "Teaser sale 7/7 (97.000 views)",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1655116209118584%2F&show_text=false&width=476&t=0"
       },
       {
-        title: "Teaser Ngày hội NutriBest Health 23/5 (37.700 views)",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2181925642640613%2F&show_text=false&width=267&t=0",
-      },
+        "title": "Teaser Ngày hội NutriBest Health 23/5 (37.700 views)",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2181925642640613%2F&show_text=false&width=267&t=0"
+      }
     ],
-    stats: [
-      { num: "> 50", label: "Bài social post đóng góp" },
-      { num: "485.000+", label: "Lượt xem (bài đóng góp)" },
-      { num: "224.000+", label: "Người tiếp cận (bài đóng góp)" },
-      { num: "14.200+", label: "Tương tác thực tế" },
-    ],
+    "stats": [
+      {
+        "num": "> 50",
+        "label": "Bài social post đóng góp"
+      },
+      {
+        "num": "485.000+",
+        "label": "Lượt xem (bài đóng góp)"
+      },
+      {
+        "num": "224.000+",
+        "label": "Người tiếp cận (bài đóng góp)"
+      },
+      {
+        "num": "14.200+",
+        "label": "Tương tác thực tế"
+      }
+    ]
   },
   "camp-tldt": {
-    badge: '<i class="fas fa-bullhorn"></i> Droppii',
-    title: 'Hỗ trợ Series "Tôi Là Đối Tác Droppii"',
-    date: "05/2026 - 07/2026",
-    tagline:
-      "Khai thác chiều sâu cảm xúc: Dùng câu chuyện thật của đối tác kinh doanh để xây dựng lòng tin tự nhiên.",
-    problem:
-      "Làm sao để thể hiện rõ đây là câu chuyện người thật việc thật, không bị pr hay seeding quá đà",
-    strategy:
-      'Xây dựng Series truyền cảm hứng 6 tập "Tôi Là Đối Tác Droppii" - khai thác câu chuyện đổi đời, vượt qua khó khăn thực tế của các khách mời.',
-    execution:
-      "Đóng góp >30 bài viết truyền thông: bao gồm cap cho teaser, poster, official video, storytelling,...",
-    sheet:
-      "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=458713564#gid=458713564",
-    sheetLabel: "Google Sheet bài đăng",
-
-    // Phần 1: Bài đăng nổi bật (Dữ liệu từ meme.html)
-    featuredPosts: [
+    "badge": "<i class=\"fas fa-bullhorn\"></i> Droppii",
+    "title": "Hỗ trợ Series \"Tôi Là Đối Tác Droppii\"",
+    "date": "05/2026 - 07/2026",
+    "tagline": "Khai thác chiều sâu cảm xúc: Dùng câu chuyện thật của đối tác kinh doanh để xây dựng lòng tin tự nhiên.",
+    "problem": "Làm sao để thể hiện rõ đây là câu chuyện người thật việc thật, không bị pr hay seeding quá đà",
+    "strategy": "Xây dựng Series truyền cảm hứng 6 tập \"Tôi Là Đối Tác Droppii\" - khai thác câu chuyện đổi đời, vượt qua khó khăn thực tế của các khách mời.",
+    "execution": "Đóng góp >30 bài viết truyền thông: bao gồm cap cho teaser, poster, official video, storytelling,...",
+    "sheet": "https://docs.google.com/spreadsheets/d/1jtHNT5MBwXDn8rI5jFE23ED71amE9yzcmgZ52xqtvKw/edit?gid=458713564#gid=458713564",
+    "sheetLabel": "Google Sheet bài đăng",
+    "featuredPosts": [
       {
-        caption: "Caption cho tập 2 - short 1 (377.000 lượt xem)",
-        imgs: ["photo/MEME/tldtep2.png", "photo/MEME/tldtep2-meta.png"],
+        "caption": "Caption cho tập 2 - short 1 (377.000 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldtep2.png",
+          "photo/MEME/tldtep2-meta.png"
+        ]
       },
       {
-        caption: "Caption cho tập 2 - short 2 (117.000 lượt xem)",
-        imgs: ["photo/MEME/tldts22.png", "photo/MEME/tldts22me.png"],
+        "caption": "Caption cho tập 2 - short 2 (117.000 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldts22.png",
+          "photo/MEME/tldts22me.png"
+        ]
       },
       {
-        caption: "Caption cho tập 4 - short 1 (140.000 lượt xem)",
-        imgs: ["photo/MEME/tldts14.png", "photo/MEME/tldts14me.png"],
+        "caption": "Caption cho tập 4 - short 1 (140.000 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldts14.png",
+          "photo/MEME/tldts14me.png"
+        ]
       },
       {
-        caption: "Caption cho tập 5 - short 1 (182.000 lượt xem)",
-        imgs: ["photo/MEME/tldt5te.png", "photo/MEME/tldt5teme.png"],
+        "caption": "Caption cho tập 5 - short 1 (182.000 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldt5te.png",
+          "photo/MEME/tldt5teme.png"
+        ]
       },
       {
-        caption: "Caption cho album ảnh tập 3 (3.900 lượt xem)",
-        imgs: ["photo/MEME/tldt3sto.png", "photo/MEME/tldt3stome.png"],
+        "caption": "Caption cho album ảnh tập 3 (3.900 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldt3sto.png",
+          "photo/MEME/tldt3stome.png"
+        ]
       },
       {
-        caption: "Caption cho official video tập 6 (5.100 lượt xem)",
-        imgs: ["photo/MEME/tldt1.png", "photo/MEME/tldtme1.png"],
+        "caption": "Caption cho official video tập 6 (5.100 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldt1.png",
+          "photo/MEME/tldtme1.png"
+        ]
       },
       {
-        caption: "Caption cho poster tập 5 (3.200 lượt xem)",
-        imgs: ["photo/MEME/tldt5pos.png", "photo/MEME/tldt5me.png"],
-      },
+        "caption": "Caption cho poster tập 5 (3.200 lượt xem)",
+        "imgs": [
+          "photo/MEME/tldt5pos.png",
+          "photo/MEME/tldt5me.png"
+        ]
+      }
     ],
-
-    // Phần 2: Từ Brief cho đến Thành phẩm (Dữ liệu từ brief.html)
-    briefToOutput: [
+    "briefToOutput": [
       {
-        title: "Album ảnh Tôi là đối tác Droppii tập 6",
-        link: "https://www.facebook.com/share/p/1Bxpe9QCBv/",
-        briefImgs: ["photo/brief-tldt6.png"],
-        resultImgs: [
+        "title": "Album ảnh Tôi là đối tác Droppii tập 6",
+        "link": "https://www.facebook.com/share/p/1Bxpe9QCBv/",
+        "briefImgs": [
+          "photo/brief-tldt6.png"
+        ],
+        "resultImgs": [
           "photo/brief-tldt6-result.png",
           "photo/brief-tldt6-01.png",
-          "photo/brief-tldt6-meta.png",
+          "photo/brief-tldt6-meta.png"
         ],
-        note: "Bài viết thuộc series Tôi là đối tác Droppii",
-        views: "> 2.400",
-        reach: "1.400",
+        "note": "Bài viết thuộc series Tôi là đối tác Droppii",
+        "views": "> 2.400",
+        "reach": "1.400"
+      }
+    ],
+    "stats": [
+      {
+        "num": "~ 30",
+        "label": "Bài social xuất bản đóng góp"
       },
-    ],
-
-    stats: [
-      { num: "~ 30", label: "Bài social xuất bản đóng góp" },
-      { num: "950.000+", label: "Lượt xem (bài đóng góp)" },
-      { num: "559.000+", label: "Người tiếp cận (bài đóng góp)" },
-      { num: "32.000+", label: "Tương tác cộng đồng" },
-    ],
+      {
+        "num": "950.000+",
+        "label": "Lượt xem (bài đóng góp)"
+      },
+      {
+        "num": "559.000+",
+        "label": "Người tiếp cận (bài đóng góp)"
+      },
+      {
+        "num": "32.000+",
+        "label": "Tương tác cộng đồng"
+      }
+    ]
   },
   "camp-make": {
-    badge: '<i class="fas fa-robot"></i> Công nghệ',
-    title: "Hệ Thống AI Marketing Automation (Make.com)",
-    date: "2026 (Dự án Công nghệ)",
-    tagline:
-      '"Tự động hóa 100% quy trình sản xuất nội dung: Từ quét tin tức internet đến AI viết bài, tạo ảnh & xuất bản."',
-    problem:
-      "Quy trình sản xuất nội dung hàng ngày tốn 4-5 tiếng/ngày cho các khâu tìm ý tưởng, viết bài, thiết kế banner và xuất bản đa kênh.",
-    strategy:
-      "Thiết lập luồng tự động hóa tích hợp Make.com + Gemini API (học giọng văn con người) + Leonardo API (tự sinh banner) + Telegram Bot (duyệt bài 1-click).",
-    execution:
-      "Cấu hình RSS Feed, viết Prompt chuẩn hóa cho Gemini API, thiết lập Webhook tự động ghi log dữ liệu vào Google Sheet & Telegram Bot.",
-    photos: [
-      { src: "photo/make1.png", title: "Overview Kịch bản Make.com" },
-      { src: "photo/make2.png", title: "Google Sheet Quản lý dữ liệu" },
-      { src: "photo/make4.png", title: "Leonardo API Tự động tạo ảnh" },
-      { src: "photo/make5.png", title: "Google AI Studio / Gemini API" },
-      { src: "photo/make6.png", title: "Telegram Bot Nhận thông báo bài" },
-      { src: "photo/make7.png", title: "Bài đăng tự động hoàn chỉnh" },
+    "badge": "<i class=\"fas fa-robot\"></i> Công nghệ",
+    "title": "Hệ Thống AI Marketing Automation (Make.com)",
+    "date": "2026 (Dự án Công nghệ)",
+    "tagline": "\"Tự động hóa 100% quy trình sản xuất nội dung: Từ quét tin tức internet đến AI viết bài, tạo ảnh & xuất bản.\"",
+    "problem": "Quy trình sản xuất nội dung hàng ngày tốn 4-5 tiếng/ngày cho các khâu tìm ý tưởng, viết bài, thiết kế banner và xuất bản đa kênh.",
+    "strategy": "Thiết lập luồng tự động hóa tích hợp Make.com + Gemini API (học giọng văn con người) + Leonardo API (tự sinh banner) + Telegram Bot (duyệt bài 1-click).",
+    "execution": "Cấu hình RSS Feed, viết Prompt chuẩn hóa cho Gemini API, thiết lập Webhook tự động ghi log dữ liệu vào Google Sheet & Telegram Bot.",
+    "photos": [
+      {
+        "src": "photo/make1.png",
+        "title": "Overview Kịch bản Make.com"
+      },
+      {
+        "src": "photo/make2.png",
+        "title": "Google Sheet Quản lý dữ liệu"
+      },
+      {
+        "src": "photo/make4.png",
+        "title": "Leonardo API Tự động tạo ảnh"
+      },
+      {
+        "src": "photo/make5.png",
+        "title": "Google AI Studio / Gemini API"
+      },
+      {
+        "src": "photo/make6.png",
+        "title": "Telegram Bot Nhận thông báo bài"
+      },
+      {
+        "src": "photo/make7.png",
+        "title": "Bài đăng tự động hoàn chỉnh"
+      }
     ],
-    stats: [
-      { num: "100%", label: "Tự động hóa quy trình" },
-      { num: "- 70%", label: "Thời gian vận hành" },
-      { num: "50+", label: "Bài viết xử lý/tuần" },
-    ],
+    "stats": [
+      {
+        "num": "100%",
+        "label": "Tự động hóa quy trình"
+      },
+      {
+        "num": "- 70%",
+        "label": "Thời gian vận hành"
+      },
+      {
+        "num": "50+",
+        "label": "Bài viết xử lý/tuần"
+      }
+    ]
   },
   "camp-xdcc": {
-    badge: '<i class="fas fa-store"></i> Lucas Combo',
-    title: "Xoay Đi Chờ Chi",
-    date: "06/09/2025 - 06/10/2025",
-    tagline:
-      "Chiến dịch tăng doanh thu tại cửa hàng. 1 hóa đơn mua hàng = 1 lượt xoay vòng quay may mắn.",
-    problem:
-      "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng.",
-    strategy:
-      "Lên kịch bản video dạng dẫn dắt câu chuyện + meme + cập nhật hình ảnh khách hàng thực tế.",
-    execution:
-      "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
-    sheet:
-      "https://docs.google.com/spreadsheets/d/1ZKpP-XwpTRJh86EiEFHs0XhB-CHrNXfi/edit?gid=1498389441",
-    featuredPosts: [
+    "badge": "<i class=\"fas fa-store\"></i> Lucas Combo",
+    "title": "Xoay Đi Chờ Chi",
+    "date": "06/09/2025 - 06/10/2025",
+    "tagline": "Chiến dịch tăng doanh thu tại cửa hàng. 1 hóa đơn mua hàng = 1 lượt xoay vòng quay may mắn.",
+    "problem": "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng.",
+    "strategy": "Lên kịch bản video dạng dẫn dắt câu chuyện + meme + cập nhật hình ảnh khách hàng thực tế.",
+    "execution": "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
+    "sheet": "https://docs.google.com/spreadsheets/d/1ZKpP-XwpTRJh86EiEFHs0XhB-CHrNXfi/edit?gid=1498389441",
+    "featuredPosts": [
       {
-        caption: "Bài đăng Khởi động chiến dịch Xoay Đi Chờ Chi",
-        imgs: ["photo/XĐCC/thongbao.png"],
+        "caption": "Bài đăng Khởi động chiến dịch Xoay Đi Chờ Chi",
+        "imgs": [
+          "photo/XĐCC/thongbao.png"
+        ]
       },
       {
-        caption: "Bài đăng Nhắc nhở ưu đãi Voucher & Vòng quay may mắn",
-        imgs: ["photo/XĐCC/remind1.png"],
+        "caption": "Bài đăng Nhắc nhở ưu đãi Voucher & Vòng quay may mắn",
+        "imgs": [
+          "photo/XĐCC/remind1.png"
+        ]
       },
       {
-        caption: "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (1)",
-        imgs: ["photo/XĐCC/cuoingay1.png"],
+        "caption": "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (1)",
+        "imgs": [
+          "photo/XĐCC/cuoingay1.png"
+        ]
       },
       {
-        caption: "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (2)",
-        imgs: ["photo/XĐCC/cuoingay2.png"],
-      },
+        "caption": "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (2)",
+        "imgs": [
+          "photo/XĐCC/cuoingay2.png"
+        ]
+      }
     ],
-    photos: [
+    "photos": [
       {
-        src: "photo/XĐCC/doanhthu.png",
-        title: "Báo cáo theo dõi doanh thu thực tế",
-      },
+        "src": "photo/XĐCC/doanhthu.png",
+        "title": "Báo cáo theo dõi doanh thu thực tế"
+      }
     ],
-    videos: [
+    "videos": [
       {
-        title: "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1725098248137253%2F&show_text=false&width=267&t=0",
+        "title": "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1725098248137253%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F24538925582408921%2F&show_text=false&width=267&t=0",
+        "title": "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F24538925582408921%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Quảng cáo túi chống sốc & chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F798628676364303%2F&show_text=false&width=267&t=0",
+        "title": "Quảng cáo túi chống sốc & chiến dịch Xoay Đi Chờ Chi",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F798628676364303%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Clip vui cho chiến dịch Xoay Đi Chờ Chi",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1487223245746254%2F&show_text=false&width=267&t=0",
-      },
+        "title": "Clip vui cho chiến dịch Xoay Đi Chờ Chi",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1487223245746254%2F&show_text=false&width=267&t=0"
+      }
     ],
-    stats: [
-      { num: "> 30", label: "Bài đăng (gồm reels, ảnh, story)" },
-      { num: "> 500", label: "Khách hàng ghé mua và hài lòng" },
-      { num: "341 triệu", label: "Doanh thu tại cửa hàng" },
-    ],
+    "stats": [
+      {
+        "num": "> 30",
+        "label": "Bài đăng (gồm reels, ảnh, story)"
+      },
+      {
+        "num": "> 500",
+        "label": "Khách hàng ghé mua và hài lòng"
+      },
+      {
+        "num": "341 triệu",
+        "label": "Doanh thu tại cửa hàng"
+      }
+    ]
   },
   "camp-dtv": {
-    badge: '<i class="fas fa-bullhorn"></i> Droppii',
-    title: "Điểm Tư Vấn Đạt Chuẩn Droppii",
-    date: "2026",
-    tagline:
-      '"Chuẩn hóa quy trình tư vấn 1:1 và tôn vinh hệ thống điểm tư vấn uy tín trên toàn quốc."',
-    problem:
-      "Cần nâng cao chất lượng tư vấn trực tiếp của đối tác và định vị hình ảnh chuyên nghiệp cho các điểm tư vấn Droppii.",
-    strategy:
-      "Truyền thông chuỗi cẩm nang quy trình 5 bước tư vấn chuẩn + vinh danh các showroom điểm tư vấn đạt chứng nhận xuất sắc.",
-    photos: [
+    "badge": "<i class=\"fas fa-bullhorn\"></i> Droppii",
+    "title": "Điểm Tư Vấn Đạt Chuẩn Droppii",
+    "date": "2026",
+    "tagline": "\"Chuẩn hóa quy trình tư vấn 1:1 và tôn vinh hệ thống điểm tư vấn uy tín trên toàn quốc.\"",
+    "problem": "Cần nâng cao chất lượng tư vấn trực tiếp của đối tác và định vị hình ảnh chuyên nghiệp cho các điểm tư vấn Droppii.",
+    "strategy": "Truyền thông chuỗi cẩm nang quy trình 5 bước tư vấn chuẩn + vinh danh các showroom điểm tư vấn đạt chứng nhận xuất sắc.",
+    "photos": [
       {
-        src: "photo/ĐTV/DTV_1.png",
-        title: "Ra mắt Điểm tư vấn đạt chuẩn tại TP.HCM",
-      },
-      { src: "photo/ĐTV/DTV_2.png", title: "Cẩm nang 5 bước tư vấn sản phẩm" },
-      {
-        src: "photo/ĐTV/DTV_3.png",
-        title: "Trải nghiệm tư vấn 1:1 chuyên sâu",
+        "src": "photo/ĐTV/DTV_1.png",
+        "title": "Ra mắt Điểm tư vấn đạt chuẩn tại TP.HCM"
       },
       {
-        src: "photo/ĐTV/DTV_4.png",
-        title: "Trao chứng nhận Điểm tư vấn xuất sắc",
+        "src": "photo/ĐTV/DTV_2.png",
+        "title": "Cẩm nang 5 bước tư vấn sản phẩm"
       },
+      {
+        "src": "photo/ĐTV/DTV_3.png",
+        "title": "Trải nghiệm tư vấn 1:1 chuyên sâu"
+      },
+      {
+        "src": "photo/ĐTV/DTV_4.png",
+        "title": "Trao chứng nhận Điểm tư vấn xuất sắc"
+      }
     ],
-    stats: [
-      { num: "180.000+", label: "Lượt tiếp cận" },
-      { num: "12.000+", label: "Tương tác bài đăng" },
-    ],
+    "stats": [
+      {
+        "num": "180.000+",
+        "label": "Lượt tiếp cận"
+      },
+      {
+        "num": "12.000+",
+        "label": "Tương tác bài đăng"
+      }
+    ]
   },
   "camp-aiads": {
-    badge: '<i class="fas fa-bullhorn"></i> Droppii',
-    title: "Ads Khóa Học AI & Công Nghệ",
-    date: "2026",
-    tagline:
-      '"Tập trung vào tính ứng dụng thực chiến: Giúp đối tác X10 hiệu suất kinh doanh nhờ công cụ AI."',
-    problem:
-      "Chiêu sinh các khóa học AI cho đối tác kinh doanh với yêu cầu thông điệp dễ hiểu, không hàn lâm.",
-    strategy:
-      'Minh họa trực quan các case study "Viết 30 bài trong 5 phút", "Thiết kế banner AI" + chứng thực từ kết quả học viên.',
-    photos: [
+    "badge": "<i class=\"fas fa-bullhorn\"></i> Droppii",
+    "title": "Ads Khóa Học AI & Công Nghệ",
+    "date": "2026",
+    "tagline": "\"Tập trung vào tính ứng dụng thực chiến: Giúp đối tác X10 hiệu suất kinh doanh nhờ công cụ AI.\"",
+    "problem": "Chiêu sinh các khóa học AI cho đối tác kinh doanh với yêu cầu thông điệp dễ hiểu, không hàn lâm.",
+    "strategy": "Minh họa trực quan các case study \"Viết 30 bài trong 5 phút\", \"Thiết kế banner AI\" + chứng thực từ kết quả học viên.",
+    "photos": [
       {
-        src: "photo/MEME/AI_1.png",
-        title: "Bí quyết tự động hóa bài đăng với AI",
+        "src": "photo/MEME/AI_1.png",
+        "title": "Bí quyết tự động hóa bài đăng với AI"
       },
       {
-        src: "photo/MEME/AI_2.png",
-        title: "Viết 30 caption facebook trong 5 phút",
+        "src": "photo/MEME/AI_2.png",
+        "title": "Viết 30 caption facebook trong 5 phút"
       },
       {
-        src: "photo/MEME/AI_3.png",
-        title: "Thiết kế banner & video bán hàng AI",
+        "src": "photo/MEME/AI_3.png",
+        "title": "Thiết kế banner & video bán hàng AI"
       },
       {
-        src: "photo/MEME/AI_4.png",
-        title: "Thành quả bứt phá đơn hàng của học viên",
-      },
+        "src": "photo/MEME/AI_4.png",
+        "title": "Thành quả bứt phá đơn hàng của học viên"
+      }
     ],
-    videos: [
+    "videos": [
       {
-        title: "Video AI Veo3 Ads - Quảng cáo khóa học",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F618290484501869%2F&show_text=false&width=267&t=0",
+        "title": "Video AI Veo3 Ads - Quảng cáo khóa học",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F618290484501869%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Video Gemini AI - Hướng dẫn tạo kịch bản",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1697285934509172%2F&show_text=false&width=267&t=0",
+        "title": "Video Gemini AI - Hướng dẫn tạo kịch bản",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1697285934509172%2F&show_text=false&width=267&t=0"
+      }
+    ],
+    "stats": [
+      {
+        "num": "210.000+",
+        "label": "Lượt tiếp cận Ads"
       },
-    ],
-    stats: [
-      { num: "210.000+", label: "Lượt tiếp cận Ads" },
-      { num: "15.400+", label: "Tương tác quan tâm" },
-    ],
+      {
+        "num": "15.400+",
+        "label": "Tương tác quan tâm"
+      }
+    ]
   },
   "camp-77": {
-    badge: '<i class="fas fa-bullhorn"></i> Droppii',
-    title: "Siêu Sale Double Day 7/7",
-    date: "07/2026",
-    tagline:
-      '"Tạo hiệu ứng FOMO săn deal Siêu Sale 7/7 cùng brief hình ảnh ưu đãi rực rỡ."',
-    problem:
-      "Đẩy mạnh doanh số phiên Mega Sale 7/7 và tạo hiệu ứng truyền thông đồng bộ cho hệ thống.",
-    strategy:
-      "Thiết kế bộ Brief hình ảnh banner ưu đãi chuẩn Meta + Video Teaser FOMO kéo tương tác.",
-    briefLink: "briefs.html",
-    videos: [
+    "badge": "<i class=\"fas fa-bullhorn\"></i> Droppii",
+    "title": "Siêu Sale Double Day 7/7",
+    "date": "07/2026",
+    "tagline": "\"Tạo hiệu ứng FOMO săn deal Siêu Sale 7/7 cùng brief hình ảnh ưu đãi rực rỡ.\"",
+    "problem": "Đẩy mạnh doanh số phiên Mega Sale 7/7 và tạo hiệu ứng truyền thông đồng bộ cho hệ thống.",
+    "strategy": "Thiết kế bộ Brief hình ảnh banner ưu đãi chuẩn Meta + Video Teaser FOMO kéo tương tác.",
+    "briefLink": "briefs.html",
+    "videos": [
       {
-        title: "Teaser sale 7/7 (97.000 views - Có ads)",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1655116209118584%2F&show_text=false&width=476&t=0",
+        "title": "Teaser sale 7/7 (97.000 views - Có ads)",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1655116209118584%2F&show_text=false&width=476&t=0"
+      }
+    ],
+    "stats": [
+      {
+        "num": "320.000+",
+        "label": "Lượt tiếp cận (Reach)"
       },
-    ],
-    stats: [
-      { num: "320.000+", label: "Lượt tiếp cận (Reach)" },
-      { num: "510.000+", label: "Lượt hiển thị (Impressions)" },
-    ],
+      {
+        "num": "510.000+",
+        "label": "Lượt hiển thị (Impressions)"
+      }
+    ]
   },
   "camp-2010": {
-    badge: '<i class="fas fa-store"></i> Lucas Combo',
-    title: "Tháng 10 Dịu Dàng - Trao Nàng Yêu Thương",
-    date: "18/10/2025 - 20/10/2025",
-    tagline:
-      "Tặng hoa kẹo mút (handmade) & Voucher giảm 10% cho khách hàng nữ ghé mua hàng trong 3 ngày diễn ra chương trình.",
-    problem:
-      "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng. Làm thủ công quà tặng nên cần tính toán đủ số lượng.",
-    strategy:
-      "Lên kịch bản video dạng dẫn dắt câu chuyện + hình ảnh hậu trường + cập nhật hình ảnh khách hàng thực tế.",
-    execution:
-      "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
-    featuredPosts: [
+    "badge": "<i class=\"fas fa-store\"></i> Lucas Combo",
+    "title": "Tháng 10 Dịu Dàng - Trao Nàng Yêu Thương",
+    "date": "18/10/2025 - 20/10/2025",
+    "tagline": "Tặng hoa kẹo mút (handmade) & Voucher giảm 10% cho khách hàng nữ ghé mua hàng trong 3 ngày diễn ra chương trình.",
+    "problem": "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng. Làm thủ công quà tặng nên cần tính toán đủ số lượng.",
+    "strategy": "Lên kịch bản video dạng dẫn dắt câu chuyện + hình ảnh hậu trường + cập nhật hình ảnh khách hàng thực tế.",
+    "execution": "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
+    "featuredPosts": [
       {
-        caption: "Bài đăng Khởi động & Thông báo chương trình",
-        imgs: ["photo/2010/thongbao.png"],
+        "caption": "Bài đăng Khởi động & Thông báo chương trình",
+        "imgs": [
+          "photo/2010/thongbao.png"
+        ]
       },
       {
-        caption: "Bài đăng Thông báo",
-        imgs: ["photo/2010/thongbaoluon.png"],
+        "caption": "Bài đăng Thông báo",
+        "imgs": [
+          "photo/2010/thongbaoluon.png"
+        ]
       },
       {
-        caption:
-          "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
-        imgs: ["photo/2010/keugoi1.png", "photo/2010/keugoi2.png"],
+        "caption": "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
+        "imgs": [
+          "photo/2010/keugoi1.png",
+          "photo/2010/keugoi2.png"
+        ]
       },
       {
-        caption: "Bài đăng Khoe những bó hoa kẹo mút handmade",
-        imgs: ["photo/2010/khoequa1.png", "photo/2010/khoequa2.png"],
-      },
+        "caption": "Bài đăng Khoe những bó hoa kẹo mút handmade",
+        "imgs": [
+          "photo/2010/khoequa1.png",
+          "photo/2010/khoequa2.png"
+        ]
+      }
     ],
-    photos: [
+    "photos": [
       {
-        src: "photo/2010/ketqua.png",
-        title: "Báo cáo doanh thu thực tế chiến dịch 20/10",
-      },
+        "src": "photo/2010/ketqua.png",
+        "title": "Báo cáo doanh thu thực tế chiến dịch 20/10"
+      }
     ],
-    videos: [
+    "videos": [
       {
-        title: "Quảng cáo chiến dịch 20/10",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1873461660221906%2F&show_text=false&width=267&t=0",
+        "title": "Quảng cáo chiến dịch 20/10",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1873461660221906%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Clip vui cho chiến dịch 20/10",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1706983176651990%2F&show_text=false&width=267&t=0",
+        "title": "Clip vui cho chiến dịch 20/10",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1706983176651990%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Quảng cáo chiến dịch 20/10 (ads)",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1475473590229817%2F&show_text=false&width=267&t=0",
+        "title": "Quảng cáo chiến dịch 20/10 (ads)",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1475473590229817%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Hậu trường chuẩn bị quà 20/10",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1987813311760464%2F&show_text=false&width=267&t=0",
-      },
+        "title": "Hậu trường chuẩn bị quà 20/10",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1987813311760464%2F&show_text=false&width=267&t=0"
+      }
     ],
-    stats: [
-      { num: "> 10", label: "Bài đăng (gồm reels, ảnh, story)" },
-      { num: "16", label: "Khách nữ ghé mua và hài lòng" },
-      { num: "12 triệu", label: "Doanh thu tại cửa hàng" },
-    ],
+    "stats": [
+      {
+        "num": "> 10",
+        "label": "Bài đăng (gồm reels, ảnh, story)"
+      },
+      {
+        "num": "16",
+        "label": "Khách nữ ghé mua và hài lòng"
+      },
+      {
+        "num": "12 triệu",
+        "label": "Doanh thu tại cửa hàng"
+      }
+    ]
   },
   "camp-thct": {
-    badge: '<i class="fas fa-graduation-cap"></i> Đồ án',
-    title: "Đồ án Thương mại xã hội (Tạp Hóa Content)",
-    date: "10/2025 - 12/2025",
-    tagline:
-      "Xây dựng Fanpage Tạp hóa Content từ con số 0 với kế hoạch nội dung đa dạng. TA: Học sinh sinh viên.",
-    problem:
-      "Chú trọng ở mảng video nên cần tập hợp nhân sự quay/dựng, lên kịch bản liên tục. Xây kênh từ số 0 để phục vụ cho buổi MEGA LIVE nên cần thường xuyên tối ưu content.",
-    strategy:
-      "Triển khai luồng nội dung đa dạng: Unboxing, review, viral clip, teaser, ảnh thông báo,...",
-    sheet:
-      "https://docs.google.com/spreadsheets/d/11hDVcBBFUSz9cr09Bz_EY0ZAwz9vE-gbU1U3S9Yrgqo/edit?gid=1420815595#gid=1420815595",
-    featuredPosts: [
+    "badge": "<i class=\"fas fa-graduation-cap\"></i> Đồ án",
+    "title": "Đồ án Thương mại xã hội (Tạp Hóa Content)",
+    "date": "10/2025 - 12/2025",
+    "tagline": "Xây dựng Fanpage Tạp hóa Content từ con số 0 với kế hoạch nội dung đa dạng. TA: Học sinh sinh viên.",
+    "problem": "Chú trọng ở mảng video nên cần tập hợp nhân sự quay/dựng, lên kịch bản liên tục. Xây kênh từ số 0 để phục vụ cho buổi MEGA LIVE nên cần thường xuyên tối ưu content.",
+    "strategy": "Triển khai luồng nội dung đa dạng: Unboxing, review, viral clip, teaser, ảnh thông báo,...",
+    "sheet": "https://docs.google.com/spreadsheets/d/11hDVcBBFUSz9cr09Bz_EY0ZAwz9vE-gbU1U3S9Yrgqo/edit?gid=1420815595#gid=1420815595",
+    "featuredPosts": [
       {
-        caption: "Bài đăng Nhá hàng MEGA LIVE 11/11 Tạp Hóa Content",
-        imgs: ["photo/THC/thongbaomega.png"],
+        "caption": "Bài đăng Nhá hàng MEGA LIVE 11/11 Tạp Hóa Content",
+        "imgs": [
+          "photo/THC/thongbaomega.png"
+        ]
       },
       {
-        caption: "Bài đăng Tiết lộ Minigame phiên MEGA LIVE 17/12",
-        imgs: ["photo/THC/thongbaolive.png"],
+        "caption": "Bài đăng Tiết lộ Minigame phiên MEGA LIVE 17/12",
+        "imgs": [
+          "photo/THC/thongbaolive.png"
+        ]
       },
       {
-        caption: "Bài đăng Series Mỗi ngày 1 Review sản phẩm",
-        imgs: ["photo/THC/review.png"],
+        "caption": "Bài đăng Series Mỗi ngày 1 Review sản phẩm",
+        "imgs": [
+          "photo/THC/review.png"
+        ]
       },
       {
-        caption: "Bài đăng Minigame Giải đề Tạp hóa nhận quà hóa to",
-        imgs: ["photo/THC/minigame.png"],
+        "caption": "Bài đăng Minigame Giải đề Tạp hóa nhận quà hóa to",
+        "imgs": [
+          "photo/THC/minigame.png"
+        ]
       },
       {
-        caption: "Bài đăng Quảng bá sản phẩm Chén sứ gia dụng",
-        imgs: ["photo/THC/chensu.png"],
+        "caption": "Bài đăng Quảng bá sản phẩm Chén sứ gia dụng",
+        "imgs": [
+          "photo/THC/chensu.png"
+        ]
       },
       {
-        caption: "Bài đăng Thông báo Livestream & Hậu trường săn deal",
-        imgs: ["photo/THC/dailylive.png", "photo/THC/dailylivee.png"],
+        "caption": "Bài đăng Thông báo Livestream & Hậu trường săn deal",
+        "imgs": [
+          "photo/THC/dailylive.png",
+          "photo/THC/dailylivee.png"
+        ]
       },
       {
-        caption: "Bài đăng Tổng kết phiên MEGA LIVE 17/12",
-        imgs: ["photo/THC/tongket.png"],
-      },
+        "caption": "Bài đăng Tổng kết phiên MEGA LIVE 17/12",
+        "imgs": [
+          "photo/THC/tongket.png"
+        ]
+      }
     ],
-    photos: [
+    "photos": [
       {
-        src: "photo/report1.png",
-        title: "Overview báo cáo Fanpage Tạp Hóa Content",
-        maxWidth: "460px",
+        "src": "photo/report1.png",
+        "title": "Overview báo cáo Fanpage Tạp Hóa Content",
+        "maxWidth": "460px"
       },
       {
-        src: "photo/THC/tongketreal.jpg",
-        title: "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12",
-        maxWidth: "460px",
-      },
+        "src": "photo/THC/tongketreal.jpg",
+        "title": "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12",
+        "maxWidth": "460px"
+      }
     ],
-    videos: [
+    "videos": [
       {
-        title: "Clip vui quảng cáo snack",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2030950817718218%2F&show_text=false&width=267&t=0",
+        "title": "Clip vui quảng cáo snack",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2030950817718218%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Teaser MEGA LIVE 11/11",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2126008008208266%2F&show_text=false&width=267&t=0",
+        "title": "Teaser MEGA LIVE 11/11",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2126008008208266%2F&show_text=false&width=267&t=0"
       },
       {
-        title: "Clip vui quảng cáo giấy Topgia",
-        src: "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1322399539581048%2F&show_text=false&width=267&t=0",
-      },
+        "title": "Clip vui quảng cáo giấy Topgia",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1322399539581048%2F&show_text=false&width=267&t=0"
+      }
     ],
-    stats: [
-      { num: "> 100", label: "Bài đăng (gồm reels, ảnh, bài viết, story)" },
-      { num: "> 50.000", label: "Lượt xem trang" },
-      { num: "~ 5 triệu", label: "Doanh thu MEGA LIVE" },
-    ],
+    "stats": [
+      {
+        "num": "> 100",
+        "label": "Bài đăng (gồm reels, ảnh, bài viết, story)"
+      },
+      {
+        "num": "> 50.000",
+        "label": "Lượt xem trang"
+      },
+      {
+        "num": "~ 5 triệu",
+        "label": "Doanh thu MEGA LIVE"
+      }
+    ]
   },
   "camp-delifood": {
-    badge: '<i class="fas fa-graduation-cap"></i> Đồ án',
-    title: "Đồ án Digital Marketing (Delifood Vietnam)",
-    date: "10/2024 - 12/2024",
-    tagline:
-      '"Xây dựng hệ sinh thái Omnichannel: Fanpage, TikTok, Figma Landing Page & Website WordPress."',
-    problem:
-      "Xây dựng sự hiện diện đa kênh cho thương hiệu thực phẩm Delifood Vietnam.",
-    strategy:
-      "Thiết kế bộ nhận diện thương hiệu, Landing Page Figma, Website WordPress và các bài đăng quảng bá sản phẩm khô chay & khô bò.",
-    photos: [
-      { src: "photo/khochay.jpg", title: "Banner Quảng cáo Khô Chay Delifood" },
+    "badge": "<i class=\"fas fa-graduation-cap\"></i> Đồ án",
+    "title": "Đồ án Digital Marketing (Delifood Vietnam)",
+    "date": "10/2024 - 12/2024",
+    "tagline": "\"Xây dựng hệ sinh thái Omnichannel: Fanpage, TikTok, Figma Landing Page & Website WordPress.\"",
+    "problem": "Xây dựng sự hiện diện đa kênh cho thương hiệu thực phẩm Delifood Vietnam.",
+    "strategy": "Thiết kế bộ nhận diện thương hiệu, Landing Page Figma, Website WordPress và các bài đăng quảng bá sản phẩm khô chay & khô bò.",
+    "photos": [
       {
-        src: "photo/delifood2.jpg",
-        title: "Khô Bò Cay Delifood - Visual Post",
+        "src": "photo/khochay.jpg",
+        "title": "Banner Quảng cáo Khô Chay Delifood"
       },
+      {
+        "src": "photo/delifood2.jpg",
+        "title": "Khô Bò Cay Delifood - Visual Post"
+      }
     ],
-    stats: [
-      { num: "~ 30", label: "Bài đăng (gồm reels, ảnh, story)" },
-      { num: "7.400", label: "Lượt xem trang tự nhiên" },
-      { num: "9đ", label: "Nhóm có điểm đồ án cao nhất lớp" },
-    ],
-  },
+    "stats": [
+      {
+        "num": "~ 30",
+        "label": "Bài đăng (gồm reels, ảnh, story)"
+      },
+      {
+        "num": "7.400",
+        "label": "Lượt xem trang tự nhiên"
+      },
+      {
+        "num": "9đ",
+        "label": "Nhóm có điểm đồ án cao nhất lớp"
+      }
+    ]
+  }
 };
 
 function initProjectDetailPage() {
