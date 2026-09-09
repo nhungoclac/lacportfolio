@@ -1,0 +1,3146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Portfolio Lạc Ngọc Như</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Nhúng style.css gốc của Portfolio để clone chuẩn 100% không lệch 1 pixel -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* BỔ SUNG CÁC TIỆN ÍCH DÀNH RIÊNG CHO ADMIN DASHBOARD */
+    :root {
+      --admin-primary: #0284c7;
+      --admin-hover: #0369a1;
+      --admin-light: rgba(2, 132, 199, 0.08);
+      --admin-bg: #f8fafc;
+      --admin-border: #e2e8f0;
+      --admin-success: #10b981;
+      --admin-warning: #f59e0b;
+      --admin-danger: #ef4444;
+    }
+
+    body {
+      background-color: var(--admin-bg);
+      padding-bottom: 90px;
+    }
+
+    /* TOP BAR STICKY HEADER CHO ADMIN */
+    .admin-top-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--admin-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .admin-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* 7 tab nen cho phep cuon ngang khi man hinh hep, khong bao gio de tran mat nut */
+    .admin-nav {
+      flex: 1 1 420px;
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .admin-nav::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .admin-nav::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    .admin-tab-btn {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #0f172a;
+    }
+
+    .admin-brand-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: #0284c7;
+      color: #fff;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .admin-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .admin-tab-btn:hover { color: #0284c7; background: var(--admin-light); }
+    .admin-tab-btn.active { color: #0284c7; background: var(--admin-light); font-weight: 700; }
+
+    .admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .status-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid var(--admin-border);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; }
+    .status-pill.connected .status-dot {
+      background: var(--admin-success);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .btn-push-github {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      border: none;
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-push-github:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-push-github:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .pending-count-badge {
+      background: #f59e0b;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      margin-left: 0.25rem;
+    }
+
+    /* FOLDER BANNER */
+    .folder-sync-banner {
+      background: #ffffff;
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1.5rem auto 1.5rem auto;
+      max-width: 1200px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .folder-sync-banner.unlinked { background: #fffbeb; border-color: #fde68a; }
+    .folder-sync-banner.linked { background: #ecfdf5; border-color: #a7f3d0; }
+
+    .folder-sync-info { display: flex; align-items: center; gap: 0.75rem; }
+    .folder-sync-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #e0f2fe;
+      color: #0284c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .folder-sync-banner.unlinked .folder-sync-icon { background: #fef3c7; color: #d97706; }
+    .folder-sync-banner.linked .folder-sync-icon { background: #d1fae5; color: #059669; }
+
+    .btn-folder-link {
+      background: #f59e0b;
+      color: #ffffff;
+      border: none;
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-folder-link:hover { background: #d97706; }
+    .btn-folder-link.linked { background: #10b981; }
+
+    /* TAB SECTIONS */
+    .admin-tab-content { display: none; }
+    .admin-tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* OVERLAY THAY ẢNH THUMBNAIL TRÊN GIAO DIỆN CAMPAIGNS CLONE */
+    .admin-thumb-overlay-btn {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(4px);
+      z-index: 20;
+      transition: all 0.2s ease;
+    }
+
+    .admin-thumb-overlay-btn:hover {
+      background: #0284c7;
+      border-color: #0284c7;
+      transform: scale(1.03);
+    }
+
+    /* OVERLAY CÔNG CỤ QUẢN TRỊ ẢNH TRÊN CARD BRIEF-EDGE-CARD */
+    .admin-card-toolbar {
+      background: #f8fafc;
+      border-top: 1px solid var(--admin-border);
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .admin-toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-mini-thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.3rem;
+    }
+
+    .admin-mini-thumb-item {
+      position: relative;
+      width: 58px;
+      height: 58px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--admin-border);
+      background: #e2e8f0;
+    }
+
+    .admin-mini-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .admin-thumb-del {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      border: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-btn-sm {
+      background: #e0f2fe;
+      color: #0284c7;
+      border: 1px dashed #0284c7;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .admin-btn-sm:hover {
+      background: #bae6fd;
+    }
+
+    .admin-btn-del {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fecaca;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .admin-btn-del:hover { background: #fee2e2; }
+
+    /* EDIT INLINE INPUT */
+    .admin-editable-text {
+      outline: none;
+      padding: 0.2rem 0.4rem;
+      border: 1px dashed transparent;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+
+    .admin-editable-text:hover {
+      border-color: #94a3b8;
+      background: rgba(2, 132, 199, 0.03);
+    }
+
+    .admin-editable-text:focus {
+      border-color: #0284c7;
+      background: #ffffff;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+    }
+
+    /* TOAST ALERT */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: slideIn 0.25s ease;
+      pointer-events: auto;
+    }
+
+    .toast.success { background: #065f46; border-left: 4px solid #10b981; }
+    .toast.error { background: #7f1d1d; border-left: 4px solid #ef4444; }
+    .toast.warning { background: #78350f; border-left: 4px solid #f59e0b; }
+    .toast.info { background: #0c4a6e; border-left: 4px solid #0284c7; }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN TOP BAR -->
+  <header class="admin-top-bar">
+    <div class="admin-bar-inner">
+      <div class="admin-brand">
+        <div class="nav-logo-badge" style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#e0f2fe,#bae6fd);display:flex;align-items:center;justify-content:center;">
+          <img src="favicon.svg" alt="Logo" style="width:20px;height:20px;" />
+        </div>
+        <span class="admin-brand-title">
+          Lạc Ngọc Như <span class="admin-tag">Admin</span>
+        </span>
+      </div>
+
+      <nav class="admin-nav">
+        <button class="admin-tab-btn active" data-tab="tab-campaigns-view">
+          <i class="fas fa-bullhorn"></i> Chiến dịch (Clone)
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-design-view">
+          <i class="fas fa-palette"></i> Thiết kế (Clone)
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-photos-view">
+          <i class="fas fa-images"></i> Kho Ảnh
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-ai-view">
+          <i class="fas fa-robot"></i> AI Automation
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-standalone-view">
+          <i class="fas fa-shapes"></i> Khác
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-home-view">
+          <i class="fas fa-home"></i> Trang chủ
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-settings-view">
+          <i class="fas fa-key"></i> Cấu hình
+        </button>
+      </nav>
+
+      <div class="admin-actions">
+        <div class="status-pill" id="statusPill" title="Cấu hình Token GitHub">
+          <span class="status-dot"></span>
+          <span id="statusText">Chưa có Token</span>
+        </div>
+        <button class="btn-push-github" id="btnPushGitHub">
+          <i class="fas fa-cloud-arrow-up"></i>
+          <span>Cập nhật lên GitHub</span>
+          <span class="pending-count-badge" id="pendingCount" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- FOLDER SYNC BANNER -->
+  <div class="folder-sync-banner unlinked" id="folderSyncBanner">
+    <div class="folder-sync-info">
+      <div class="folder-sync-icon">
+        <i class="fas fa-folder-open"></i>
+      </div>
+      <div>
+        <div style="font-size: 0.92rem; font-weight: 700; color: #0f172a;">
+          Tự động lưu ảnh vào folder <code>photo/</code> trên máy tính
+        </div>
+        <div style="font-size: 0.78rem; color: #64748b;" id="folderSyncSub">
+          Bấm nút bên phải chọn thư mục <code>E:\portfolio\lacportfolio\lacportfolio\photo</code> (chỉ cần làm 1 lần) để mọi ảnh tải lên được lưu thẳng vào máy!
+        </div>
+      </div>
+    </div>
+    <button class="btn-folder-link" id="btnLinkFolder">
+      <i class="fas fa-folder-plus"></i> <span>Chọn thư mục photo trên máy</span>
+    </button>
+  </div>
+
+  <!-- CONTAINER CHÍNH -->
+  <main class="container">
+
+    <!-- ============================================================ -->
+    <!-- 1. TAB CHIẾN DỊCH (CLONE 100% GIAO DIỆN CAMPAIGNS & PROJECT) -->
+    <!-- ============================================================ -->
+    <section id="tab-campaigns-view" class="admin-tab-content active">
+      
+      <!-- 1A. DANH SÁCH 5 CHIẾN DỊCH (CLONE CHÍNH XÁC CAMPAIGNS.HTML) -->
+      <div id="campListView">
+        <div class="section" style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 class="section-title" style="margin-bottom: 0.5rem;">Danh sách các Chiến dịch tiêu biểu</h2>
+              <p style="color: #64748b; font-size: 0.88rem;">
+                Giao diện clone 100% từ <code>campaigns.html</code>. Bạn có thể <strong>bấm nút trên ảnh để đổi ảnh bìa</strong> hoặc <strong>bấm "Quản lý &amp; Gắn ảnh"</strong> để vào trang chi tiết.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DANH SÁCH 5 BLOCK CHIẾN DỊCH XEN KẼ CLONE NGUYÊN BẢN -->
+        <div class="cmp-list" id="cmpListRenderContainer">
+          <!-- Render 5 cmp-blocks qua JavaScript từ campaigns.html & PROJECTS_DATA -->
+          <div style="text-align: center; padding: 3rem 1rem; color: #64748b;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size: 1.8rem; color: #0284c7;"></i>
+            <p style="margin-top: 0.8rem; font-weight: 600;">Đang tải danh sách 5 chiến dịch...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1B. TRANG CHI TIẾT CHIẾN DỊCH (CLONE CHÍNH XÁC 100% PROJECT.HTML) -->
+      <div id="campDetailView" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <button class="cv-btn btn-outline-blue" id="btnBackToCampList" style="cursor: pointer;">
+            <i class="fas fa-arrow-left"></i> Quay lại Danh sách Chiến dịch
+          </button>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="cv-btn" id="btnSaveCurrentProjectDetail" style="background: #10b981; border-color: #10b981; color: #fff; cursor: pointer;">
+              <i class="fas fa-floppy-disk"></i> Lưu thay đổi chiến dịch này
+            </button>
+          </div>
+        </div>
+
+        <!-- VÙNG RENDER NGUYÊN BẢN CỦA PROJECT.HTML -->
+        <div id="projectDetailCloneContainer">
+          <!-- Sẽ render pdh-card, featuredPosts, briefToOutput, work-samples -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. TAB THIẾT KẾ (CLONE DESIGN.HTML) -->
+    <!-- ============================================================ -->
+    <section id="tab-design-view" class="admin-tab-content">
+      <div class="section" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">Quản lý Ấn phẩm Thiết kế</h2>
+            <p style="color: #64748b; font-size: 0.88rem;">Giao diện clone từ <code>design.html</code></p>
+          </div>
+          <button class="cv-btn" id="btnOpenAddDesignModal" style="cursor: pointer;">
+            <i class="fas fa-plus"></i> Thêm ấn phẩm mới
+          </button>
+        </div>
+      </div>
+
+      <div class="design-grid" id="designGridRenderContainer" style="column-count: 3; column-gap: 1.5rem;">
+        <!-- Render design cards -->
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. TAB KHO ẢNH (PHOTO HUB) -->
+    <!-- ============================================================ -->
+    <section id="tab-photos-view" class="admin-tab-content">
+      <div class="section" style="margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="margin-bottom: 0.5rem;">Kho Ảnh &amp; Kéo Thả Tải Lên</h2>
+        <p style="color: #64748b; font-size: 0.88rem;">
+          Mọi ảnh kéo thả vào đây sẽ tự động lưu vào folder <code>photo/</code> trên máy tính và chuẩn bị đẩy lên GitHub.
+        </p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--admin-border); border-radius: 14px; padding: 2rem; margin-bottom: 2rem;">
+        <div id="photoHubBigDropzone" style="border: 2px dashed #cbd5e1; border-radius: 12px; padding: 2.5rem 1rem; text-align: center; cursor: pointer; background: #f8fafc; transition: all 0.2s ease;">
+          <i class="fas fa-cloud-arrow-up" style="font-size: 2.8rem; color: #0284c7; margin-bottom: 0.8rem;"></i>
+          <p style="font-size: 1.15rem; font-weight: 800; color: #0f172a;">Kéo thả ảnh vào đây hoặc Click để chọn ảnh từ máy</p>
+          <p style="font-size: 0.82rem; color: #64748b; margin-top: 0.35rem;">Hỗ trợ PNG, JPG, WEBP. Ảnh tự lưu vào thư mục <code>photo/</code> của máy tính.</p>
+          <input type="file" id="photoHubBigFileInput" multiple accept="image/*" style="display: none;" />
+        </div>
+
+        <div style="margin-top: 2rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a;">Tất cả hình ảnh đang có trong Portfolio</h3>
+          <span style="font-size: 0.8rem; color: #64748b;">Click "Sao chép link" để dùng</span>
+        </div>
+
+        <div id="photoHubListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem;">
+          <!-- Render danh sách ảnh -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB AI AUTOMATION (ai.html) -->
+    <!-- ============================================================ -->
+    <section id="tab-ai-view" class="admin-tab-content">
+      <div class="admin-section-head">
+        <div>
+          <h2 class="section-title" style="margin-bottom: 0.3rem;">Quản lý trang AI Automation</h2>
+          <p style="color:#64748b; font-size:0.86rem; margin:0;">Bấm thẳng vào chữ để sửa. Bấm nút trên ảnh để đổi ảnh.</p>
+        </div>
+      </div>
+      <div id="pageEditor-ai"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB KHÁC (standalone.html) -->
+    <!-- ============================================================ -->
+    <section id="tab-standalone-view" class="admin-tab-content">
+      <div class="admin-section-head">
+        <div>
+          <h2 class="section-title" style="margin-bottom: 0.3rem;">Quản lý trang Khác</h2>
+          <p style="color:#64748b; font-size:0.86rem; margin:0;">Bấm thẳng vào chữ để sửa. Bấm nút trên ảnh để đổi ảnh.</p>
+        </div>
+      </div>
+      <div id="pageEditor-standalone"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 4. TAB TRANG CHỦ -->
+    <!-- ============================================================ -->
+    <section id="tab-home-view" class="admin-tab-content">
+      <div class="section" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">Quản lý Nội dung Trang chủ</h2>
+            <p style="color: #64748b; font-size: 0.88rem;">Chỉnh sửa Slogan và 3 khối số liệu thống kê trên <code>index.html</code></p>
+          </div>
+          <button class="cv-btn" id="btnSaveHomeTab" style="cursor: pointer;">
+            <i class="fas fa-check"></i> Lưu thay đổi Trang chủ
+          </button>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--admin-border); border-radius: 14px; padding: 1.8rem; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">
+          <i class="fas fa-user-pen" style="color: #0284c7;"></i> Thông tin định vị
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Họ và Tên</label>
+            <input type="text" id="homeEditName" value="Lạc Ngọc Như" style="width:100%; padding:0.6rem 0.85rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Slogan định vị</label>
+            <input type="text" id="homeEditSlogan" value='"Lạc - thích truyền thông, yêu công nghệ"' style="width:100%; padding:0.6rem 0.85rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Link CV Google Drive</label>
+            <input type="text" id="homeEditCv" value="https://drive.google.com/file/d/1CRm0hvvJd5fkQZBLlEl1SQJHV02AQYpo/view?usp=sharing" style="width:100%; padding:0.6rem 0.85rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--admin-border); border-radius: 14px; padding: 1.8rem;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">
+          <i class="fas fa-chart-line" style="color: #0284c7;"></i> 3 Khối Số liệu Thống kê Chính
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:1rem;">
+            <label style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase; display:block; margin-bottom:0.4rem;">Khối 1: Views</label>
+            <input type="text" id="stat1ValInput" value="3.000.000+" style="font-weight:800; font-size:1.2rem; color:#0284c7; width:100%; border:1px solid #e2e8f0; padding:0.4rem; border-radius:6px;" />
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:1rem;">
+            <label style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase; display:block; margin-bottom:0.4rem;">Khối 2: Engagements</label>
+            <input type="text" id="stat2ValInput" value="15.000+" style="font-weight:800; font-size:1.2rem; color:#0284c7; width:100%; border:1px solid #e2e8f0; padding:0.4rem; border-radius:6px;" />
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:1rem;">
+            <label style="font-size:0.75rem; font-weight:700; color:#64748b; text-transform:uppercase; display:block; margin-bottom:0.4rem;">Khối 3: Nội dung</label>
+            <input type="text" id="stat3ValInput" value="300+" style="font-weight:800; font-size:1.2rem; color:#0284c7; width:100%; border:1px solid #e2e8f0; padding:0.4rem; border-radius:6px;" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 5. TAB CẤU HÌNH GITHUB -->
+    <!-- ============================================================ -->
+    <section id="tab-settings-view" class="admin-tab-content">
+      <div class="section" style="margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="margin-bottom: 0.5rem;">Cấu hình Kết nối GitHub</h2>
+        <p style="color: #64748b; font-size: 0.88rem;">Nhập Personal Access Token (PAT) để web tự động commit &amp; push code lên GitHub</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--admin-border); border-radius: 14px; padding: 2rem; max-width: 650px;">
+        <div style="margin-bottom: 1.2rem;">
+          <label style="display:block; font-size:0.82rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">GitHub Token (PAT)</label>
+          <input type="password" id="cfgTokenPat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%; padding:0.65rem 0.9rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          <span style="font-size: 0.76rem; color: #64748b; margin-top: 0.35rem; display:block;">Token lưu trong máy bạn (localStorage), an toàn và bảo mật.</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+          <div>
+            <label style="display:block; font-size:0.82rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Owner</label>
+            <input type="text" id="cfgOwnerInput" value="nhungoclac" style="width:100%; padding:0.65rem 0.9rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          </div>
+          <div>
+            <label style="display:block; font-size:0.82rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Repository</label>
+            <input type="text" id="cfgRepoInput" value="lacportfolio" style="width:100%; padding:0.65rem 0.9rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display:block; font-size:0.82rem; font-weight:700; color:#475569; margin-bottom:0.35rem;">Branch</label>
+          <input type="text" id="cfgBranchInput" value="main" style="width:100%; padding:0.65rem 0.9rem; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit;" />
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="cv-btn" id="btnSaveConfigTab" style="cursor: pointer;">
+            <i class="fas fa-save"></i> Lưu &amp; Kiểm tra kết nối
+          </button>
+          <button class="btn-outline-blue" id="btnClearConfigTab" style="cursor: pointer;">
+            Xóa Token
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL THÊM ẤN PHẨM THIẾT KẾ MỚI -->
+  <div class="modal-backdrop" id="modalDesign">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="modalDesignTitle">Thêm Ấn Phẩm Thiết Kế</h3>
+        <button class="modal-close" onclick="closeDesignModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+        <input type="hidden" id="editDesignIndex" value="-1" />
+        <div>
+          <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.35rem;">Tiêu đề ấn phẩm *</label>
+          <input type="text" id="dTitle" style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:8px;" placeholder="VD: Standee Ngày hội NutriBest Health" />
+        </div>
+        <div>
+          <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.35rem;">Mô tả ngắn</label>
+          <textarea id="dDesc" rows="2" style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:8px;" placeholder="Mô tả ấn phẩm..."></textarea>
+        </div>
+        <div>
+          <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.35rem;">Công cụ thiết kế (cách nhau bởi dấu phẩy)</label>
+          <input type="text" id="dTools" style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:8px;" placeholder="Photoshop, Illustrator, Canva Pro..." />
+        </div>
+        <div>
+          <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.35rem;">Link bài viết</label>
+          <input type="text" id="dLink" style="width:100%; padding:0.6rem; border:1px solid #e2e8f0; border-radius:8px;" placeholder="https://facebook.com/..." />
+        </div>
+        <div>
+          <label style="display:block; font-size:0.82rem; font-weight:700; margin-bottom:0.35rem;">Hình ảnh (Tự động lưu vào folder photo)</label>
+          <div id="designModalDropzone" style="border:2px dashed #cbd5e1; padding:1.2rem; text-align:center; border-radius:10px; cursor:pointer; background:#f8fafc;">
+            <i class="fas fa-cloud-arrow-up" style="font-size:1.8rem; color:#0284c7;"></i>
+            <p style="font-size:0.85rem; font-weight:600; margin-top:0.3rem;">Bấm hoặc kéo ảnh vào đây</p>
+            <input type="file" id="designModalFileInput" multiple accept="image/*" style="display:none;" />
+          </div>
+          <div class="preview-thumbs" id="designModalPreviewThumbs" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem;"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeDesignModal()">Hủy</button>
+        <button class="btn-create" id="btnSaveDesignSubmit"><i class="fas fa-save"></i> Lưu ấn phẩm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT FILE ẨN ĐỂ ĐỔI ẢNH THUMBNAIL CHO CAMPAIGN -->
+  <input type="file" id="globalThumbFileInput" accept="image/*" style="display: none;" />
+  <!-- INPUT FILE ẨN ĐỂ GẮN ẢNH VÀO FEATURED POST -->
+  <input type="file" id="globalPostFileInput" multiple accept="image/*" style="display: none;" />
+  <!-- INPUT FILE ẨN ĐỂ GẮN ẢNH VÀO BRIEF -->
+  <input type="file" id="globalBriefFileInput" multiple accept="image/*" style="display: none;" />
+  <!-- INPUT FILE ẨN ĐỂ GẮN ẢNH VÀO RESULT -->
+  <input type="file" id="globalResultFileInput" multiple accept="image/*" style="display: none;" />
+
+  <!-- TOAST ALERTS -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // --- BỘ ĐỆM PREVIEW ẢNH (GIỮ ẢNH MỚI CHỌN ĐỂ KHÔNG BỊ 404/FALLBACK) ---
+    const LOCAL_PREVIEW_CACHE = {};
+    // --- CHUẨN HOÁ TÊN FILE ẢNH (TIẾNG VIỆT -> KHÔNG DẤU, KHÔNG DẤU CÁCH) ---
+    
+    // --- CÁC HÀM XỬ LÝ CHỌN ẢNH TRỰC TIẾP (DÙNG LABEL NATIVE ĐẢM BẢO 100% MỞ FILE DIALOG & ĐỔI ẢNH TỨC THÌ) ---
+    window.handleCampaignThumbChange = function(e, campId, index) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const cleanName = 'photo/' + sanitizeFileName(file.name);
+      pendingFileObjects.push({ file, cleanName });
+
+      // 1. Tạo ObjectURL xem trước tức thì (0ms)
+      const previewUrl = URL.createObjectURL(file);
+      LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+      // 2. Đổi ngay ảnh trên thẻ HTML trực tiếp
+      const directImg = document.getElementById('cmp-thumb-img-' + (campId || index));
+      if (directImg) {
+        directImg.src = previewUrl;
+      }
+
+      // 3. Cập nhật dữ liệu chiến dịch
+      let found = null;
+      if (campId) {
+        found = CAMPAIGN_BLOCKS_DATA.find(b => b.id === campId);
+      }
+      if (!found && index >= 0 && CAMPAIGN_BLOCKS_DATA[index]) {
+        found = CAMPAIGN_BLOCKS_DATA[index];
+      }
+      if (found) {
+        found.img = cleanName;
+      }
+
+      if (campId && PROJECTS_DATA[campId]) {
+        PROJECTS_DATA[campId].thumb = cleanName;
+      }
+
+      // 4. Lưu thay đổi chờ commit lên GitHub
+      file.arrayBuffer().then(buf => {
+        const bytes = new Uint8Array(buf);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+        const base64 = btoa(binary);
+        PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+        PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+        PENDING_CHANGES.campaignsHtml = true;
+        ALL_DETECTED_PHOTOS.add(cleanName);
+        updatePendingUI();
+      }).catch(err => console.error('Lỗi encode base64:', err));
+
+      // 5. Lưu vào folder photo trên máy nếu đã kết nối
+      if (photoDirHandle) {
+        saveFileToLocalPhoto(file, cleanName);
+      }
+
+      showToast(`✅ Đã đổi ảnh bìa thành "${file.name}"! Bấm "Cập nhật lên GitHub" để đẩy lên web.`, 'success');
+      e.target.value = '';
+    };
+
+    window.handlePostImgsChange = function(e, pIdx) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || !activeProjectData || !activeProjectData.featuredPosts[pIdx]) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.featuredPosts[pIdx].imgs) {
+          activeProjectData.featuredPosts[pIdx].imgs = [];
+        }
+        activeProjectData.featuredPosts[pIdx].imgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã thêm ${files.length} ảnh vào bài viết! Bấm "Lưu thay đổi chiến dịch này".`, 'success');
+      e.target.value = '';
+    };
+
+    window.handleBriefImgsChange = function(e, bIdx) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || !activeProjectData || !activeProjectData.briefToOutput[bIdx]) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.briefToOutput[bIdx].briefImgs) {
+          activeProjectData.briefToOutput[bIdx].briefImgs = [];
+        }
+        activeProjectData.briefToOutput[bIdx].briefImgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã thêm ${files.length} ảnh Brief!`, 'success');
+      e.target.value = '';
+    };
+
+    window.handleResultImgsChange = function(e, bIdx) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || !activeProjectData || !activeProjectData.briefToOutput[bIdx]) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.briefToOutput[bIdx].resultImgs) {
+          activeProjectData.briefToOutput[bIdx].resultImgs = [];
+        }
+        activeProjectData.briefToOutput[bIdx].resultImgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã thêm ${files.length} ảnh Thành phẩm!`, 'success');
+      e.target.value = '';
+    };
+
+    function sanitizeFileName(name) {
+      if (!name) return 'img_' + Date.now() + '.png';
+      const lastDot = name.lastIndexOf('.');
+      const ext = lastDot !== -1 ? name.slice(lastDot).toLowerCase() : '.png';
+      const base = lastDot !== -1 ? name.slice(0, lastDot) : name;
+      const normalized = base.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[đĐ]/g, 'd')
+        .replace(/[^a-zA-Z0-9_-]/g, '_')
+        .replace(/_+/g, '_');
+      return (normalized || 'img_' + Date.now()) + ext;
+    }
+
+
+    function getImgPreviewSrc(path) {
+      if (!path) return 'photo/xdcc.jpg';
+      return LOCAL_PREVIEW_CACHE[path] || path;
+    }
+
+    function handleImgError(imgEl) {
+      if (imgEl.dataset.failed) return;
+      imgEl.dataset.failed = 'true';
+      imgEl.src = 'photo/xdcc.jpg';
+    }
+
+    function formatCaptionHTML(raw) {
+      if (!raw) return '';
+      return raw.replace(/\(([^)]+)\)/g, '<span style="color:#0284c7;font-weight:700;">($1)</span>');
+    }
+
+    // --- INDEXEDDB HELPER ---
+    const DB_NAME = 'LacAdminDB';
+    const STORE_NAME = 'handles';
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore(STORE_NAME);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function idbGet(key) {
+      try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readonly');
+          const req = tx.objectStore(STORE_NAME).get(key);
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+      } catch { return null; }
+    }
+
+    async function idbSet(key, val) {
+      try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          tx.objectStore(STORE_NAME).put(val, key);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+      } catch {}
+    }
+
+    // --- FILE SYSTEM ACCESS API ---
+    let photoDirHandle = null;
+
+    async function getPhotoDirHandle() {
+      if (photoDirHandle) return photoDirHandle;
+      try {
+        const saved = await Promise.race([
+          idbGet('photoDirHandle'),
+          new Promise(r => setTimeout(() => r(null), 500))
+        ]);
+        if (saved && typeof saved.queryPermission === 'function') {
+          const perm = await Promise.race([
+            saved.queryPermission({ mode: 'readwrite' }),
+            new Promise(r => setTimeout(() => r('prompt'), 500))
+          ]);
+          if (perm === 'granted') {
+            photoDirHandle = saved;
+            updateLocalFolderUI(saved.name);
+            return saved;
+          }
+        }
+      } catch (e) {
+        console.warn('Lỗi đọc IndexedDB handle:', e);
+      }
+      return null;
+    }
+
+    async function selectPhotoDirectory() {
+      if (!('showDirectoryPicker' in window)) {
+        showToast('Trình duyệt không hỗ trợ File System Access. Hãy dùng Google Chrome hoặc Microsoft Edge!', 'error');
+        return null;
+      }
+      try {
+        const handle = await window.showDirectoryPicker({
+          id: 'lacportfolio-photo-dir',
+          mode: 'readwrite'
+        });
+        photoDirHandle = handle;
+        await idbSet('photoDirHandle', handle);
+        updateLocalFolderUI(handle.name);
+        showToast(`🎉 Đã liên kết thư mục "${handle.name}". Mọi ảnh mới tải lên sẽ tự động lưu vào máy tính!`, 'success');
+        
+        flushPendingImagesToDisk();
+        return handle;
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          showToast('Lỗi chọn thư mục: ' + err.message, 'error');
+        }
+        return null;
+      }
+    }
+
+    function updateLocalFolderUI(folderName) {
+      const banner = document.getElementById('folderSyncBanner');
+      const btn = document.getElementById('btnLinkFolder');
+      const sub = document.getElementById('folderSyncSub');
+      if (banner) {
+        banner.classList.remove('unlinked');
+        banner.classList.add('linked');
+      }
+      if (btn) {
+        btn.innerHTML = `<i class="fas fa-circle-check"></i> Đã kết nối: <strong>${folderName}</strong>`;
+        btn.classList.add('linked');
+      }
+      if (sub) {
+        sub.innerHTML = `Đang đồng bộ tự động với thư mục <strong>${folderName}</strong> trên máy tính. Mọi ảnh upload sẽ tự động lưu vào đây.`;
+      }
+    }
+
+        async function saveFileToLocalPhoto(file, filename) {
+      if (!photoDirHandle) return false;
+      try {
+        const cleanPath = filename.replace(/^photo\//, '');
+        const parts = cleanPath.split('/');
+        const fileName = parts.pop();
+        let targetDir = photoDirHandle;
+
+        for (const dirName of parts) {
+          if (dirName) {
+            targetDir = await targetDir.getDirectoryHandle(dirName, { create: true });
+          }
+        }
+
+        const fileHandle = await targetDir.getFileHandle(fileName, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(file);
+        await writable.close();
+        showToast(`📁 Đã lưu "${fileName}" vào folder photo trên máy!`, 'success');
+        return true;
+      } catch (err) {
+        console.warn('Lỗi lưu vào máy:', err);
+        return false;
+      }
+    }
+
+    async function flushPendingImagesToDisk() {
+      if (pendingFileObjects.length > 0 && photoDirHandle) {
+        showToast(`Đang lưu ${pendingFileObjects.length} ảnh vào thư mục máy tính...`, 'info');
+        for (const item of pendingFileObjects) {
+          await saveFileToLocalPhoto(item.file, item.cleanName);
+        }
+        pendingFileObjects = [];
+      }
+    }
+
+    document.getElementById('btnLinkFolder').addEventListener('click', () => {
+      selectPhotoDirectory();
+    });
+
+    // --- STATE ---
+    let GITHUB_CONFIG = {
+      pat: (localStorage.getItem('lac_pat') || '').trim(),
+      owner: (localStorage.getItem('lac_owner') || 'nhungoclac').trim(),
+      repo: (localStorage.getItem('lac_repo') || 'lacportfolio').trim(),
+      branch: (localStorage.getItem('lac_branch') || 'main').trim()
+    };
+
+    let FILE_CACHE = {};
+    let PENDING_CHANGES = {
+      design: false,
+      script: false,
+      campaignsHtml: false,
+      home: false,
+      ai: false,
+      standalone: false,
+      newImages: []
+    };
+
+    let DESIGN_ITEMS = [];
+    let PROJECTS_DATA = {};
+    let CAMPAIGN_BLOCKS_DATA = []; // 5 blocks parsed from campaigns.html
+    let ALL_DETECTED_PHOTOS = new Set();
+    let currentModalImages = [];
+
+    // Detailed project view state
+    let activeProjectId = '';
+    let activeProjectData = null;
+
+    const statusPill = document.getElementById('statusPill');
+    const statusText = document.getElementById('statusText');
+    const btnPushGitHub = document.getElementById('btnPushGitHub');
+    const pendingCount = document.getElementById('pendingCount');
+
+    // --- TOAST ---
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'fa-info-circle';
+      if (type === 'success') icon = 'fa-circle-check';
+      if (type === 'error') icon = 'fa-triangle-exclamation';
+      if (type === 'warning') icon = 'fa-triangle-exclamation';
+
+      toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.25s ease reverse';
+        setTimeout(() => toast.remove(), 250);
+      }, 4500);
+    }
+
+    function updatePendingUI() {
+      let count = 0;
+      if (PENDING_CHANGES.design) count++;
+      if (PENDING_CHANGES.script) count++;
+      if (PENDING_CHANGES.campaignsHtml) count++;
+      if (PENDING_CHANGES.home) count++;
+      if (PENDING_CHANGES.ai) count++;
+      if (PENDING_CHANGES.standalone) count++;
+      count += PENDING_CHANGES.newImages.length;
+
+      if (count > 0) {
+        pendingCount.style.display = 'inline-block';
+        pendingCount.textContent = count;
+        btnPushGitHub.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+      } else {
+        pendingCount.style.display = 'none';
+        btnPushGitHub.style.background = 'linear-gradient(135deg, #0284c7, #0369a1)';
+      }
+    }
+
+    // --- TAB SWITCHING ---
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-tab');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    statusPill.addEventListener('click', () => {
+      document.querySelector('[data-tab="tab-settings-view"]').click();
+    });
+
+    // --- GITHUB API HELPER ---
+    async function ghRequest(endpoint, options = {}) {
+      const cleanPat = (GITHUB_CONFIG.pat || '').trim().replace(/[\r\n\t]/g, '');
+      if (!cleanPat) {
+        throw new Error('Chưa cài đặt GitHub Token! Vui lòng vào mục "Cấu hình".');
+      }
+
+      const cleanOwner = (GITHUB_CONFIG.owner || '').trim();
+      const cleanRepo = (GITHUB_CONFIG.repo || '').trim();
+      const cleanEndpoint = endpoint ? (endpoint.startsWith('/') ? endpoint.slice(1) : endpoint) : '';
+
+      const url = cleanEndpoint
+        ? `https://api.github.com/repos/${cleanOwner}/${cleanRepo}/${cleanEndpoint}`
+        : `https://api.github.com/repos/${cleanOwner}/${cleanRepo}`;
+
+      const headers = {
+        'Authorization': `Bearer ${cleanPat}`,
+        'Accept': 'application/vnd.github.v3+json',
+        ...options.headers
+      };
+
+      try {
+        const res = await fetch(url, { ...options, headers });
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || `Lỗi HTTP ${res.status}`);
+        }
+        return res.json();
+      } catch (e) {
+        if (e.message === 'Failed to fetch') {
+          throw new Error('Không thể kết nối api.github.com (kiểm tra internet hoặc token)');
+        }
+        throw e;
+      }
+    }
+
+    async function fetchGitHubFile(path) {
+      if (FILE_CACHE[path]) return FILE_CACHE[path];
+      
+      const data = await ghRequest(`contents/${path}?ref=${GITHUB_CONFIG.branch}`);
+      const content = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
+      FILE_CACHE[path] = { sha: data.sha, content: content };
+      return FILE_CACHE[path];
+    }
+
+    async function commitFile(path, newContentUtf8, commitMessage) {
+      const sha = FILE_CACHE[path]?.sha;
+      const contentBase64 = btoa(unescape(encodeURIComponent(newContentUtf8)));
+
+      const body = {
+        message: commitMessage,
+        content: contentBase64,
+        branch: GITHUB_CONFIG.branch,
+        ...(sha ? { sha } : {})
+      };
+
+      const res = await ghRequest(`contents/${path}`, {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      });
+
+      FILE_CACHE[path] = { sha: res.content.sha, content: newContentUtf8 };
+      return res;
+    }
+
+    async function commitBinaryFile(path, base64Content, commitMessage) {
+      let sha = null;
+      try {
+        const existing = await ghRequest(`contents/${path}?ref=${GITHUB_CONFIG.branch}`);
+        sha = existing.sha;
+      } catch (e) {}
+
+      const body = {
+        message: commitMessage,
+        content: base64Content,
+        branch: GITHUB_CONFIG.branch,
+        ...(sha ? { sha } : {})
+      };
+
+      return ghRequest(`contents/${path}`, { method: 'PUT', body: JSON.stringify(body) });
+    }
+
+    async function checkGitHubConnection() {
+      if (!GITHUB_CONFIG.pat) {
+        statusPill.classList.remove('connected');
+        statusText.textContent = 'Chưa có Token';
+        return false;
+      }
+      try {
+        statusText.textContent = 'Đang kiểm tra...';
+        const repoInfo = await ghRequest('');
+        statusPill.classList.add('connected');
+        statusText.textContent = `${repoInfo.name || GITHUB_CONFIG.repo} (Sẵn sàng)`;
+        return true;
+      } catch (err) {
+        statusPill.classList.remove('connected');
+        statusText.textContent = 'Lỗi kết nối';
+        showToast('Không kết nối được GitHub: ' + err.message, 'error');
+        return false;
+      }
+    }
+
+    // --- TẢI TOÀN BỘ DỮ LIỆU ---
+    async function loadAllData() {
+      try {
+        showToast('Đang nạp dữ liệu từ GitHub...', 'info');
+
+        // 1. Tải campaigns.html
+        let cmpHtml = '';
+        try {
+          const f = await fetchGitHubFile('campaigns.html');
+          cmpHtml = f.content;
+        } catch {
+          const res = await fetch('campaigns.html');
+          cmpHtml = await res.text();
+        }
+        parseCampaignsHtmlBlocks(cmpHtml);
+
+        // 2. Tải script.js (PROJECTS_DATA)
+        let scriptJs = '';
+        try {
+          const f = await fetchGitHubFile('script.js');
+          scriptJs = f.content;
+        } catch {
+          const res = await fetch('script.js');
+          scriptJs = await res.text();
+        }
+        parseProjectsData(scriptJs);
+
+        // Render danh sách 5 chiến dịch clone nguyên bản
+        renderCampaignsListClone();
+
+        // 3. Tải design.html
+        let designHtml = '';
+        try {
+          const f = await fetchGitHubFile('design.html');
+          designHtml = f.content;
+        } catch {
+          const res = await fetch('design.html');
+          designHtml = await res.text();
+        }
+        parseDesignHtml(designHtml);
+        renderDesignGridClone();
+
+        // 4. Nạp 2 trang dạng thẻ lặp (AI Automation + Khác)
+        await loadSimplePages();
+
+        // 5. Render Photo Hub
+        renderPhotoHubList();
+
+        showToast('Dữ liệu đã sẵn sàng!', 'success');
+      } catch (err) {
+        showToast('Lỗi khi tải dữ liệu: ' + err.message, 'error');
+      }
+    }
+
+    // --- BÓC TÁCH CHÍNH XÁC 5 BLOCK TỪ CAMPAIGNS.HTML ---
+    function parseCampaignsHtmlBlocks(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const blocks = doc.querySelectorAll('.cmp-block');
+      CAMPAIGN_BLOCKS_DATA = [];
+
+      blocks.forEach(block => {
+        const isReverse = block.classList.contains('cmp-block-reverse');
+        const imgEl = block.querySelector('.cmp-block-img-wrap img');
+        const imgSrc = imgEl?.getAttribute('src') || '';
+        ALL_DETECTED_PHOTOS.add(imgSrc);
+
+        const brandEl = block.querySelector('.cmp-brand-tag');
+        const brandHtml = brandEl?.innerHTML || '';
+        const brandClass = brandEl?.className || 'cmp-brand-tag';
+        const brandText = brandEl?.textContent?.trim() || '';
+
+        const dateEl = block.querySelector('.cmp-block-date');
+        const dateText = dateEl?.textContent?.trim() || '';
+
+        const titleLink = block.querySelector('.cmp-block-title-link');
+        const titleText = titleLink?.textContent?.trim() || '';
+        const href = titleLink?.getAttribute('href') || '';
+        const idMatch = href.match(/id=(camp-[a-z0-9]+)/i);
+        const campId = idMatch ? idMatch[1] : '';
+
+        const descText = block.querySelector('.cmp-block-desc')?.textContent?.trim() || '';
+
+        const statCards = Array.from(block.querySelectorAll('.cmp-stat-card')).map(sc => ({
+          val: sc.querySelector('.cmp-stat-val')?.textContent?.trim() || '',
+          lbl: sc.querySelector('.cmp-stat-lbl')?.textContent?.trim() || ''
+        }));
+
+        CAMPAIGN_BLOCKS_DATA.push({
+          id: campId,
+          img: imgSrc,
+          isReverse,
+          brandHtml,
+          brandClass,
+          brandText,
+          orig: {
+            img: imgSrc,
+            brandText: brandText,
+            dateText: dateText,
+            titleText: titleText,
+            descText: descText,
+            statCards: statCards.map(x => ({ val: x.val, lbl: x.lbl }))
+          },
+          dateText,
+          titleText,
+          descText,
+          statCards
+        });
+      });
+    }
+
+    // --- CẬP NHẬT TEXT CHIẾN DỊCH KHI SỬA TRỰC TIẾP TRÊN GIAO DIỆN ---
+    window.updateCmpField = function(idx, field, el) {
+      const cmp = CAMPAIGN_BLOCKS_DATA[idx];
+      if (!cmp) return;
+      const val = el.textContent.trim();
+      if (cmp[field] === val) return;
+      cmp[field] = val;
+      PENDING_CHANGES.campaignsHtml = true;
+      updatePendingUI();
+    };
+
+    window.updateCmpStat = function(idx, sIdx, key, el) {
+      const cmp = CAMPAIGN_BLOCKS_DATA[idx];
+      if (!cmp || !cmp.statCards || !cmp.statCards[sIdx]) return;
+      const val = el.textContent.trim();
+      if (cmp.statCards[sIdx][key] === val) return;
+      cmp.statCards[sIdx][key] = val;
+      PENDING_CHANGES.campaignsHtml = true;
+      updatePendingUI();
+    };
+
+    // --- RENDER 5 BLOCK CHIẾN DỊCH (CLONE 100% GIAO DIỆN CAMPAIGNS.HTML) ---
+    function renderCampaignsListClone() {
+      const container = document.getElementById('cmpListRenderContainer');
+      container.innerHTML = '';
+
+      if (CAMPAIGN_BLOCKS_DATA.length === 0) {
+        container.innerHTML = '<p style="color: #64748b; text-align: center;">Không tìm thấy chiến dịch nào.</p>';
+        return;
+      }
+
+      CAMPAIGN_BLOCKS_DATA.forEach((cmp, index) => {
+        const block = document.createElement('div');
+        block.className = `cmp-block ${cmp.isReverse ? 'cmp-block-reverse' : ''}`;
+
+        const displayImgSrc = getImgPreviewSrc(cmp.img);
+
+        const statsHtml = cmp.statCards.map((s, sIdx) => `
+          <div class="cmp-stat-card">
+            <span class="cmp-stat-val admin-editable-text" contenteditable="true" onblur="updateCmpStat(${index}, ${sIdx}, 'val', this)">${s.val}</span>
+            <span class="cmp-stat-lbl admin-editable-text" contenteditable="true" onblur="updateCmpStat(${index}, ${sIdx}, 'lbl', this)">${s.lbl}</span>
+          </div>
+        `).join('');
+
+        block.innerHTML = `
+          <!-- CỘT ẢNH 16:9 NGUYÊN BẢN CÓ NÚT THAY ẢNH NHANH -->
+          <div class="cmp-block-img-col">
+            <div class="cmp-block-img-wrap" style="position: relative;">
+              <label class="admin-thumb-overlay-btn" style="cursor: pointer;" onclick="event.stopPropagation()">
+                <i class="fas fa-camera"></i> Đổi ảnh bìa này
+                <input type="file" accept="image/*" style="display: none;" onchange="handleCampaignThumbChange(event, '${cmp.id}', ${index})" />
+              </label>
+              <img id="cmp-thumb-img-${cmp.id || index}" src="${displayImgSrc}" alt="${cmp.titleText}" onerror="handleImgError(this)" />
+              <div class="cmp-block-img-overlay" style="cursor: pointer;" onclick="openProjectDetailClone('${cmp.id}')">
+                <i class="fas fa-arrow-up-right-from-square"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- CỘT NỘI DUNG NGUYÊN BẢN CỦA CAMPAIGNS.HTML -->
+          <div class="cmp-block-body">
+            <div class="cmp-block-top">
+              <span class="${cmp.brandClass} admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'brandText', this)">${cmp.brandHtml}</span>
+              <span class="cmp-block-date admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'dateText', this)">${cmp.dateText}</span>
+            </div>
+            <h2 class="cmp-block-title">
+              <span class="cmp-block-title-link">
+                <span class="admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'titleText', this)">${cmp.titleText}</span>
+                <i class="fas fa-arrow-right cmp-title-arrow" style="cursor: pointer;" title="Mo trang chi tiet" onclick="openProjectDetailClone('${cmp.id}')"></i>
+              </span>
+            </h2>
+            <p class="cmp-block-desc admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'descText', this)">${cmp.descText}</p>
+            <div class="cmp-stats-row">${statsHtml}</div>
+            <div style="display: flex; gap: 0.75rem; align-items: center; margin-top: auto;">
+              <button class="cmp-cta-btn" style="cursor: pointer; border: none;" onclick="openProjectDetailClone('${cmp.id}')">
+                Quản lý &amp; Gắn ảnh chi tiết <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(block);
+      });
+    }
+
+        // --- ĐỔI ẢNH THUMBNAIL CHO BLOCK CHIẾN DỊCH ---
+    let targetThumbCampId = '';
+    let targetThumbIndex = -1;
+
+    window.triggerChangeCampaignThumb = function(campId, idx) {
+      targetThumbCampId = campId;
+      targetThumbIndex = idx;
+      const fileInput = document.getElementById('globalThumbFileInput');
+      fileInput.value = '';
+      fileInput.click();
+    };
+
+    document.getElementById('globalThumbFileInput').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const cleanName = 'photo/' + sanitizeFileName(file.name);
+      pendingFileObjects.push({ file, cleanName });
+
+      // 1. TẠO URL XEM TRƯỚC TỨC THÌ (0ms)
+      const previewUrl = URL.createObjectURL(file);
+      LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+      // 2. CẬP NHẬT TRỰC TIẾP ELEMENT IMG ĐỂ THẤY NGAY LẬP TỨC TRÊN MÀN HÌNH
+      const directImg = document.getElementById('cmp-thumb-img-' + targetThumbCampId) 
+                     || document.getElementById('cmp-thumb-img-' + targetThumbIndex);
+      if (directImg) {
+        directImg.src = previewUrl;
+      }
+
+      // 3. CẬP NHẬT DATA & RENDER ĐỒNG BỘ
+      let found = null;
+      if (targetThumbCampId) {
+        found = CAMPAIGN_BLOCKS_DATA.find(b => b.id === targetThumbCampId);
+      }
+      if (!found && targetThumbIndex >= 0 && CAMPAIGN_BLOCKS_DATA[targetThumbIndex]) {
+        found = CAMPAIGN_BLOCKS_DATA[targetThumbIndex];
+      }
+      if (found) {
+        found.img = cleanName;
+      }
+
+      if (targetThumbCampId && PROJECTS_DATA[targetThumbCampId]) {
+        PROJECTS_DATA[targetThumbCampId].thumb = cleanName;
+      }
+
+      renderCampaignsListClone();
+
+      // 4. ĐỌC ARRAYBUFFER SANG BASE64 CHO GITHUB (CHẠY NỀN, KHÔNG CHẶN GIAO DIỆN)
+      file.arrayBuffer().then(buf => {
+        const bytes = new Uint8Array(buf);
+        let binary = '';
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        const base64 = btoa(binary);
+        PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+        PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+        PENDING_CHANGES.campaignsHtml = true;
+        ALL_DETECTED_PHOTOS.add(cleanName);
+        updatePendingUI();
+      }).catch(err => console.error('Lỗi encode base64:', err));
+
+      // 5. LƯU XUỐNG THƯ MỤC PHOTO TRÊN MÁY TÍNH (NẾU ĐÃ KẾT NỐI)
+      if (photoDirHandle) {
+        saveFileToLocalPhoto(file, cleanName);
+      }
+
+      showToast(`✅ Đã đổi ảnh bìa: "${file.name}". Bấm "Cập nhật lên GitHub" để đẩy lên Vercel!`, 'success');
+    });
+
+    // --- BÓC TÁCH SCRIPT.JS (PROJECTS_DATA) ---
+    function parseProjectsData(scriptText) {
+      const marker = 'const PROJECTS_DATA = ';
+      const start = scriptText.indexOf(marker);
+      if (start === -1) return;
+
+      const objStart = start + marker.length;
+      let depth = 0;
+      let inString = false;
+      let stringChar = '';
+      let end = -1;
+
+      for (let i = objStart; i < scriptText.length; i++) {
+        const char = scriptText[i];
+        if (inString) {
+          if (char === '\\') { i++; continue; }
+          if (char === stringChar) inString = false;
+        } else {
+          if (char === '"' || char === "'" || char === '`') {
+            inString = true;
+            stringChar = char;
+          } else if (char === '{') depth++;
+          else if (char === '}') {
+            depth--;
+            if (depth === 0) { end = i + 1; break; }
+          }
+        }
+      }
+
+      if (end !== -1) {
+        try {
+          const jsonLike = scriptText.substring(objStart, end);
+          PROJECTS_DATA = new Function('return ' + jsonLike)();
+          JSON.stringify(PROJECTS_DATA).replace(/photo\/[^"'\\]+/g, match => {
+            ALL_DETECTED_PHOTOS.add(match);
+          });
+        } catch (e) {
+          console.error('Không thể parse PROJECTS_DATA:', e);
+        }
+      }
+    }
+
+    // --- MỞ TRANG CHI TIẾT CHIẾN DỊCH (CLONE 100% GIAO DIỆN PROJECT.HTML) ---
+    window.openProjectDetailClone = function(id) {
+      activeProjectId = id;
+      if (!PROJECTS_DATA[id]) {
+        // Tạo mặc định nếu chưa có
+        PROJECTS_DATA[id] = {
+          title: "Chiến dịch mới",
+          date: "05/2026 – 07/2026",
+          tagline: "Mô tả chiến dịch...",
+          problem: "Thử thách của chiến dịch...",
+          strategy: "Ý tưởng thực thi...",
+          execution: "Kế hoạch đa định dạng...",
+          featuredPosts: [],
+          briefToOutput: []
+        };
+      }
+
+      activeProjectData = JSON.parse(JSON.stringify(PROJECTS_DATA[id]));
+      if (!activeProjectData.featuredPosts) activeProjectData.featuredPosts = [];
+      if (!activeProjectData.briefToOutput) activeProjectData.briefToOutput = [];
+
+      renderProjectDetailClone();
+
+      document.getElementById('campListView').style.display = 'none';
+      document.getElementById('campDetailView').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    document.getElementById('btnBackToCampList').addEventListener('click', () => {
+      document.getElementById('campDetailView').style.display = 'none';
+      document.getElementById('campListView').style.display = 'block';
+      renderCampaignsListClone();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- RENDER GIAO DIỆN PROJECT.HTML NGUYÊN BẢN KÈM BỘ CÔNG CỤ GẮN ẢNH ADMIN ---
+    function renderProjectDetailClone() {
+      const container = document.getElementById('projectDetailCloneContainer');
+      const p = activeProjectData;
+      if (!p) return;
+
+      let html = '';
+
+      // 1. HEADER CARD (.pdh-card NGUYÊN BẢN CỦA PROJECT.HTML)
+      html += `
+        <div class="pdh-card" style="margin-bottom: 2.5rem;">
+          <div class="pdh-top">
+            <div class="pdh-title-row">
+              <h1 class="pdh-title admin-editable-text" contenteditable="true" onblur="activeProjectData.title = this.textContent.trim()">${p.title || 'Tiêu đề chiến dịch'}</h1>
+            </div>
+            <div class="pdh-meta-row">
+              <span class="pdh-date"><i class="fas fa-calendar-alt"></i> <span class="admin-editable-text" contenteditable="true" onblur="activeProjectData.date = this.textContent.trim()">${p.date || '05/2026 – 07/2026'}</span></span>
+              ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet bài đăng"}</a>` : ""}
+            </div>
+          </div>
+
+          <p class="pdh-tagline admin-editable-text" contenteditable="true" onblur="activeProjectData.tagline = this.textContent.trim()">${p.tagline || 'Tagline mô tả chiến dịch...'}</p>
+
+          <div class="pdh-psr-grid">
+            <div class="pdh-psr-box">
+              <div class="pdh-psr-label pdh-psr-problem"><i class="fas fa-bullseye"></i> Problem / Thử thách</div>
+              <div class="pdh-psr-text admin-editable-text" contenteditable="true" onblur="activeProjectData.problem = this.textContent.trim()">${p.problem || "Tối ưu hóa chiến dịch truyền thông."}</div>
+            </div>
+            <div class="pdh-psr-box">
+              <div class="pdh-psr-label pdh-psr-strategy"><i class="fas fa-lightbulb"></i> Core Strategy / Ý tưởng</div>
+              <div class="pdh-psr-text admin-editable-text" contenteditable="true" onblur="activeProjectData.strategy = this.textContent.trim()">${p.strategy || "Chiến lược nội dung viral..."}</div>
+            </div>
+            <div class="pdh-psr-box">
+              <div class="pdh-psr-label pdh-psr-exec"><i class="fas fa-layer-group"></i> Multi-Format Execution</div>
+              <div class="pdh-psr-text admin-editable-text" contenteditable="true" onblur="activeProjectData.execution = this.textContent.trim()">${p.execution || "Thực thi đa định dạng..."}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // 2. PHẦN BÀI ĐĂNG NỔI BẬT (.brief-edge-card NGUYÊN BẢN CỦA SCRIPT.JS)
+      const posts = p.featuredPosts || [];
+      html += `
+        <div style="margin-top: 2.5rem; margin-bottom: 3rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4rem;">
+            <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 0;">
+              Bài Đăng Nổi Bật (${posts.length})
+            </h2>
+            <button class="admin-btn-sm" onclick="addNewFeaturedPost()" style="padding: 0.5rem 0.9rem;">
+              <i class="fas fa-plus"></i> Thêm bài đăng nổi bật
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;">
+            ${posts.map((post, pIdx) => {
+              const allImgs = post.imgs || [];
+              const imgsGalleryHtml = allImgs.map((imgSrc, idx) => `
+                <div class="gallery-item ${idx === 0 ? 'active' : ''}">
+                  <img src="${getImgPreviewSrc(imgSrc)}" alt="${post.caption}" class="brief-edge-img" onerror="handleImgError(this)" />
+                </div>
+              `).join('');
+
+              const miniThumbsHtml = allImgs.map((imgSrc, iIdx) => `
+                <div class="admin-mini-thumb-item">
+                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
+                  <button type="button" class="admin-thumb-del" onclick="deletePostImg(${pIdx}, ${iIdx})">&times;</button>
+                </div>
+              `).join('');
+
+              return `
+                <div class="brief-edge-card">
+                  <!-- LOCKET GALLERY NGUYÊN BẢN -->
+                  <div class="locket-gallery brief-edge-gallery">
+                    ${imgsGalleryHtml || '<div class="gallery-item active"><img src="photo/xdcc.jpg" class="brief-edge-img" /></div>'}
+                    <div class="gallery-counter">1/${allImgs.length || 1}</div>
+                  </div>
+
+                  <div class="brief-edge-body">
+                    <div class="brief-edge-header">
+                      <div class="brief-edge-title admin-editable-text" style="font-size: 0.92rem; line-height: 1.5; color: #1e293b;" contenteditable="true" onblur="activeProjectData.featuredPosts[${pIdx}].caption = this.textContent.trim()">
+                        ${formatCaptionHTML(post.caption)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- THANH CÔNG CỤ QUẢN TRỊ ẢNH CHO BÀI ĐĂNG NÀY -->
+                  <div class="admin-card-toolbar">
+                    <div class="admin-toolbar-row">
+                      <span style="font-size: 0.78rem; font-weight: 700; color: #475569;">
+                        <i class="fas fa-images"></i> Đang có ${allImgs.length} ảnh
+                      </span>
+                      <div style="display: flex; gap: 0.4rem;">
+                        <label class="admin-btn-sm" style="cursor: pointer;">
+                          <i class="fas fa-cloud-arrow-up"></i> Gắn thêm ảnh
+                          <input type="file" multiple accept="image/*" style="display: none;" onchange="handlePostImgsChange(event, ${pIdx})" />
+                        </label>
+                        <button class="admin-btn-del" onclick="deleteFeaturedPostCard(${pIdx})">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="admin-mini-thumbs">${miniThumbsHtml}</div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      // 3. PHẦN TỪ BRIEF CHO ĐẾN THÀNH PHẨM (briefToOutput NGUYÊN BẢN CỦA SCRIPT.JS)
+      const briefs = p.briefToOutput || [];
+      html += `
+        <div style="margin-top: 2.5rem; margin-bottom: 3rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4rem;">
+            <h2 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 0;">
+              Từ Brief Cho Đến Thành Phẩm (${briefs.length})
+            </h2>
+            <button class="admin-btn-sm" onclick="addNewBriefOutput()" style="padding: 0.5rem 0.9rem;">
+              <i class="fas fa-plus"></i> Thêm đề mục Brief mới
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.8rem; align-items: stretch;">
+            ${briefs.map((b, bIdx) => {
+              const allImgs = [
+                ...(b.thumb ? [b.thumb] : []),
+                ...(b.briefImgs || []),
+                ...(b.resultImgs || [])
+              ];
+
+              const imgsGalleryHtml = allImgs.map((imgSrc, idx) => `
+                <div class="gallery-item ${idx === 0 ? 'active' : ''}">
+                  <img src="${getImgPreviewSrc(imgSrc)}" alt="${b.title}" class="brief-edge-img" onerror="handleImgError(this)" />
+                </div>
+              `).join('');
+
+              const briefMiniThumbs = (b.briefImgs || []).map((imgSrc, iIdx) => `
+                <div class="admin-mini-thumb-item">
+                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
+                  <button type="button" class="admin-thumb-del" onclick="deleteBriefImg(${bIdx}, ${iIdx})">&times;</button>
+                </div>
+              `).join('');
+
+              const resultMiniThumbs = (b.resultImgs || []).map((imgSrc, iIdx) => `
+                <div class="admin-mini-thumb-item">
+                  <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
+                  <button type="button" class="admin-thumb-del" onclick="deleteResultImg(${bIdx}, ${iIdx})">&times;</button>
+                </div>
+              `).join('');
+
+              return `
+                <div class="brief-edge-card">
+                  <!-- LOCKET GALLERY NGUYÊN BẢN -->
+                  <div class="locket-gallery brief-edge-gallery">
+                    ${imgsGalleryHtml || '<div class="gallery-item active"><img src="photo/xdcc.jpg" class="brief-edge-img" /></div>'}
+                    <div class="gallery-counter">1/${allImgs.length || 1}</div>
+                  </div>
+
+                  <div class="brief-edge-body">
+                    <div class="brief-edge-header">
+                      <div class="brief-edge-title">
+                        <a href="${b.link || '#'}" target="_blank" class="brief-title-link admin-editable-text" contenteditable="true" onblur="activeProjectData.briefToOutput[${bIdx}].title = this.textContent.trim()">${b.title || 'Tiêu đề đề mục brief'}</a>
+                      </div>
+                      <div class="brief-edge-note admin-editable-text" contenteditable="true" onblur="activeProjectData.briefToOutput[${bIdx}].note = this.textContent.trim()">${b.note || 'Ghi chú đề mục...'}</div>
+                    </div>
+
+                    <div class="brief-edge-footer">
+                      <div class="brief-edge-stats">
+                        <span class="brief-stat-pill"><i class="fas fa-eye"></i> <span class="admin-editable-text" contenteditable="true" onblur="activeProjectData.briefToOutput[${bIdx}].views = this.textContent.trim()">${b.views || '> 1.000'}</span> Lượt xem</span>
+                        <span class="brief-stat-pill"><i class="fas fa-users"></i> <span class="admin-editable-text" contenteditable="true" onblur="activeProjectData.briefToOutput[${bIdx}].reach = this.textContent.trim()">${b.reach || '> 500'}</span> Người xem</span>
+                      </div>
+                      <button class="admin-btn-del" onclick="deleteBriefCard(${bIdx})" title="Xóa đề mục brief này">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- THANH CÔNG CỤ GẮN ẢNH BRIEF VÀ THÀNH PHẨM -->
+                  <div class="admin-card-toolbar">
+                    <div>
+                      <div class="admin-toolbar-row">
+                        <span style="font-size: 0.76rem; font-weight: 700; color: #0369a1;">
+                          <i class="fas fa-file-lines"></i> Ảnh Bản Brief (${(b.briefImgs || []).length})
+                        </span>
+                        <label class="admin-btn-sm" style="cursor: pointer;">
+                          <i class="fas fa-cloud-arrow-up"></i> Gắn ảnh Brief
+                          <input type="file" multiple accept="image/*" style="display: none;" onchange="handleBriefImgsChange(event, ${bIdx})" />
+                        </label>
+                      </div>
+                      <div class="admin-mini-thumbs">${briefMiniThumbs || '<span style="font-size:0.72rem;color:#94a3b8;">Chưa có ảnh</span>'}</div>
+                    </div>
+
+                    <div style="border-top: 1px dashed #e2e8f0; padding-top: 0.5rem; margin-top: 0.25rem;">
+                      <div class="admin-toolbar-row">
+                        <span style="font-size: 0.76rem; font-weight: 700; color: #15803d;">
+                          <i class="fas fa-image"></i> Ảnh Ấn Phẩm Hoàn Thiện (${(b.resultImgs || []).length})
+                        </span>
+                        <label class="admin-btn-sm" style="cursor: pointer;">
+                          <i class="fas fa-cloud-arrow-up"></i> Gắn ảnh Thành phẩm
+                          <input type="file" multiple accept="image/*" style="display: none;" onchange="handleResultImgsChange(event, ${bIdx})" />
+                        </label>
+                      </div>
+                      <div class="admin-mini-thumbs">${resultMiniThumbs || '<span style="font-size:0.72rem;color:#94a3b8;">Chưa có ảnh</span>'}</div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+
+      // Khởi chạy lại locket galleries slider nếu có
+      if (typeof initLocketGalleries === 'function') {
+        initLocketGalleries();
+      }
+    }
+
+        // --- ACTIONS GẮN ẢNH CHO BÀI ĐĂNG NỔI BẬT (FEATURED POSTS) ---
+    let currentUploadPostIndex = -1;
+
+    window.triggerAddPostImg = function(pIdx) {
+      currentUploadPostIndex = pIdx;
+      const fileInput = document.getElementById('globalPostFileInput');
+      fileInput.value = '';
+      fileInput.click();
+    };
+
+    document.getElementById('globalPostFileInput').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || currentUploadPostIndex === -1) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.featuredPosts[currentUploadPostIndex].imgs) {
+          activeProjectData.featuredPosts[currentUploadPostIndex].imgs = [];
+        }
+        activeProjectData.featuredPosts[currentUploadPostIndex].imgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã gắn ${files.length} ảnh vào bài viết! Bấm "Lưu thay đổi chiến dịch này".`, 'success');
+    });
+
+    window.deletePostImg = function(pIdx, iIdx) {
+      if (activeProjectData.featuredPosts[pIdx]) {
+        activeProjectData.featuredPosts[pIdx].imgs.splice(iIdx, 1);
+        renderProjectDetailClone();
+      }
+    };
+
+    window.deleteFeaturedPostCard = function(pIdx) {
+      if (confirm('Xóa bài đăng nổi bật này?')) {
+        activeProjectData.featuredPosts.splice(pIdx, 1);
+        renderProjectDetailClone();
+      }
+    };
+
+    window.addNewFeaturedPost = function() {
+      activeProjectData.featuredPosts.unshift({
+        caption: 'Tiêu đề bài đăng mới (gồm reels, bài viết viral)',
+        imgs: []
+      });
+      renderProjectDetailClone();
+      showToast('Đã thêm bài đăng mới lên đầu. Hãy gắn ảnh vào bài!', 'info');
+    };
+
+        // --- ACTIONS GẮN ẢNH CHO BRIEF TO OUTPUT ---
+    let currentUploadBriefIndex = -1;
+
+    window.triggerAddBriefImg = function(bIdx) {
+      currentUploadBriefIndex = bIdx;
+      const fileInput = document.getElementById('globalBriefFileInput');
+      fileInput.value = '';
+      fileInput.click();
+    };
+
+    document.getElementById('globalBriefFileInput').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || currentUploadBriefIndex === -1) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.briefToOutput[currentUploadBriefIndex].briefImgs) {
+          activeProjectData.briefToOutput[currentUploadBriefIndex].briefImgs = [];
+        }
+        activeProjectData.briefToOutput[currentUploadBriefIndex].briefImgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã gắn ${files.length} ảnh Brief!`, 'success');
+    });
+
+    let currentUploadResultIndex = -1;
+
+    window.triggerAddResultImg = function(bIdx) {
+      currentUploadResultIndex = bIdx;
+      const fileInput = document.getElementById('globalResultFileInput');
+      fileInput.value = '';
+      fileInput.click();
+    };
+
+    document.getElementById('globalResultFileInput').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length || currentUploadResultIndex === -1) return;
+
+      files.forEach(file => {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+
+        if (!activeProjectData.briefToOutput[currentUploadResultIndex].resultImgs) {
+          activeProjectData.briefToOutput[currentUploadResultIndex].resultImgs = [];
+        }
+        activeProjectData.briefToOutput[currentUploadResultIndex].resultImgs.push(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          ALL_DETECTED_PHOTOS.add(cleanName);
+          updatePendingUI();
+        }).catch(err => console.error('Lỗi encode base64:', err));
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      });
+
+      renderProjectDetailClone();
+      showToast(`✅ Đã gắn ${files.length} ảnh Thành phẩm!`, 'success');
+    });
+
+    window.deleteBriefImg = function(bIdx, iIdx) {
+      if (activeProjectData.briefToOutput[bIdx]) {
+        activeProjectData.briefToOutput[bIdx].briefImgs.splice(iIdx, 1);
+        renderProjectDetailClone();
+      }
+    };
+
+    window.deleteResultImg = function(bIdx, iIdx) {
+      if (activeProjectData.briefToOutput[bIdx]) {
+        activeProjectData.briefToOutput[bIdx].resultImgs.splice(iIdx, 1);
+        renderProjectDetailClone();
+      }
+    };
+
+    window.deleteBriefCard = function(bIdx) {
+      if (confirm('Xóa đề mục Brief này?')) {
+        activeProjectData.briefToOutput.splice(bIdx, 1);
+        renderProjectDetailClone();
+      }
+    };
+
+    window.addNewBriefOutput = function() {
+      activeProjectData.briefToOutput.unshift({
+        title: 'Quy trình Brief cho ấn phẩm mới',
+        note: 'Bài viết nằm trong chiến dịch',
+        link: '',
+        views: '> 1.000',
+        reach: '> 500',
+        briefImgs: [],
+        resultImgs: []
+      });
+      renderProjectDetailClone();
+      showToast('Đã thêm đề mục Brief mới lên đầu!', 'info');
+    };
+
+    // LƯU TOÀN BỘ CHI TIẾT CHIẾN DỊCH ĐANG SỬA
+    document.getElementById('btnSaveCurrentProjectDetail').addEventListener('click', () => {
+      if (!activeProjectId) return;
+
+      PROJECTS_DATA[activeProjectId] = activeProjectData;
+      PENDING_CHANGES.script = true;
+      updatePendingUI();
+      showToast('🎉 Đã lưu toàn bộ chiến dịch! Bấm nút "Cập nhật lên GitHub" ở góc phải để đẩy code lên Vercel.', 'success');
+    });
+
+    // --- PHOTO HUB (KHO ẢNH) ---
+    function renderPhotoHubList() {
+      const container = document.getElementById('photoHubListContainer');
+      container.innerHTML = '';
+
+      const photosArray = Array.from(ALL_DETECTED_PHOTOS).filter(p => p.startsWith('photo/'));
+      if (photosArray.length === 0) {
+        container.innerHTML = '<p style="color: #64748b; grid-column: 1/-1;">Chưa có ảnh nào.</p>';
+        return;
+      }
+
+      photosArray.forEach(path => {
+        const card = document.createElement('div');
+        card.style.background = '#ffffff';
+        card.style.border = '1px solid #e2e8f0';
+        card.style.borderRadius = '10px';
+        card.style.overflow = 'hidden';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+
+        const fileName = path.split('/').pop();
+        const displaySrc = getImgPreviewSrc(path);
+
+        card.innerHTML = `
+          <div style="aspect-ratio: 1; background: #f1f5f9; overflow: hidden;">
+            <img src="${displaySrc}" alt="${fileName}" style="width: 100%; height: 100%; object-fit: cover;" onerror="handleImgError(this)" />
+          </div>
+          <div style="padding: 0.65rem; display: flex; flex-direction: column; gap: 0.3rem;">
+            <span style="font-size: 0.78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${fileName}">${fileName}</span>
+            <button type="button" class="admin-btn-sm" style="justify-content: center;" onclick="copyPhotoPath('${path}')">
+              <i class="fas fa-copy"></i> Sao chép link
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.copyPhotoPath = function(path) {
+      navigator.clipboard.writeText(path).then(() => {
+        showToast(`Đã sao chép: "${path}"`, 'success');
+      });
+    };
+
+    const photoHubBigDropzone = document.getElementById('photoHubBigDropzone');
+    const photoHubBigFileInput = document.getElementById('photoHubBigFileInput');
+
+    photoHubBigDropzone.addEventListener('click', () => photoHubBigFileInput.click());
+    photoHubBigDropzone.addEventListener('dragover', (e) => { e.preventDefault(); photoHubBigDropzone.style.borderColor = '#0284c7'; });
+    photoHubBigDropzone.addEventListener('dragleave', () => { photoHubBigDropzone.style.borderColor = '#cbd5e1'; });
+    photoHubBigDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      photoHubBigDropzone.style.borderColor = '#cbd5e1';
+      handlePhotoHubBatchUpload(e.dataTransfer.files);
+    });
+    photoHubBigFileInput.addEventListener('change', (e) => {
+      handlePhotoHubBatchUpload(e.target.files);
+    });
+
+        async function handlePhotoHubBatchUpload(files) {
+      if (!files || files.length === 0) return;
+
+      showToast(`Đang tải lên ${files.length} ảnh...`, 'info');
+      for (const file of Array.from(files)) {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+        ALL_DETECTED_PHOTOS.add(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          updatePendingUI();
+        }).catch(console.error);
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      }
+      renderPhotoHubList();
+      showToast('✅ Đã tải ảnh lên Kho Ảnh! Bấm Cập nhật lên GitHub để đẩy lên Vercel.', 'success');
+    }
+
+    // --- TAB THIẾT KẾ (CLONE DESIGN.HTML) ---
+    function parseDesignHtml(html) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const cards = doc.querySelectorAll('.design-card');
+      DESIGN_ITEMS = [];
+
+      cards.forEach(card => {
+        const imgs = Array.from(card.querySelectorAll('.gallery-item img')).map(img => {
+          const src = img.getAttribute('src');
+          ALL_DETECTED_PHOTOS.add(src);
+          return src;
+        });
+        const title = card.querySelector('.design-info h3')?.textContent?.trim() || '';
+        const desc = card.querySelector('.design-info p')?.textContent?.trim() || '';
+        const tools = Array.from(card.querySelectorAll('.tool-tag')).map(t => t.textContent.trim());
+        const linkEl = card.querySelector('.design-link');
+        const link = linkEl?.getAttribute('href') || '#';
+
+        DESIGN_ITEMS.push({ title, desc, tools, link, imgs });
+      });
+    }
+
+    function renderDesignGridClone() {
+      const grid = document.getElementById('designGridRenderContainer');
+      grid.innerHTML = '';
+
+      if (DESIGN_ITEMS.length === 0) {
+        grid.innerHTML = '<p style="color: #64748b;">Chưa có ấn phẩm thiết kế nào.</p>';
+        return;
+      }
+
+      DESIGN_ITEMS.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'design-card';
+        card.style.breakInside = 'avoid';
+        card.style.display = 'inline-block';
+        card.style.width = '100%';
+        card.style.marginBottom = '1.5rem';
+
+        const mainImg = item.imgs[0] || 'photo/xdcc.jpg';
+        const displaySrc = getImgPreviewSrc(mainImg);
+
+        const imgsHtml = item.imgs.map((s, i) => `
+          <div class="gallery-item ${i === 0 ? 'active' : ''}">
+            <img src="${getImgPreviewSrc(s)}" alt="${item.title}" onerror="handleImgError(this)" />
+          </div>
+        `).join('');
+
+        const toolsHtml = item.tools.map(t => `<span class="tool-tag">${t}</span>`).join('');
+
+        card.innerHTML = `
+          <div class="locket-gallery" data-current="0" style="position: relative;">
+            ${imgsHtml}
+            <div class="gallery-counter">1/${item.imgs.length}</div>
+            <button class="admin-thumb-overlay-btn" onclick="editDesignModalItem(${index})">
+              <i class="fas fa-pen"></i> Sửa ấn phẩm
+            </button>
+          </div>
+          <div class="design-info">
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="design-tools">${toolsHtml}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+              <a href="${item.link}" target="_blank" class="design-link"><i class="fas fa-arrow-up-right-from-square"></i> Xem bài viết</a>
+              <button class="admin-btn-del" onclick="deleteDesignItem(${index})"><i class="fas fa-trash"></i> Xóa</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    const modalDesign = document.getElementById('modalDesign');
+    const designModalDropzone = document.getElementById('designModalDropzone');
+    const designModalFileInput = document.getElementById('designModalFileInput');
+    const designModalPreviewThumbs = document.getElementById('designModalPreviewThumbs');
+
+    document.getElementById('btnOpenAddDesignModal').addEventListener('click', () => {
+      document.getElementById('modalDesignTitle').textContent = 'Thêm Ấn Phẩm Mới';
+      document.getElementById('editDesignIndex').value = -1;
+      document.getElementById('dTitle').value = '';
+      document.getElementById('dDesc').value = '';
+      document.getElementById('dTools').value = '';
+      document.getElementById('dLink').value = '';
+      currentModalImages = [];
+      renderModalDesignThumbs();
+      modalDesign.classList.add('active');
+    });
+
+    function closeDesignModal() { modalDesign.classList.remove('active'); }
+
+    window.editDesignModalItem = function(index) {
+      const item = DESIGN_ITEMS[index];
+      document.getElementById('modalDesignTitle').textContent = 'Chỉnh sửa Ấn Phẩm';
+      document.getElementById('editDesignIndex').value = index;
+      document.getElementById('dTitle').value = item.title;
+      document.getElementById('dDesc').value = item.desc;
+      document.getElementById('dTools').value = item.tools.join(', ');
+      document.getElementById('dLink').value = item.link;
+      currentModalImages = [...item.imgs];
+      renderModalDesignThumbs();
+      modalDesign.classList.add('active');
+    };
+
+    window.deleteDesignItem = function(index) {
+      if (confirm(`Bạn có chắc muốn xóa ấn phẩm "${DESIGN_ITEMS[index].title}" không?`)) {
+        DESIGN_ITEMS.splice(index, 1);
+        renderDesignGridClone();
+        PENDING_CHANGES.design = true;
+        updatePendingUI();
+        showToast('Đã xóa ấn phẩm! Bấm "Cập nhật lên GitHub" để đẩy code.', 'info');
+      }
+    };
+
+    designModalDropzone.addEventListener('click', () => designModalFileInput.click());
+        designModalFileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      for (const file of files) {
+        const cleanName = 'photo/' + sanitizeFileName(file.name);
+        pendingFileObjects.push({ file, cleanName });
+
+        const previewUrl = URL.createObjectURL(file);
+        LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+        currentModalImages.push(cleanName);
+        ALL_DETECTED_PHOTOS.add(cleanName);
+
+        file.arrayBuffer().then(buf => {
+          const bytes = new Uint8Array(buf);
+          let binary = '';
+          const len = bytes.byteLength;
+          for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(item => item.path !== cleanName);
+          PENDING_CHANGES.newImages.push({ path: cleanName, content: base64 });
+          updatePendingUI();
+        }).catch(console.error);
+
+        if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+      }
+      renderModalDesignThumbs();
+      showToast(`✅ Đã thêm ${files.length} ảnh vào ấn phẩm!`, 'success');
+    });
+
+    function renderModalDesignThumbs() {
+      designModalPreviewThumbs.innerHTML = '';
+      currentModalImages.forEach((imgSrc, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'admin-mini-thumb-item';
+        thumb.innerHTML = `
+          <img src="${getImgPreviewSrc(imgSrc)}" onerror="handleImgError(this)" />
+          <button type="button" class="admin-thumb-del" onclick="removeModalDesignImg(${idx})">&times;</button>
+        `;
+        designModalPreviewThumbs.appendChild(thumb);
+      });
+    }
+
+    window.removeModalDesignImg = function(idx) {
+      currentModalImages.splice(idx, 1);
+      renderModalDesignThumbs();
+    };
+
+    document.getElementById('btnSaveDesignSubmit').addEventListener('click', () => {
+      const title = document.getElementById('dTitle').value.trim();
+      if (!title) { alert('Vui lòng nhập tiêu đề ấn phẩm!'); return; }
+      if (currentModalImages.length === 0) { alert('Vui lòng gắn ít nhất 1 ảnh cho ấn phẩm!'); return; }
+
+      const desc = document.getElementById('dDesc').value.trim();
+      const tools = document.getElementById('dTools').value.split(',').map(s => s.trim()).filter(Boolean);
+      const link = document.getElementById('dLink').value.trim() || '#';
+      const editIndex = parseInt(document.getElementById('editDesignIndex').value);
+
+      const newItem = { title, desc, tools, link, imgs: currentModalImages };
+
+      if (editIndex >= 0) {
+        DESIGN_ITEMS[editIndex] = newItem;
+      } else {
+        DESIGN_ITEMS.unshift(newItem);
+      }
+
+      renderDesignGridClone();
+      closeDesignModal();
+      PENDING_CHANGES.design = true;
+      updatePendingUI();
+      showToast('Đã lưu ấn phẩm! Nhớ bấm "Cập nhật lên GitHub" để đẩy lên Vercel.', 'success');
+    });
+
+    // --- TAB TRANG CHỦ & CẤU HÌNH ---
+    document.getElementById('btnSaveHomeTab').addEventListener('click', () => {
+      PENDING_CHANGES.home = true;
+      updatePendingUI();
+      showToast('Đã ghi nhận thay đổi trang chủ! Nhớ bấm "Cập nhật lên GitHub".', 'success');
+    });
+
+    document.getElementById('btnSaveConfigTab').addEventListener('click', async () => {
+      const pat = document.getElementById('cfgTokenPat').value.trim();
+      const owner = document.getElementById('cfgOwnerInput').value.trim();
+      const repo = document.getElementById('cfgRepoInput').value.trim();
+      const branch = document.getElementById('cfgBranchInput').value.trim();
+
+      if (!pat) { alert('Vui lòng nhập Token GitHub (PAT)!'); return; }
+
+      GITHUB_CONFIG = { pat, owner, repo, branch };
+      localStorage.setItem('lac_pat', pat);
+      localStorage.setItem('lac_owner', owner);
+      localStorage.setItem('lac_repo', repo);
+      localStorage.setItem('lac_branch', branch);
+
+      const ok = await checkGitHubConnection();
+      if (ok) {
+        showToast('Kết nối GitHub thành công!', 'success');
+        loadAllData();
+      }
+    });
+
+    document.getElementById('btnClearConfigTab').addEventListener('click', () => {
+      if (confirm('Xóa token đã lưu trên trình duyệt?')) {
+        localStorage.removeItem('lac_pat');
+        GITHUB_CONFIG.pat = '';
+        document.getElementById('cfgTokenPat').value = '';
+        checkGitHubConnection();
+        showToast('Đã xóa token GitHub.', 'info');
+      }
+    });
+
+    // ============================================================
+    // EDITOR CHUNG CHO CÁC TRANG DẠNG THẺ LẶP (ai.html, standalone.html)
+    // ============================================================
+    const SIMPLE_PAGES = [
+      {
+        key: 'ai',
+        file: 'ai.html',
+        groups: [
+          {
+            name: 'Kịch bản & Quy trình Make.com',
+            cardClass: 'ai-project-card',
+            fields: [
+              { k: 'title', sel: '.ai-project-title', label: 'Tiêu đề' },
+              { k: 'desc', sel: '.ai-project-desc', label: 'Mô tả' }
+            ]
+          }
+        ]
+      },
+      {
+        key: 'standalone',
+        file: 'standalone.html',
+        groups: [
+          {
+            name: 'Từ Brief Cho Đến Thành Phẩm',
+            cardClass: 'brief-edge-card',
+            fields: [
+              { k: 'title', sel: '.brief-title-link', label: 'Tiêu đề' },
+              { k: 'note', sel: '.brief-edge-note', label: 'Ghi chú' }
+            ]
+          },
+          {
+            name: 'Bài Đăng Nổi Bật (Meme)',
+            cardClass: 'meme-card',
+            fields: [
+              { k: 'caption', sel: '.meme-caption', inner: 'p', label: 'Caption' }
+            ]
+          },
+          {
+            name: 'Video Reels',
+            cardClass: 'reel-card',
+            fields: [
+              { k: 'caption', sel: '.reel-caption', label: 'Caption' }
+            ]
+          }
+        ]
+      }
+    ];
+
+    const PAGE_STATE = {};
+    // Ghi lại những chỗ nguồn trên GitHub đã bị đổi sau khi app nạp dữ liệu
+    let PUSH_CONFLICTS = [];
+
+    function reFieldTag(tag, cls, inner) {
+      // Cho phép thuộc tính khác đứng trước class (vd: <a href=... class=...>)
+      const head = '<' + tag + '[^>]*class="' + cls + '"[^>]*>';
+      if (inner) {
+        return new RegExp('(' + head + '[^]*?<' + inner + '>)([^]*?)(</' + inner + '>)');
+      }
+      return new RegExp('(' + head + ')([^]*?)(</' + tag + '>)');
+    }
+
+    function reCardOpen(cls) {
+      return new RegExp('<div class="' + cls + '"[^>]*>', 'g');
+    }
+
+    // Cắt vùng mã nguồn của từng thẻ, chặn ở thẻ kế tiếp hoặc hết section
+    function sliceCards(raw, cardClass) {
+      const re = reCardOpen(cardClass);
+      const starts = [];
+      let m;
+      while ((m = re.exec(raw)) !== null) starts.push(m.index);
+
+      const segs = [];
+      for (let i = 0; i < starts.length; i++) {
+        let end;
+        if (i + 1 < starts.length) {
+          end = starts[i + 1];
+        } else {
+          const secEnd = raw.indexOf('</section>', starts[i]);
+          end = secEnd === -1 ? raw.length : secEnd;
+        }
+        segs.push({ start: starts[i], end: end, text: raw.slice(starts[i], end) });
+      }
+      return segs;
+    }
+
+    function parseSimplePage(cfg, raw) {
+      const doc = new DOMParser().parseFromString(raw, 'text/html');
+      const state = { file: cfg.file, groups: [] };
+
+      cfg.groups.forEach(g => {
+        const domCards = doc.querySelectorAll('.' + g.cardClass);
+        const segs = sliceCards(raw, g.cardClass);
+        const cards = [];
+
+        domCards.forEach((el, i) => {
+          const seg = segs[i];
+          const fields = [];
+
+          g.fields.forEach(f => {
+            const domEl = el.querySelector(f.sel);
+            if (!domEl || !seg) return;
+            const textEl = f.inner ? domEl.querySelector(f.inner) : domEl;
+            if (!textEl) return;
+            const tag = domEl.tagName.toLowerCase();
+            const cls = domEl.getAttribute('class') || '';
+            const mm = seg.text.match(reFieldTag(tag, cls, f.inner));
+            // Chỉ cho sửa khi vá ngược lại chắc chắn trúng đúng đoạn mã nguồn
+            const safe = !!(mm && sameText(mm[2], textEl.textContent));
+            fields.push({
+              k: f.k, label: f.label, tag: tag, cls: cls, inner: f.inner || null,
+              text: textEl.textContent.trim(),
+              origText: textEl.textContent.trim(),
+              safe: safe, dirty: false
+            });
+          });
+
+          const imgs = [];
+          el.querySelectorAll('img').forEach(im => {
+            imgs.push({ src: im.getAttribute('src') || '', newSrc: null });
+          });
+
+          cards.push({ fields: fields, imgs: imgs });
+        });
+
+        state.groups.push({ name: g.name, cardClass: g.cardClass, cards: cards });
+      });
+
+      PAGE_STATE[cfg.key] = state;
+      return state;
+    }
+
+    function renderSimplePage(cfg) {
+      const host = document.getElementById('pageEditor-' + cfg.key);
+      const st = PAGE_STATE[cfg.key];
+      if (!host) return;
+      if (!st) { host.innerHTML = '<p style="color:#64748b;">Chưa nạp được dữ liệu.</p>'; return; }
+
+      const K = "'" + cfg.key + "'";
+      let html = '';
+
+      st.groups.forEach((grp, gi) => {
+        html += '<h3 style="font-size:1.05rem;font-weight:800;color:#0284c7;margin:1.6rem 0 0.9rem;">'
+             + grp.name + ' (' + grp.cards.length + ')</h3>';
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.4rem;">';
+
+        grp.cards.forEach((card, ci) => {
+          let imgsHtml = '';
+          card.imgs.forEach((im, ii) => {
+            const shown = getImgPreviewSrc(im.newSrc || im.src);
+            const args = K + ', ' + gi + ', ' + ci + ', ' + ii;
+            imgsHtml += '<div style="position:relative;width:84px;height:84px;border-radius:8px;overflow:hidden;border:1px solid #e2e8f0;">'
+              + '<img src="' + shown + '" onerror="handleImgError(this)" style="width:100%;height:100%;object-fit:cover;" />'
+              + '<label title="Đổi ảnh này" style="position:absolute;left:0;right:0;bottom:0;background:rgba(2,132,199,.92);color:#fff;font-size:0.62rem;font-weight:700;text-align:center;padding:3px 0;cursor:pointer;">'
+              + 'Đổi ảnh<input type="file" accept="image/*" style="display:none;" onchange="handleSimplePageImg(event, ' + args + ')" />'
+              + '</label></div>';
+          });
+
+          let fieldsHtml = '';
+          card.fields.forEach((f, fi) => {
+            const args = K + ', ' + gi + ', ' + ci + ', ' + fi;
+            const lbl = '<div style="font-size:0.7rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:0.25rem;">';
+            if (f.safe) {
+              fieldsHtml += '<div style="margin-bottom:0.7rem;">' + lbl + f.label + '</div>'
+                + '<div class="admin-editable-text" contenteditable="true" style="font-size:0.88rem;line-height:1.55;color:#1e293b;"'
+                + ' onblur="updateSimpleField(event, ' + args + ')">'
+                + escapeHtmlText(f.text) + '</div></div>';
+            } else {
+              fieldsHtml += '<div style="margin-bottom:0.7rem;">' + lbl + f.label
+                + ' <span style="color:#f59e0b;font-weight:600;text-transform:none;">(chưa sửa được tự động)</span></div>'
+                + '<div style="font-size:0.85rem;color:#94a3b8;">' + escapeHtmlText(f.text) + '</div></div>';
+            }
+          });
+
+          html += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;">'
+            + (imgsHtml ? '<div style="display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:0.9rem;">' + imgsHtml + '</div>' : '')
+            + fieldsHtml
+            + '</div>';
+        });
+
+        html += '</div>';
+      });
+
+      host.innerHTML = html;
+    }
+
+    window.updateSimpleField = function(ev, pageKey, gi, ci, fi) {
+      const st = PAGE_STATE[pageKey];
+      if (!st) return;
+      const f = st.groups[gi].cards[ci].fields[fi];
+      const val = ev.target.textContent.trim();
+      if (f.text === val) return;
+      f.text = val;
+      f.dirty = true;
+      PENDING_CHANGES[pageKey] = true;
+      updatePendingUI();
+    };
+
+    window.handleSimplePageImg = function(ev, pageKey, gi, ci, ii) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+
+      const cleanName = 'photo/' + sanitizeFileName(file.name);
+      pendingFileObjects.push({ file: file, cleanName: cleanName });
+
+      const previewUrl = URL.createObjectURL(file);
+      LOCAL_PREVIEW_CACHE[cleanName] = previewUrl;
+      ALL_DETECTED_PHOTOS.add(cleanName);
+
+      const st = PAGE_STATE[pageKey];
+      st.groups[gi].cards[ci].imgs[ii].newSrc = cleanName;
+      PENDING_CHANGES[pageKey] = true;
+
+      file.arrayBuffer().then(buf => {
+        const bytes = new Uint8Array(buf);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+        PENDING_CHANGES.newImages = PENDING_CHANGES.newImages.filter(it => it.path !== cleanName);
+        PENDING_CHANGES.newImages.push({ path: cleanName, content: btoa(binary) });
+        updatePendingUI();
+      }).catch(console.error);
+
+      if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
+
+      const cfg = SIMPLE_PAGES.find(p => p.key === pageKey);
+      renderSimplePage(cfg);
+      renderPhotoHubList();
+      updatePendingUI();
+      showToast('Đã đổi ảnh. Nhớ bấm Cập nhật lên GitHub.', 'success');
+    };
+
+    function generateUpdatedSimplePage(cfg, originalHtml) {
+      const st = PAGE_STATE[cfg.key];
+      if (!st) return originalHtml;
+      let out = originalHtml;
+
+      st.groups.forEach(grp => {
+        for (let i = 0; i < grp.cards.length; i++) {
+          const card = grp.cards[i];
+          const hasEdit = card.fields.some(f => f.safe && f.dirty) || card.imgs.some(im => im.newSrc);
+          if (!hasEdit) continue;
+
+          const segs = sliceCards(out, grp.cardClass);
+          const seg = segs[i];
+          if (!seg) continue;
+
+          let txt = seg.text;
+
+          card.fields.forEach(f => {
+            if (!f.safe || !f.dirty) return;
+            txt = txt.replace(reFieldTag(f.tag, f.cls, f.inner), function(all, a, b, c) {
+              if (sameText(b, f.text)) return all;
+              // Nguồn trên GitHub đã khác lúc nạp -> có người sửa nơi khác, không ghi đè
+              if (!sameText(b, f.origText)) {
+                PUSH_CONFLICTS.push(cfg.file + ' → ' + f.label);
+                return all;
+              }
+              return a + escapeHtmlText(f.text) + c;
+            });
+          });
+
+          let n = 0;
+          txt = txt.replace(/<img([^>]*?)src="([^"]*)"/g, function(all, attrs, src) {
+            const im = card.imgs[n++];
+            if (!im || !im.newSrc || im.newSrc === src) return all;
+            if (src !== im.src) {
+              PUSH_CONFLICTS.push(cfg.file + ' → ảnh ' + src);
+              return all;
+            }
+            return '<img' + attrs + 'src="' + im.newSrc + '"';
+          });
+
+          out = out.slice(0, seg.start) + txt + out.slice(seg.end);
+        }
+      });
+
+      return out;
+    }
+
+    async function loadSimplePages() {
+      for (const cfg of SIMPLE_PAGES) {
+        let raw = '';
+        try {
+          const f = await fetchGitHubFile(cfg.file);
+          raw = f.content;
+        } catch (e) {
+          raw = await (await fetch(cfg.file)).text();
+        }
+        parseSimplePage(cfg, raw);
+        renderSimplePage(cfg);
+      }
+    }
+
+    // --- TẠO FILE CAMPAIGNS.HTML MỚI (VÁ ĐÚNG TỪNG BLOCK, GIỮ NGUYÊN ĐỊNH DẠNG FILE) ---
+    function escapeHtmlText(str) {
+      return String(str == null ? '' : str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // Giải mã entity HTML (&amp; &lt; &nbsp; ...) về ký tự thật
+    const _decodeTa = document.createElement('textarea');
+    function decodeHtmlText(str) {
+      _decodeTa.innerHTML = String(str == null ? '' : str);
+      return _decodeTa.value;
+    }
+
+    // So sánh text nguồn (còn entity) với text đã sửa, bỏ qua khoảng trắng/xuống dòng
+    function sameText(rawFromSource, plainFromData) {
+      const a = decodeHtmlText(rawFromSource).replace(/\s+/g, ' ').trim();
+      const b = String(plainFromData == null ? '' : plainFromData).replace(/\s+/g, ' ').trim();
+      return a === b;
+    }
+
+    function generateUpdatedCampaignsHtml(originalHtml) {
+      const CRLF = String.fromCharCode(13, 10);
+      const NL = originalHtml.indexOf(CRLF) !== -1 ? CRLF : String.fromCharCode(10);
+      const blockRe = /<div class="cmp-block(?: cmp-block-reverse)?">/g;
+      const starts = [];
+      let m;
+      while ((m = blockRe.exec(originalHtml)) !== null) starts.push(m.index);
+      if (starts.length === 0) throw new Error('Không tìm thấy .cmp-block nào trong campaigns.html');
+
+      let out = originalHtml.slice(0, starts[0]);
+
+      for (let i = 0; i < starts.length; i++) {
+        let end;
+        if (i + 1 < starts.length) {
+          end = starts[i + 1];
+        } else {
+          const secEnd = originalHtml.indexOf('</section>', starts[i]);
+          end = secEnd === -1 ? originalHtml.length : secEnd;
+        }
+
+        let seg = originalHtml.slice(starts[i], end);
+        const cmp = CAMPAIGN_BLOCKS_DATA[i];
+
+        if (cmp) {
+          if (cmp.img) {
+            seg = seg.replace(/(<div class="cmp-block-img-wrap">[\s\S]*?<img\s+src=")[^"]*(")/, `$1${cmp.img}$2`);
+          }
+          // Giữ nguyên thẻ icon <i>, chỉ thay phần chữ phía sau
+          const og = cmp.orig || {};
+          // Chỉ ghi đè khi nguồn vẫn đúng như lúc app nạp về
+          const guard = (b, newVal, origVal, label) => {
+            if (sameText(b, newVal)) return 'skip';
+            if (!sameText(b, origVal)) {
+              PUSH_CONFLICTS.push('campaigns.html → ' + label);
+              return 'skip';
+            }
+            return 'write';
+          };
+
+          seg = seg.replace(/(<span class="cmp-brand-tag[^"]*"[\s\S]*?<\/i>)([\s\S]*?)(<\/span)/,
+            (all, a, b, c) => guard(b, cmp.brandText, og.brandText, 'thương hiệu') === 'write'
+              ? `${a} ${escapeHtmlText(cmp.brandText)}${c}` : all);
+          seg = seg.replace(/(<span class="cmp-block-date"[\s\S]*?<\/i>)([\s\S]*?)(<\/span)/,
+            (all, a, b, c) => guard(b, cmp.dateText, og.dateText, 'thời gian') === 'write'
+              ? `${a} ${escapeHtmlText(cmp.dateText)}${c}` : all);
+          seg = seg.replace(/(class="cmp-block-title-link">)([\s\S]*?)(<i class="fas fa-arrow-right)/,
+            (all, a, b, c) => guard(b, cmp.titleText, og.titleText, 'tiêu đề') === 'write'
+              ? `${a}${NL}                ${escapeHtmlText(cmp.titleText)}${NL}                ${c}` : all);
+          seg = seg.replace(/(<p class="cmp-block-desc">)([\s\S]*?)(<\/p>)/,
+            (all, a, b, c) => guard(b, cmp.descText, og.descText, 'mô tả') === 'write'
+              ? `${a}${NL}              ${escapeHtmlText(cmp.descText)}${NL}            ${c}` : all);
+
+          let vIdx = 0;
+          seg = seg.replace(/(<span class="cmp-stat-val">)([\s\S]*?)(<\/span>)/g, (all, a, b, c) => {
+            const i2 = vIdx++;
+            const st = cmp.statCards && cmp.statCards[i2];
+            const os = og.statCards && og.statCards[i2];
+            if (!st || !os) return all;
+            return guard(b, st.val, os.val, 'số liệu') === 'write' ? `${a}${escapeHtmlText(st.val)}${c}` : all;
+          });
+          let lIdx = 0;
+          seg = seg.replace(/(<span class="cmp-stat-lbl">)([\s\S]*?)(<\/span>)/g, (all, a, b, c) => {
+            const i2 = lIdx++;
+            const st = cmp.statCards && cmp.statCards[i2];
+            const os = og.statCards && og.statCards[i2];
+            if (!st || !os) return all;
+            return guard(b, st.lbl, os.lbl, 'nhãn số liệu') === 'write' ? `${a}${escapeHtmlText(st.lbl)}${c}` : all;
+          });
+        }
+        out += seg;
+      }
+
+      const lastEnd = (function () {
+        const secEnd = originalHtml.indexOf('</section>', starts[starts.length - 1]);
+        return secEnd === -1 ? originalHtml.length : secEnd;
+      })();
+      return out + originalHtml.slice(lastEnd);
+    }
+
+    // --- TẠO SCRIPT.JS MỚI ---
+    function generateUpdatedScriptJs(originalScript) {
+      const marker = 'const PROJECTS_DATA = ';
+      const start = originalScript.indexOf(marker);
+      if (start === -1) throw new Error('Không tìm thấy PROJECTS_DATA trong script.js');
+
+      const objStart = start + marker.length;
+      let depth = 0;
+      let inString = false;
+      let stringChar = '';
+      let end = -1;
+
+      for (let i = objStart; i < originalScript.length; i++) {
+        const char = originalScript[i];
+        if (inString) {
+          if (char === '\\') { i++; continue; }
+          if (char === stringChar) inString = false;
+        } else {
+          if (char === '"' || char === "'" || char === '`') {
+            inString = true;
+            stringChar = char;
+          } else if (char === '{') depth++;
+          else if (char === '}') {
+            depth--;
+            if (depth === 0) { end = i + 1; break; }
+          }
+        }
+      }
+
+      if (end === -1) throw new Error('Không xác định được vùng kết thúc của PROJECTS_DATA');
+
+      const newJson = JSON.stringify(PROJECTS_DATA, null, 2);
+      return originalScript.substring(0, objStart) + newJson + originalScript.substring(end);
+    }
+
+    // --- TẠO DESIGN.HTML MỚI ---
+    function generateUpdatedDesignHtml(originalHtml) {
+      const gridStartTag = '<div class="design-grid">';
+      const startIndex = originalHtml.indexOf(gridStartTag);
+      if (startIndex === -1) throw new Error('Không tìm thấy class .design-grid trong design.html');
+
+      const cardsHtml = DESIGN_ITEMS.map(item => {
+        const isFacebook = item.link.includes('facebook');
+        const isTikTok = item.link.includes('tiktok');
+        const iconClass = isFacebook ? 'fab fa-facebook' : isTikTok ? 'fab fa-tiktok' : 'fas fa-arrow-up-right-from-square';
+
+        const galleryItemsHtml = item.imgs.map((img, i) => `
+              <div class="gallery-item${i === 0 ? ' active' : ''}">
+                <img src="${img}" alt="${item.title}" onerror="this.onerror=null; this.src='photo/xdcc.jpg'" />
+              </div>`).join('');
+
+        const toolsHtml = item.tools.map(t => `\n                <span class="tool-tag">${t}</span>`).join('');
+
+        return `
+          <!-- CARD: ${item.title} -->
+          <div class="design-card">
+            <div class="locket-gallery" data-current="0">${galleryItemsHtml}
+              <div class="gallery-counter">1/${item.imgs.length}</div>
+            </div>
+            <div class="design-info">
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
+              <div class="design-tools">${toolsHtml}
+              </div>
+              <a href="${item.link}" target="_blank" class="design-link">
+                <i class="${iconClass}"></i> Xem bài viết
+              </a>
+            </div>
+          </div>`;
+      }).join('\n');
+
+      const afterGrid = originalHtml.substring(startIndex + gridStartTag.length);
+      let depth = 1;
+      let closeIndex = -1;
+
+      for (let i = 0; i < afterGrid.length; i++) {
+        if (afterGrid.startsWith('<div', i)) depth++;
+        else if (afterGrid.startsWith('</div>', i)) {
+          depth--;
+          if (depth === 0) {
+            closeIndex = startIndex + gridStartTag.length + i;
+            break;
+          }
+        }
+      }
+
+      if (closeIndex === -1) throw new Error('Không tìm thấy thẻ đóng </div> của design-grid');
+
+      return originalHtml.substring(0, startIndex + gridStartTag.length) +
+        '\n' + cardsHtml + '\n        ' +
+        originalHtml.substring(closeIndex);
+    }
+
+    // --- TẠO INDEX.HTML MỚI (chỉ đụng vào phần thật sự thay đổi) ---
+    function generateUpdatedIndexHtml(originalHtml) {
+      let html = originalHtml;
+
+      const fullName = document.getElementById('homeEditName').value.trim();
+      const slogan = document.getElementById('homeEditSlogan').value.trim();
+      const cv = document.getElementById('homeEditCv').value.trim();
+
+      const statsList = [
+        document.getElementById('stat1ValInput').value.trim(),
+        document.getElementById('stat2ValInput').value.trim(),
+        document.getElementById('stat3ValInput').value.trim()
+      ];
+
+      if (fullName) {
+        html = html.replace(/(<div class="info-header">[\s\S]*?<h1>)([\s\S]*?)(<\/h1>)/,
+          (all, a, b, c) => sameText(b, fullName) ? all : `${a}${escapeHtmlText(fullName)}${c}`);
+        html = html.replace(/(<span class="nav-name">)([\s\S]*?)(<\/span>)/,
+          (all, a, b, c) => sameText(b, fullName) ? all : `${a}${escapeHtmlText(fullName)}${c}`);
+      }
+
+      if (slogan) {
+        html = html.replace(/(<p class="slogan">)([\s\S]*?)(<\/p>)/,
+          (all, a, b, c) => sameText(b, slogan) ? all : `${a}${escapeHtmlText(slogan)}${c}`);
+      }
+
+      if (cv) {
+        html = html.replace(/href="https:\/\/drive\.google\.com\/file[^"]*"/,
+          (all) => all === `href="${cv}"` ? all : `href="${cv}"`);
+      }
+
+      let statIndex = 0;
+      html = html.replace(/(<div class="dash-num"[^>]*>)([\s\S]*?)(<\/div>)/g, (all, a, b, c) => {
+        const val = statsList[statIndex++];
+        if (!val || sameText(b, val)) return all;
+        const numOnly = val.replace(/[^0-9]/g, '');
+        const suffix = val.includes('+') ? '+' : '';
+        return `<div class="dash-num" data-target="${numOnly}" data-suffix="${suffix}">${escapeHtmlText(val)}${c}`;
+      });
+
+      return html;
+    }
+
+    // --- ĐẨY TẤT CẢ THAY ĐỔI TRONG ĐÚNG 1 COMMIT (Git Data API) ---
+    async function pushAsSingleCommit(files, message) {
+      const branch = GITHUB_CONFIG.branch || 'main';
+
+      const ref = await ghRequest(`git/ref/heads/${branch}`);
+      const parentSha = ref.object.sha;
+      const parentCommit = await ghRequest(`git/commits/${parentSha}`);
+
+      const treeItems = [];
+      for (const f of files) {
+        const blob = await ghRequest('git/blobs', {
+          method: 'POST',
+          body: JSON.stringify({ content: f.content, encoding: f.encoding })
+        });
+        treeItems.push({ path: f.path, mode: '100644', type: 'blob', sha: blob.sha });
+      }
+
+      const tree = await ghRequest('git/trees', {
+        method: 'POST',
+        body: JSON.stringify({ base_tree: parentCommit.tree.sha, tree: treeItems })
+      });
+
+      const commit = await ghRequest('git/commits', {
+        method: 'POST',
+        body: JSON.stringify({ message, tree: tree.sha, parents: [parentSha] })
+      });
+
+      await ghRequest(`git/refs/heads/${branch}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ sha: commit.sha })
+      });
+
+      return commit;
+    }
+
+    btnPushGitHub.addEventListener('click', async () => {
+      if (!GITHUB_CONFIG.pat) {
+        alert('Vui lòng vào tab "Cấu hình" để nhập Token PAT trước khi cập nhật!');
+        document.querySelector('[data-tab="tab-settings-view"]').click();
+        return;
+      }
+
+      const originalBtnHtml = btnPushGitHub.innerHTML;
+      btnPushGitHub.disabled = true;
+      btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang chuẩn bị...';
+
+      try {
+        const files = [];
+        const summary = [];
+
+        for (const img of PENDING_CHANGES.newImages) {
+          files.push({ path: img.path, content: img.content, encoding: 'base64' });
+        }
+        if (PENDING_CHANGES.newImages.length) {
+          summary.push(`${PENDING_CHANGES.newImages.length} ảnh mới`);
+        }
+
+        // Luôn lấy bản mới nhất trên GitHub rồi mới vá, tránh ghi đè thay đổi của người khác
+        FILE_CACHE = {};
+        PUSH_CONFLICTS = [];
+
+        if (PENDING_CHANGES.campaignsHtml) {
+          btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang dựng campaigns.html...';
+          const cur = await fetchGitHubFile('campaigns.html');
+          const out = generateUpdatedCampaignsHtml(cur.content);
+          if (out !== cur.content) {
+            files.push({ path: 'campaigns.html', content: out, encoding: 'utf-8' });
+            summary.push('campaigns.html');
+          }
+        }
+
+        if (PENDING_CHANGES.script) {
+          btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang dựng script.js...';
+          const cur = await fetchGitHubFile('script.js');
+          const out = generateUpdatedScriptJs(cur.content);
+          if (out !== cur.content) {
+            files.push({ path: 'script.js', content: out, encoding: 'utf-8' });
+            summary.push('script.js (chi tiết chiến dịch)');
+          }
+        }
+
+        if (PENDING_CHANGES.design) {
+          btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang dựng design.html...';
+          const cur = await fetchGitHubFile('design.html');
+          const out = generateUpdatedDesignHtml(cur.content);
+          if (out !== cur.content) {
+            files.push({ path: 'design.html', content: out, encoding: 'utf-8' });
+            summary.push('design.html');
+          }
+        }
+
+        if (PENDING_CHANGES.home) {
+          btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang dựng index.html...';
+          const cur = await fetchGitHubFile('index.html');
+          const out = generateUpdatedIndexHtml(cur.content);
+          if (out !== cur.content) {
+            files.push({ path: 'index.html', content: out, encoding: 'utf-8' });
+            summary.push('index.html (trang chủ)');
+          }
+        }
+
+        for (const cfg of SIMPLE_PAGES) {
+          if (!PENDING_CHANGES[cfg.key]) continue;
+          btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang dựng ' + cfg.file + '...';
+          const cur = await fetchGitHubFile(cfg.file);
+          const out = generateUpdatedSimplePage(cfg, cur.content);
+          if (out !== cur.content) {
+            files.push({ path: cfg.file, content: out, encoding: 'utf-8' });
+            summary.push(cfg.file);
+          }
+        }
+
+        if (files.length === 0) {
+          showToast('Không có thay đổi nào cần đẩy lên.', 'info');
+          PENDING_CHANGES.newImages = [];
+          PENDING_CHANGES.campaignsHtml = false;
+          PENDING_CHANGES.script = false;
+          PENDING_CHANGES.design = false;
+          PENDING_CHANGES.home = false;
+          PENDING_CHANGES.ai = false;
+          PENDING_CHANGES.standalone = false;
+          updatePendingUI();
+          return;
+        }
+
+        const NLC = String.fromCharCode(10);
+
+        if (PUSH_CONFLICTS.length > 0) {
+          const goOn = confirm(
+            'CẢNH BÁO: ' + PUSH_CONFLICTS.length + ' chỗ trên GitHub đã bị sửa ở nơi khác '
+            + '(VS Code, GitHub Desktop...) sau khi mở app này:' + NLC + NLC
+            + PUSH_CONFLICTS.slice(0, 10).join(NLC) + NLC + NLC
+            + 'Những chỗ đó sẽ ĐƯỢC GIỮ NGUYÊN, không bị ghi đè.' + NLC
+            + 'Nên tải lại app (F5) để lấy bản mới nhất rồi sửa lại.' + NLC + NLC
+            + 'Vẫn đẩy phần còn lại lên?'
+          );
+          if (!goOn) {
+            showToast('Đã huỷ. Hãy tải lại trang (F5) để lấy bản mới nhất.', 'info');
+            return;
+          }
+        }
+        const fileList = files.map(f => '  - ' + f.path).join(NLC);
+        const ok = confirm(
+          'Sẽ tạo 1 commit lên ' + GITHUB_CONFIG.owner + '/' + GITHUB_CONFIG.repo +
+          ' (nhánh ' + (GITHUB_CONFIG.branch || 'main') + ') với ' + files.length + ' file:' + NLC + NLC +
+          fileList + NLC + NLC + 'Tiếp tục?'
+        );
+        if (!ok) {
+          showToast('Đã huỷ, chưa đẩy gì lên GitHub.', 'info');
+          return;
+        }
+
+        btnPushGitHub.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đẩy lên GitHub...';
+        const msg = '[Admin] Cập nhật ' + summary.join(', ');
+        const commit = await pushAsSingleCommit(files, msg);
+
+        PENDING_CHANGES.newImages = [];
+        PENDING_CHANGES.campaignsHtml = false;
+        PENDING_CHANGES.script = false;
+        PENDING_CHANGES.design = false;
+        PENDING_CHANGES.home = false;
+        PENDING_CHANGES.ai = false;
+        PENDING_CHANGES.standalone = false;
+        for (const cfg of SIMPLE_PAGES) {
+          const st = PAGE_STATE[cfg.key];
+          if (!st) continue;
+          st.groups.forEach(g => g.cards.forEach(c => {
+            c.fields.forEach(f => { f.dirty = false; });
+            c.imgs.forEach(im => { if (im.newSrc) { im.src = im.newSrc; im.newSrc = null; } });
+          }));
+        }
+        FILE_CACHE = {};
+        updatePendingUI();
+
+        showToast('🎉 Xong! Đã tạo commit ' + commit.sha.slice(0, 7) + ' với ' + files.length + ' file. Vercel đang deploy lại (~25s).', 'success');
+      } catch (err) {
+        showToast('Lỗi khi đẩy lên GitHub: ' + err.message, 'error');
+        console.error(err);
+      } finally {
+        btnPushGitHub.disabled = false;
+        btnPushGitHub.innerHTML = originalBtnHtml;
+        updatePendingUI();
+      }
+    });
+
+    // --- KHỞI TẠO BAN ĐẦU ---
+    window.addEventListener('DOMContentLoaded', () => {
+      if (GITHUB_CONFIG.pat) document.getElementById('cfgTokenPat').value = GITHUB_CONFIG.pat;
+      if (GITHUB_CONFIG.owner) document.getElementById('cfgOwnerInput').value = GITHUB_CONFIG.owner;
+      if (GITHUB_CONFIG.repo) document.getElementById('cfgRepoInput').value = GITHUB_CONFIG.repo;
+      if (GITHUB_CONFIG.branch) document.getElementById('cfgBranchInput').value = GITHUB_CONFIG.branch;
+
+      getPhotoDirHandle();
+
+      // Luôn nạp dữ liệu ngay từ đầu (từ GitHub hoặc trực tiếp từ file local)
+      loadAllData();
+
+      checkGitHubConnection().then(connected => {
+        if (!connected && !GITHUB_CONFIG.pat) {
+          showToast('💡 Bạn có thể nhập Token GitHub ở mục "Cấu hình" khi cần cập nhật lên Vercel.', 'info');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
