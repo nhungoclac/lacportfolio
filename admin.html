@@ -787,6 +787,11 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
+    // --- HÀNG CHỜ FILE ẢNH VỪA CHỌN (để ghi xuống thư mục photo trên máy) ---
+    // BẮT BUỘC khai báo: trước đây thiếu biến này nên MỌI thao tác upload ảnh
+    // đều ném ReferenceError ngay dòng đầu và im lặng không làm gì cả.
+    let pendingFileObjects = [];
+
     // --- BỘ ĐỆM PREVIEW ẢNH (GIỮ ẢNH MỚI CHỌN ĐỂ KHÔNG BỊ 404/FALLBACK) ---
     const LOCAL_PREVIEW_CACHE = {};
     // --- CHUẨN HOÁ TÊN FILE ẢNH (TIẾNG VIỆT -> KHÔNG DẤU, KHÔNG DẤU CÁCH) ---
@@ -877,8 +882,9 @@
         if (photoDirHandle) saveFileToLocalPhoto(file, cleanName);
       });
 
+      commitActiveProject();
       renderProjectDetailClone();
-      showToast(`✅ Đã thêm ${files.length} ảnh vào bài viết! Bấm "Lưu thay đổi chiến dịch này".`, 'success');
+      showToast(`✅ Đã thêm ${files.length} ảnh vào bài viết! Nhớ bấm "Cập nhật lên GitHub".`, 'success');
       e.target.value = '';
     };
 
@@ -1629,6 +1635,26 @@
     }
 
     // --- MỞ TRANG CHI TIẾT CHIẾN DỊCH (CLONE 100% GIAO DIỆN PROJECT.HTML) ---
+    // Ghi bản đang sửa vào PROJECTS_DATA + bật cờ chờ push.
+    // Trước đây phải bấm nút "Lưu" mới có tác dụng, quên là mất trắng công sửa.
+    let skipNextAutoCommit = false;
+
+    function commitActiveProject() {
+      if (!activeProjectId || !activeProjectData) return;
+      PROJECTS_DATA[activeProjectId] = activeProjectData;
+      PENDING_CHANGES.script = true;
+      updatePendingUI();
+    }
+    window.commitActiveProject = commitActiveProject;
+
+    // Sửa chữ trong trang chi tiết không làm render lại, nên phải bắt riêng:
+    // rời khỏi ô là tự lưu (setTimeout để chạy SAU onblur của chính ô đó).
+    (function bindDetailAutoSave() {
+      const box = document.getElementById('projectDetailCloneContainer');
+      if (!box) return;
+      box.addEventListener('blur', () => setTimeout(commitActiveProject, 0), true);
+    })();
+
     window.openProjectDetailClone = function(id) {
       activeProjectId = id;
       if (!PROJECTS_DATA[id]) {
@@ -1649,6 +1675,7 @@
       if (!activeProjectData.featuredPosts) activeProjectData.featuredPosts = [];
       if (!activeProjectData.briefToOutput) activeProjectData.briefToOutput = [];
 
+      skipNextAutoCommit = true;
       renderProjectDetailClone();
 
       document.getElementById('campListView').style.display = 'none';
@@ -1668,6 +1695,14 @@
       const container = document.getElementById('projectDetailCloneContainer');
       const p = activeProjectData;
       if (!p) return;
+
+      // Render lại = vừa có thao tác thêm/xoá/đổi ảnh -> tự lưu luôn.
+      // Riêng lần mở trang thì bỏ qua vì chỉ xem chứ chưa sửa gì.
+      if (skipNextAutoCommit) {
+        skipNextAutoCommit = false;
+      } else {
+        commitActiveProject();
+      }
 
       let html = '';
 
@@ -1934,6 +1969,7 @@
     window.deletePostImg = function(pIdx, iIdx) {
       if (activeProjectData.featuredPosts[pIdx]) {
         activeProjectData.featuredPosts[pIdx].imgs.splice(iIdx, 1);
+        commitActiveProject();
         renderProjectDetailClone();
       }
     };
@@ -1941,6 +1977,7 @@
     window.deleteFeaturedPostCard = function(pIdx) {
       if (confirm('Xóa bài đăng nổi bật này?')) {
         activeProjectData.featuredPosts.splice(pIdx, 1);
+        commitActiveProject();
         renderProjectDetailClone();
       }
     };
@@ -1950,6 +1987,7 @@
         caption: 'Tiêu đề bài đăng mới (gồm reels, bài viết viral)',
         imgs: []
       });
+      commitActiveProject();
       renderProjectDetailClone();
       showToast('Đã thêm bài đăng mới lên đầu. Hãy gắn ảnh vào bài!', 'info');
     };
