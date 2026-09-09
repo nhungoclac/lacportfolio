@@ -1584,7 +1584,7 @@ body {
 /* ===== LOCKET GALLERY & MEME GRID ===== */
 .meme-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin: 1.5rem 0;
 }
@@ -2200,7 +2200,7 @@ body {
 /* ===== BÀI ĐĂNG NỔI BẬT & MEME GRID ===== */
 .meme-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.8rem;
   margin: 1.5rem 0 2.5rem 0;
 }
@@ -2367,7 +2367,7 @@ body {
 /* ===== BRIEF & SẢN PHẨM / DELIVERABLES ===== */
 .brief-edge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.8rem;
   align-items: stretch;
 }
@@ -3347,7 +3347,7 @@ img {
   }
 
   .brief-edge-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
   }
 
