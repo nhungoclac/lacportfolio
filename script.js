@@ -635,28 +635,32 @@ const PROJECTS_DATA = {
         "caption": "Caption cho clip quảng bá NutriBest Health (160.000 lượt xem)",
         "imgs": [
           "photo/90NTC/pdpvideo.png",
-          "photo/90NTC/pdpvideo-meta.png"
+          "photo/90NTC/pdpvideo-meta.png",
+          "photo/thumb_bai_noi_bat_1.png"
         ]
       },
       {
         "caption": "Caption cho Sales Event - Ngày hội NutriBest Health 20/6 (63.000 lượt xem)",
         "imgs": [
           "photo/90NTC/2006.png",
-          "photo/90NTC/2006-meta.png"
+          "photo/90NTC/2006-meta.png",
+          "photo/thumb_bai_noi_bat_2.png"
         ]
       },
       {
         "caption": "Caption cho Minigame Ngày hội NutriBest Health 23/5 (28.000 lượt xem)",
         "imgs": [
           "photo/90NTC/minigame.png",
-          "photo/90NTC/minigame-meta.png"
+          "photo/90NTC/minigame-meta.png",
+          "photo/thumb_bai_noi_bat_3.png"
         ]
       },
       {
         "caption": "Caption cho bài Nhìn lại 90 Ngày Tốc Chiến 2026 (2.400 lượt xem)",
         "imgs": [
           "photo/90NTC/nhinlai.png",
-          "photo/90NTC/nhinlai-meta.png"
+          "photo/90NTC/nhinlai-meta.png",
+          "photo/thumb_bai_noi_bat_4.png"
         ]
       }
     ],
@@ -908,7 +912,8 @@ const PROJECTS_DATA = {
         ],
         "note": "Bài viết thuộc series Tôi là đối tác Droppii",
         "views": "> 2.400",
-        "reach": "1.400"
+        "reach": "1.400",
+        "thumb": "photo/THUMB_SERIES.png"
       }
     ],
     "stats": [
