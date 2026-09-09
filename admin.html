@@ -3360,6 +3360,7 @@
       try {
         const files = [];
         const summary = [];
+        const pushedText = {};
 
         for (const img of PENDING_CHANGES.newImages) {
           files.push({ path: img.path, content: img.content, encoding: 'base64' });
@@ -3378,6 +3379,7 @@
           const out = generateUpdatedCampaignsHtml(cur.content);
           if (out !== cur.content) {
             files.push({ path: 'campaigns.html', content: out, encoding: 'utf-8' });
+            pushedText['campaigns.html'] = out;
             summary.push('campaigns.html');
           }
         }
@@ -3419,6 +3421,7 @@
           const out = generateUpdatedSimplePage(cfg, cur.content);
           if (out !== cur.content) {
             files.push({ path: cfg.file, content: out, encoding: 'utf-8' });
+            pushedText[cfg.file] = out;
             summary.push(cfg.file);
           }
         }
@@ -3474,13 +3477,18 @@
         PENDING_CHANGES.home = false;
         PENDING_CHANGES.ai = false;
         PENDING_CHANGES.standalone = false;
+        // Đồng bộ lại trạng thái với đúng nội dung vừa đẩy lên.
+        // Thiếu bước này thì lần sửa kế tiếp trên cùng một thẻ sẽ bị coi là
+        // xung đột và bị bỏ qua âm thầm (đúng lỗi ảnh bìa không lên đầu).
+        if (pushedText['campaigns.html']) {
+          parseCampaignsHtmlBlocks(pushedText['campaigns.html']);
+          renderCampaignsListClone();
+        }
         for (const cfg of SIMPLE_PAGES) {
-          const st = PAGE_STATE[cfg.key];
-          if (!st) continue;
-          st.groups.forEach(g => g.cards.forEach(c => {
-            c.fields.forEach(f => { f.dirty = false; });
-            c.imgs.forEach(im => { if (im.newSrc) { im.src = im.newSrc; im.newSrc = null; } });
-          }));
+          if (pushedText[cfg.file]) {
+            parseSimplePage(cfg, pushedText[cfg.file]);
+            renderSimplePage(cfg);
+          }
         }
         FILE_CACHE = {};
         updatePendingUI();

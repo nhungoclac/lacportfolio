@@ -3292,3 +3292,140 @@ body {
   }
 }
 
+/* =========================================================
+   TỐI ƯU HIỂN THỊ TRÊN ĐIỆN THOẠI & MÁY TÍNH BẢNG
+   Mục tiêu: khối nào nhét vừa 2 cột thì nhét, đừng kéo dài một dọc.
+   Đặt ở cuối file để ghi đè các @media phía trên.
+   ========================================================= */
+
+/* ---------- MÁY TÍNH BẢNG (600px – 1024px) ---------- */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .dna-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+
+  .brief-card-grid,
+  .meme-grid,
+  .work-samples {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+
+  .design-grid {
+    column-count: 2;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+  }
+
+  .dash-num {
+    font-size: 1.75rem;
+  }
+}
+
+/* ---------- ĐIỆN THOẠI (dưới 600px) ---------- */
+@media (max-width: 599px) {
+  /* Khối kỹ năng: 15 mục xếp một dọc rất dài -> chia 2 cột */
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .skill-item {
+    padding: 0.75rem 0.65rem;
+  }
+
+  .skill-name {
+    font-size: 0.82rem;
+    gap: 0.45rem;
+    line-height: 1.3;
+  }
+
+  /* 3 thẻ số liệu: 2 thẻ trên một hàng, thẻ cuối chiếm trọn bề ngang */
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .dash-card {
+    padding: 0.95rem 0.75rem;
+  }
+
+  .dash-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .dash-num {
+    font-size: 1.5rem;
+  }
+
+  .dash-label {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .dash-sub {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  /* Ảnh thì xếp 2 cột thoải mái */
+  .work-samples,
+  .meme-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+  }
+
+  .design-grid {
+    column-count: 2;
+    column-gap: 0.7rem;
+  }
+
+  /* Thông tin liên hệ: cho xuống hàng ngang thay vì mỗi dòng một mục */
+  .info-details {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 0.85rem;
+  }
+
+  .info-details span {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  /* Thẻ Marketer DNA nhiều chữ, để 1 cột nhưng thu gọn lại cho đỡ cao */
+  .dna-card {
+    padding: 1rem;
+  }
+
+  .dna-desc {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+}
+
+/* ---------- MÀN HÌNH RẤT HẸP (dưới 360px) ---------- */
+@media (max-width: 359px) {
+  .skills-grid,
+  .work-samples,
+  .meme-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .design-grid {
+    column-count: 1;
+  }
+}
