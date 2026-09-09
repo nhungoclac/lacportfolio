@@ -3939,15 +3939,16 @@ img {
     max-height: 80vh;
   }
 
-  /* Nút Back to Top */
+  /* Nút Back to Top (Nằm trên Chatbot Tawk.to) */
   #back-to-top,
   .back-to-top {
-    bottom: 20px;
-    right: 16px;
+    bottom: 90px;
+    right: 20px;
     width: 42px;
     height: 42px;
     font-size: 1rem;
     box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+    z-index: 9998;
   }
 
   /* Nút liên hệ thu gọn tinh tế */
