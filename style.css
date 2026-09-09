@@ -3950,17 +3950,26 @@ img {
     box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
   }
 
-  /* Nút liên hệ */
+  /* Nút liên hệ thu gọn tinh tế */
   .contact-links {
-    gap: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 0.6rem;
+    flex-wrap: wrap;
     width: 100%;
   }
 
   .contact-btn {
-    flex: 1 1 calc(50% - 0.6rem);
-    justify-content: center;
-    padding: 0.65rem 1rem;
-    font-size: 0.84rem;
+    flex: 0 0 auto;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 999px;
   }
 }
 
@@ -3992,10 +4001,6 @@ img {
     column-count: 1 !important;
   }
 
-  /* Nút liên hệ full width */
-  .contact-btn {
-    flex: 1 1 100%;
-  }
 }
 
 /* ---------- MÀN HÌNH RẤT HẸP (DƯỚI 360px) ---------- */
