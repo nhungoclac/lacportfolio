@@ -1174,6 +1174,7 @@ const PROJECTS_DATA = {
     "problem": "Học cách ứng biến content dựa trên tình hình thực tế tại cửa hàng. Làm thủ công quà tặng nên cần tính toán đủ số lượng.",
     "strategy": "Lên kịch bản video dạng dẫn dắt câu chuyện + hình ảnh hậu trường + cập nhật hình ảnh khách hàng thực tế.",
     "execution": "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
+    "sheet": "https://docs.google.com/spreadsheets/d/1nR7hOb9Z9vBlTrnPj2eDYfpyknF2TdSoZ7Jwf0hR3YA/edit?gid=1379483124",
     "featuredPosts": [
       {
         "caption": "Bài đăng Khởi động & Thông báo chương trình",
