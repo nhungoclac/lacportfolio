@@ -1,4 +1,5 @@
 /* style.css - Portfolio Ver 2: Unified Modern Typography & Light Blue Theme */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap");
 
 html {
   scroll-behavior: smooth;
@@ -51,15 +52,86 @@ body {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   text-decoration: none;
   color: #0f172a;
   padding-right: 0.5rem;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-brand:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+.nav-mascot-wrap {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(2, 132, 199, 0.2));
+  animation: peanutBob 3.6s ease-in-out infinite;
+}
+
+.nav-brand:hover .nav-mascot-img {
+  animation: peanutWiggle 0.6s ease-in-out infinite alternate;
+}
+
+.nav-typo-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.nav-wordmark {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 2.05rem;
+  line-height: 0.95;
+  color: #0284c7;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.25s ease;
+}
+
+.nav-brand:hover .nav-wordmark {
+  color: #0369a1;
+  transform: translateY(-1px) rotate(-1deg);
+}
+
+.nav-star {
+  font-size: 0.65rem;
+  color: #38bdf8;
+  line-height: 1;
+  animation: starTwinkle 3s ease-in-out infinite;
+}
+
+.nav-sub-text {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #0284c7;
+  white-space: nowrap;
+  line-height: 1.2;
+  margin-top: 1px;
+  opacity: 0.9;
 }
 
 .nav-logo-badge {
@@ -203,43 +275,55 @@ body {
   border: none;
 }
 
-/* ===== HEADER / GIỚI THIỆU TINH TẾ & GỌN GÀNG ===== */
+/* ===== HEADER / GIỚI THIỆU CĂN GIỮA NGHỆ THUẬT & TRẢI RỘNG KHÔNG GIAN ===== */
 .intro {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.8rem;
+  text-align: center;
+  gap: 1.1rem;
+  margin-bottom: 2.8rem;
+  padding: 1.5rem 1rem 2.2rem;
   border-bottom: 1px solid #e2e8f0;
+  position: relative;
 }
 
 .avatar {
-  flex: 0 0 140px;
-  width: 140px;
-  height: 140px;
+  flex: 0 0 132px;
+  width: 132px;
+  height: 132px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ffffff;
-  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08);
+  border: 4px solid #ffffff;
+  box-shadow: 0 10px 28px -4px rgba(2, 132, 199, 0.18), 0 0 0 2px rgba(186, 230, 253, 0.8);
   background: #f0f9ff;
-  padding: 3px;
+  padding: 2px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.avatar:hover {
+  transform: scale(1.04) rotate(1deg);
 }
 
 .info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .info-header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .info h1 {
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 2.35rem;
+  font-size: 2.5rem;
   font-weight: 800;
   letter-spacing: -0.6px;
   background: linear-gradient(135deg, #0f172a 35%, #0284c7 100%);
@@ -247,6 +331,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0;
+  line-height: 1.2;
 }
 
 .cv-btn {
@@ -292,28 +377,67 @@ body {
 }
 
 .info .slogan {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-style: italic;
   color: #0284c7;
-  margin-bottom: 0.8rem;
-  padding-left: 0.75rem;
-  border-left: 3px solid #0284c7;
+  margin: 0.2rem auto 1.1rem auto;
+  padding: 0;
+  border-left: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 600px;
+}
+
+.info .slogan::before,
+.info .slogan::after {
+  content: "";
+  width: 45px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #bae6fd);
+  border-radius: 999px;
+}
+
+.info .slogan::after {
+  background: linear-gradient(90deg, #bae6fd, transparent);
 }
 
 .info-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.4rem;
-  font-size: 0.92rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem 0.85rem;
+  font-size: 0.88rem;
   color: #0f172a;
   font-weight: 500;
+  width: 100%;
+  max-width: 850px;
 }
 
-.info-details span {
+.info-details > span,
+.info-details > a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  padding: 0.36rem 0.85rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
   white-space: nowrap;
+  transition: all 0.2s ease;
+  font-size: 0.88rem;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.info-details > span:hover,
+.info-details > a:hover {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0284c7;
+  transform: translateY(-1px);
 }
 
 .info-details i {
@@ -322,34 +446,305 @@ body {
   width: auto;
 }
 
+/* Nút Xem CV khi nằm chung hàng trước email */
+.info-details .cv-btn {
+  background: #f0f9ff;
+  color: #0284c7 !important;
+  border: 1.5px solid #0284c7;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08);
+}
+
+.info-details .cv-btn:hover {
+  background: #0284c7;
+  color: #ffffff !important;
+  border-color: #0284c7;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+  transform: translateY(-2px);
+}
+
+.info-details .cv-btn i {
+  color: inherit !important;
+}
+
+/* ===== HEADER & INFO REALTIME CLOCK ===== */
+.nav-clock-pill,
 .info-clock-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: #f0f9ff;
-  border: 1px solid #bae6fd;
-  color: #0284c7 !important;
-  padding: 0.15rem 0.6rem;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 999px;
-  font-weight: 700 !important;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.86rem;
-  transition: all 0.25s ease;
+  padding: 0.32rem 0.85rem;
   user-select: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  text-decoration: none;
+  margin: 0 auto;
 }
 
+.nav-clock-pill:hover,
 .info-clock-item:hover {
-  background: #e0f2fe;
-  border-color: #38bdf8;
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(2, 132, 199, 0.1);
 }
 
-.info-clock-item .clock-tz {
+/* Chấm xanh tròn phát sáng chuẩn của Realtime Clock (giữ nguyên hình dạng tròn tuyệt đối) */
+.clock-live-dot {
+  width: 7px !important;
+  height: 7px !important;
+  min-width: 7px !important;
+  min-height: 7px !important;
+  max-width: 7px !important;
+  max-height: 7px !important;
+  background-color: #10b981 !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.9) !important;
+  animation: clock-pulse 2s infinite ease-in-out !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+
+.clock-city {
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+#clock-time {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  font-family: "Plus Jakarta Sans", monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0284c7;
+  letter-spacing: 0.35px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.clock-tz {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
   color: #0369a1;
-  background: #bae6fd;
-  padding: 0.05rem 0.35rem;
-  border-radius: 4px;
+  background: #e0f2fe !important;
+  padding: 0.1rem 0.42rem !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.2px;
+  border: none !important;
+  line-height: 1.1;
+}
+
+/* ===== BÉ LẠC MASCOT & CREATIVE GRAPHIC TYPOGRAPHY ARTWORK ===== */
+.lac-typo-artwork {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0.5rem 1rem 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background: transparent;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lac-typo-artwork:hover {
+  transform: translateY(-4px);
+}
+
+/* Graphic Decorative Stars Accent */
+.lac-star {
+  position: absolute;
+  color: #38bdf8;
+  pointer-events: none;
+  user-select: none;
+  animation: starTwinkle 3s ease-in-out infinite;
+  z-index: 3;
+}
+
+.star-tl {
+  top: 38%;
+  left: 4px;
+  font-size: 1.15rem;
+  animation-delay: 0s;
+}
+
+.star-tr {
+  top: 18%;
+  right: 14px;
+  font-size: 0.95rem;
+  color: #f59e0b;
+  animation-delay: 1.5s;
+}
+
+.star-br {
+  bottom: 8px;
+  right: 0px;
+  font-size: 1rem;
+  color: #0284c7;
+  animation-delay: 0.8s;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { transform: scale(0.85) rotate(0deg); opacity: 0.65; }
+  50% { transform: scale(1.3) rotate(25deg); opacity: 1; filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.8)); }
+}
+
+/* Mascot Bé Lạc Lying On Top of Typography */
+.lac-mascot-wrap {
+  position: relative;
+  width: 126px;
+  height: 92px;
+  z-index: 2;
+  margin-bottom: -20px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lac-mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(2, 132, 199, 0.22));
+  animation: peanutBob 3.6s ease-in-out infinite;
+}
+
+.lac-typo-artwork:hover .lac-mascot-img {
+  animation: peanutWiggle 0.6s ease-in-out infinite alternate;
+}
+
+/* Mascot Bobbing Floating Animation */
+@keyframes peanutBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(1.2deg); }
+}
+
+@keyframes peanutWiggle {
+  0% { transform: translateY(-3px) rotate(-3.5deg) scale(1.04); }
+  100% { transform: translateY(-3px) rotate(3.5deg) scale(1.04); }
+}
+
+/* Main Display Wordmark "Lạc" (Chữ kiểu nghệ thuật không tô nền) */
+.lac-wordmark {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 4.1rem;
+  line-height: 0.95;
+  color: #0284c7;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+  transform: rotate(-3deg);
+  margin: 0;
+  text-shadow: 
+    1.5px 1.5px 0 #ffffff,
+    3px 3px 0 #38bdf8,
+    5px 5px 0 rgba(2, 132, 199, 0.22);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lac-typo-artwork:hover .lac-wordmark {
+  transform: rotate(-2deg) scale(1.04);
+  text-shadow: 
+    2px 2px 0 #ffffff,
+    4px 4px 0 #38bdf8,
+    7px 7px 0 rgba(2, 132, 199, 0.3);
+}
+
+/* Subtitle Typography Lockup "Marketing Executive" - HOÀN TOÀN KHÔNG TÔ NỀN */
+.lac-sub-lockup {
+  position: relative;
+  z-index: 3;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  transform: rotate(-1deg);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lac-typo-artwork:hover .lac-sub-lockup {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.lac-sub-line {
+  width: 20px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #0284c7);
+  border-radius: 999px;
+  opacity: 0.7;
+}
+
+.lac-sub-line:last-child {
+  background: linear-gradient(90deg, #0284c7, transparent);
+}
+
+.lac-sub-star {
+  font-size: 0.65rem;
+  color: #38bdf8;
+  line-height: 1;
+}
+
+.lac-sub-text {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: #0284c7;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Tap / Click Jump Animation */
+.lac-peanut-jump {
+  animation: peanutJump 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes peanutJump {
+  0% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-14px) scale(1.1) rotate(-4deg); }
+  65% { transform: translateY(-5px) scale(1.06) rotate(3deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+/* Micro-Particle Burst on Tap */
+.lac-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 15px;
+  animation: particleFly 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 25;
+}
+
+@keyframes particleFly {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.4); }
+  100% { opacity: 0; transform: translate(var(--tx, 0px), var(--ty, -50px)) scale(1.3); }
 }
 
 /* ===== KHUNG HỌC VẤN ĐỒNG BỘ TONE TRẮNG XANH ===== */
@@ -3442,11 +3837,44 @@ img {
     font-size: 1.05rem;
   }
 
+  .nav-mascot-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-wordmark {
+    font-size: 1.65rem;
+  }
+
+  .nav-sub-text {
+    font-size: 0.46rem;
+    letter-spacing: 1.2px;
+  }
+
   .nav-toggle {
     width: 38px;
     height: 38px;
     font-size: 1.05rem;
     border-radius: 10px;
+  }
+
+  .nav-clock-pill {
+    padding: 0.25rem 0.65rem;
+    gap: 0.38rem;
+    margin: 0 auto;
+  }
+
+  .clock-city {
+    font-size: 0.68rem;
+  }
+
+  #clock-time {
+    font-size: 0.8rem;
+  }
+
+  .clock-tz {
+    font-size: 0.62rem;
+    padding: 0.08rem 0.35rem !important;
   }
 
   .nav-bar {
@@ -3541,6 +3969,35 @@ img {
     font-weight: 500;
     color: #475569;
     white-space: nowrap;
+  }
+
+  .lac-typo-artwork {
+    margin: 0.85rem auto 0.2rem auto;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .lac-mascot-wrap {
+    width: 105px;
+    height: 78px;
+    margin-bottom: -15px;
+  }
+
+  .lac-wordmark {
+    font-size: 3.3rem;
+  }
+
+  .lac-sub-lockup {
+    gap: 0.35rem;
+    margin-top: 3px;
+  }
+
+  .lac-sub-line {
+    width: 14px;
+  }
+
+  .lac-sub-text {
+    font-size: 0.68rem;
+    letter-spacing: 1.6px;
   }
 
   /* Section Title */
@@ -4198,6 +4655,39 @@ img {
   .project-photos-wrap.photos-multi {
     grid-template-columns: 1fr !important;
   }
+
+  .lac-mascot-wrap {
+    width: 90px;
+    height: 66px;
+    margin-bottom: -12px;
+  }
+
+  .lac-wordmark {
+    font-size: 2.75rem;
+  }
+
+  .lac-sub-text {
+    font-size: 0.62rem;
+    letter-spacing: 0.8px;
+  }
+
+  .nav-clock-pill {
+    padding: 0.2rem 0.45rem;
+    gap: 0.28rem;
+  }
+
+  .clock-city {
+    display: none;
+  }
+
+  #clock-time {
+    font-size: 0.75rem;
+  }
+
+  .clock-tz {
+    display: none;
+  }
 }
+
 
 

@@ -46,6 +46,42 @@ function initPortfolioEngine() {
   adjustVideoAspectRatios();
   initRealtimeClock();
   initCounterAnimation();
+  initPeanutMascot();
+}
+
+// ===== BÉ LẠC ANIME MASCOT & TYPOGRAPHY INTERACTION ENGINE =====
+function initPeanutMascot() {
+  const badge = document.getElementById("lacBadge");
+  const peanut = document.getElementById("lacPeanutGroup");
+  if (!badge || !peanut) return;
+
+  const particles = ["✨", "🥜", "💖", "✦", "🚀", "⭐"];
+
+  badge.addEventListener("click", function (e) {
+    // 1. Hiệu ứng nhảy bật vui sướng (Bounce Hop)
+    peanut.classList.remove("lac-peanut-jump");
+    void peanut.offsetWidth; // Force reflow
+    peanut.classList.add("lac-peanut-jump");
+
+    // 2. Bắn pháo hoa micro-particles bay lên
+    const rect = badge.getBoundingClientRect();
+    const clickX = e.clientX ? e.clientX - rect.left : rect.width / 2;
+    const clickY = e.clientY ? e.clientY - rect.top : rect.height / 2;
+
+    for (let i = 0; i < 6; i++) {
+      const p = document.createElement("span");
+      p.className = "lac-particle";
+      p.textContent = particles[Math.floor(Math.random() * particles.length)];
+      p.style.left = `${clickX}px`;
+      p.style.top = `${clickY}px`;
+      const tx = (Math.random() - 0.5) * 100;
+      const ty = -(Math.random() * 60 + 35);
+      p.style.setProperty("--tx", `${tx}px`);
+      p.style.setProperty("--ty", `${ty}px`);
+      badge.appendChild(p);
+      setTimeout(() => p.remove(), 900);
+    }
+  });
 }
 
 function initCounterAnimation() {

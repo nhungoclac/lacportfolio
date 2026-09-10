@@ -24,12 +24,26 @@
       <!-- HEADER -->
       <header class="fixed-header">
         <div class="nav-container">
-          <a href="index.html" class="nav-brand">
-            <div class="nav-logo-badge">
-              <img src="favicon.svg" alt="Logo" class="nav-logo-img" />
+          <a href="index.html" class="nav-brand" id="lacBadge" title="Lạc - Marketing Executive ✨">
+            <div class="nav-mascot-wrap" id="lacPeanutGroup">
+              <img src="photo/lac_mascot_modern.png" alt="Bé Lạc Mascot" class="nav-mascot-img" />
             </div>
-            <span class="nav-name">Lạc Ngọc Như</span>
+            <div class="nav-typo-lockup">
+              <div class="nav-wordmark">Lạc <span class="nav-star">✦</span></div>
+              <div class="nav-sub-text">Marketing Executive</div>
+            </div>
           </a>
+          <!-- REALTIME CLOCK WIDGET IN HEADER -->
+          <div
+            class="nav-clock-pill"
+            id="realtime-clock"
+            title="Giờ địa phương real-time (GMT+7)"
+          >
+            <span class="clock-live-dot"></span>
+            <span class="clock-city">HCM</span>
+            <span id="clock-time">--:--:--</span>
+            <span class="clock-tz">GMT+7</span>
+          </div>
           <button
             class="nav-toggle"
             id="navToggle"

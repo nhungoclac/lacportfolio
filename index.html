@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link
@@ -24,12 +24,26 @@
       <!-- HEADER -->
       <header class="fixed-header">
         <div class="nav-container">
-          <a href="index.html" class="nav-brand">
-            <div class="nav-logo-badge">
-              <img src="favicon.svg" alt="Logo" class="nav-logo-img" />
+          <a href="index.html" class="nav-brand" id="lacBadge" title="Lạc - Marketing Executive ✨">
+            <div class="nav-mascot-wrap" id="lacPeanutGroup">
+              <img src="photo/lac_mascot_modern.png" alt="Bé Lạc Mascot" class="nav-mascot-img" />
             </div>
-            <span class="nav-name">Lạc Ngọc Như</span>
+            <div class="nav-typo-lockup">
+              <div class="nav-wordmark">Lạc <span class="nav-star">✦</span></div>
+              <div class="nav-sub-text">Marketing Executive</div>
+            </div>
           </a>
+          <!-- REALTIME CLOCK WIDGET IN HEADER -->
+          <div
+            class="nav-clock-pill"
+            id="realtime-clock"
+            title="Giờ địa phương real-time (GMT+7)"
+          >
+            <span class="clock-live-dot"></span>
+            <span class="clock-city">HCM</span>
+            <span id="clock-time">--:--:--</span>
+            <span class="clock-tz">GMT+7</span>
+          </div>
           <button
             class="nav-toggle"
             id="navToggle"
@@ -62,6 +76,9 @@
         <div class="info">
           <div class="info-header">
             <h1>Lạc Ngọc Như</h1>
+          </div>
+          <p class="slogan">"Lạc - thích truyền thông, yêu công nghệ"</p>
+          <div class="info-details">
             <a
               href="https://drive.google.com/file/d/1CRm0hvvJd5fkQZBLlEl1SQJHV02AQYpo/view?usp=sharing"
               target="_blank"
@@ -70,23 +87,12 @@
             >
               <i class="fas fa-file-pdf"></i> Xem CV
             </a>
-          </div>
-          <p class="slogan">"Lạc - thích truyền thông, yêu công nghệ"</p>
-          <div class="info-details">
             <span><i class="fas fa-envelope"></i> nhulacngoc@gmail.com</span>
             <span><i class="fas fa-map-pin"></i> TP. Hồ Chí Minh</span>
             <span><i class="fas fa-cake-candles"></i> 2004</span>
-            <span
-              class="info-clock-item"
-              id="realtime-clock"
-              title="Giờ địa phương real-time (GMT+7)"
-            >
-              <span class="clock-live-dot"></span>
-              <span id="clock-time">--:--:--</span>
-              <span class="clock-tz">GMT+7</span>
-            </span>
           </div>
         </div>
+
       </section>
 
       <!-- 2. HỌC VẤN (KHUNG CHUYÊN NGHIỆP TONE TRẮNG XANH) -->
