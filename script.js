@@ -1380,7 +1380,7 @@ function initProjectDetailPage() {
   }
 
   const p = PROJECTS_DATA[id];
-  document.title = `Lạc Ngọc Như - ${p.title}`;
+  document.title = "Lạc Ngọc Như";
 
   let html = `
     <div class="pdh-card">
