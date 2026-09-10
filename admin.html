@@ -1549,7 +1549,7 @@
             <h2 class="cmp-block-title">
               <span class="cmp-block-title-link">
                 <span class="admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'titleText', this)">${cmp.titleText}</span>
-                <i class="fas fa-arrow-right cmp-title-arrow" style="cursor: pointer;" title="Mo trang chi tiet" onclick="openProjectDetailClone('${cmp.id}')"></i>
+                <i class="fas fa-arrow-right cmp-title-arrow" style="cursor: pointer;" title="Mở trang chi tiết" onclick="openProjectDetailClone('${cmp.id}')"></i>
               </span>
             </h2>
             <p class="cmp-block-desc admin-editable-text" contenteditable="true" onblur="updateCmpField(${index}, 'descText', this)">${cmp.descText}</p>
@@ -1890,7 +1890,7 @@
             </div>
             <div class="pdh-meta-row">
               <span class="pdh-date"><i class="fas fa-calendar-alt"></i> <span class="admin-editable-text" contenteditable="true" onblur="activeProjectData.date = this.textContent.trim()">${p.date || '05/2026 – 07/2026'}</span></span>
-              ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet bài đăng"}</a>` : ""}
+              ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet chiến dịch"}</a>` : ""}
             </div>
           </div>
 

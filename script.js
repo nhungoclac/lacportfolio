@@ -994,6 +994,7 @@ const PROJECTS_DATA = {
     "strategy": "Lên kịch bản video dạng dẫn dắt câu chuyện + meme + cập nhật hình ảnh khách hàng thực tế.",
     "execution": "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
     "sheet": "https://docs.google.com/spreadsheets/d/1ZKpP-XwpTRJh86EiEFHs0XhB-CHrNXfi/edit?gid=1498389441",
+    "sheetLabel": "Google Sheet chiến dịch",
     "featuredPosts": [
       {
         "caption": "Bài đăng Khởi động chiến dịch Xoay Đi Chờ Chi",
@@ -1175,6 +1176,7 @@ const PROJECTS_DATA = {
     "strategy": "Lên kịch bản video dạng dẫn dắt câu chuyện + hình ảnh hậu trường + cập nhật hình ảnh khách hàng thực tế.",
     "execution": "Lập kế hoạch chiến dịch trên Google Sheet, in ấn standee/poster, trực tiếp quan sát tình hình mua hàng.",
     "sheet": "https://docs.google.com/spreadsheets/d/1nR7hOb9Z9vBlTrnPj2eDYfpyknF2TdSoZ7Jwf0hR3YA/edit?gid=1379483124",
+    "sheetLabel": "Google Sheet chiến dịch",
     "featuredPosts": [
       {
         "caption": "Bài đăng Khởi động & Thông báo chương trình",
@@ -1250,6 +1252,7 @@ const PROJECTS_DATA = {
     "problem": "Chú trọng ở mảng video nên cần tập hợp nhân sự quay/dựng, lên kịch bản liên tục. Xây kênh từ số 0 để phục vụ cho buổi MEGA LIVE nên cần thường xuyên tối ưu content.",
     "strategy": "Triển khai luồng nội dung đa dạng: Unboxing, review, viral clip, teaser, ảnh thông báo,...",
     "sheet": "https://docs.google.com/spreadsheets/d/11hDVcBBFUSz9cr09Bz_EY0ZAwz9vE-gbU1U3S9Yrgqo/edit?gid=1420815595#gid=1420815595",
+    "sheetLabel": "Google Sheet chiến dịch",
     "featuredPosts": [
       {
         "caption": "Bài đăng Nhá hàng MEGA LIVE 11/11 Tạp Hóa Content",
@@ -1391,7 +1394,7 @@ function initProjectDetailPage() {
         </div>
         <div class="pdh-meta-row">
           <span class="pdh-date"><i class="fas fa-calendar-alt"></i> ${p.date}</span>
-          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet chien dich"}</a>` : ""}
+          ${p.sheet ? `<a href="${p.sheet}" target="_blank" class="pdh-sheet-btn"><i class="fas fa-table-cells"></i> ${p.sheetLabel || "Google Sheet chiến dịch"}</a>` : ""}
           ${p.briefLink ? `<a href="${p.briefLink}" class="pdh-sheet-btn"><i class="fas fa-file-alt"></i> Xem Brief &amp; Output</a>` : ""}
         </div>
       </div>
@@ -1401,7 +1404,7 @@ function initProjectDetailPage() {
       <div class="pdh-psr-grid">
         <div class="pdh-psr-box">
           <div class="pdh-psr-label pdh-psr-problem"><i class="fas fa-bullseye"></i> Problem / Thử thách</div>
-          <div class="pdh-psr-text">${p.problem || "Toi uu hoa chien dich truyen thong."}</div>
+          <div class="pdh-psr-text">${p.problem || "Tối ưu hóa chiến dịch truyền thông."}</div>
         </div>
         ${p.strategy ? `<div class="pdh-psr-box"><div class="pdh-psr-label pdh-psr-strategy"><i class="fas fa-lightbulb"></i> Core Strategy / Ý tưởng</div><div class="pdh-psr-text">${p.strategy}</div></div>` : ""}
         ${p.execution ? `<div class="pdh-psr-box"><div class="pdh-psr-label pdh-psr-exec"><i class="fas fa-layer-group"></i> Multi-Format Execution</div><div class="pdh-psr-text">${p.execution}</div></div>` : ""}
