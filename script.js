@@ -141,7 +141,16 @@ function adjustVideoAspectRatios() {
       const targetW = isVertical ? 205 : 265;
       const card = embed.closest(".reel-card");
       if (card && !card.classList.contains("landscape-card")) {
-        card.style.width = `${targetW}px`;
+        if (!isVertical) {
+          card.classList.add("landscape-reel");
+        } else {
+          card.classList.add("vertical-reel");
+        }
+        if (window.innerWidth > 768) {
+          card.style.width = `${targetW}px`;
+        } else {
+          card.style.width = "";
+        }
       }
     }
   });
@@ -275,6 +284,41 @@ function initLocketGalleries() {
       e.stopPropagation();
       prevSlide();
     });
+
+    // Touch swipe gesture cho điện thoại (iPhone, Android)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    gallery.addEventListener(
+      "touchstart",
+      function (e) {
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      },
+      { passive: true },
+    );
+
+    gallery.addEventListener(
+      "touchend",
+      function (e) {
+        if (e.changedTouches && e.changedTouches.length === 1) {
+          const deltaX = e.changedTouches[0].clientX - touchStartX;
+          const deltaY = e.changedTouches[0].clientY - touchStartY;
+          if (
+            Math.abs(deltaX) > 35 &&
+            Math.abs(deltaX) > Math.abs(deltaY) * 1.3
+          ) {
+            if (deltaX < 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
+          }
+        }
+      },
+      { passive: true },
+    );
   });
 }
 
@@ -506,6 +550,41 @@ function initImageLightbox() {
     else if (e.key === "ArrowLeft") showPrev();
     else if (e.key === "ArrowRight") showNext();
   });
+
+  // Touch swipe gesture cho Lightbox trên mobile
+  let lbTouchStartX = 0;
+  let lbTouchStartY = 0;
+  lightbox.addEventListener(
+    "touchstart",
+    function (e) {
+      if (e.touches && e.touches.length === 1) {
+        lbTouchStartX = e.touches[0].clientX;
+        lbTouchStartY = e.touches[0].clientY;
+      }
+    },
+    { passive: true },
+  );
+
+  lightbox.addEventListener(
+    "touchend",
+    function (e) {
+      if (e.changedTouches && e.changedTouches.length === 1) {
+        const deltaX = e.changedTouches[0].clientX - lbTouchStartX;
+        const deltaY = e.changedTouches[0].clientY - lbTouchStartY;
+        if (
+          Math.abs(deltaX) > 40 &&
+          Math.abs(deltaX) > Math.abs(deltaY) * 1.3
+        ) {
+          if (deltaX < 0) {
+            showNext();
+          } else {
+            showPrev();
+          }
+        }
+      }
+    },
+    { passive: true },
+  );
 }
 
 // 4. Hamburger Menu (Nút 3 Gạch Responsive Nav)
@@ -1518,7 +1597,7 @@ function initProjectDetailPage() {
               const isVertical = origW < origH;
               const targetW = isVertical ? 205 : 265;
               return `
-            <div class="reel-card" style="width: ${targetW}px;">
+            <div class="reel-card ${isVertical ? "vertical-reel" : "landscape-reel"}">
               <div class="reel-embed" style="width: 100%; aspect-ratio: ${origW} / ${origH};">
                 <iframe src="${v.src}" width="${origW}" height="${origH}" style="border: none; overflow: hidden; width: 100%; height: 100%;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
               </div>
@@ -1538,31 +1617,20 @@ function initProjectDetailPage() {
     const isFour = p.photos.length === 4;
     const minColWidth = p.photos.length <= 2 ? "285px" : "260px";
 
-    let containerStyle = "";
-    if (isSingle) {
-      containerStyle = "max-width: 680px; margin: 0 auto; display: block;";
-    } else if (isFour) {
-      containerStyle =
-        "display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-items: start; width: 100%;";
-    } else {
-      containerStyle =
-        "display: flex; flex-wrap: wrap; gap: 1.4rem; align-items: start; overflow-x: visible;";
-    }
-
     html += `
       <div style="margin-top: 2.5rem;">
         <h3 class="section-title" style="font-size: 1.45rem; color: #0284c7; margin-bottom: 1.4rem; display: inline-block;">
           KẾT QUẢ CHIẾN DỊCH
         </h3>
-        <div class="work-samples" style="${containerStyle}">
+        <div class="work-samples project-photos-wrap ${isSingle ? "photos-single" : isFour ? "photos-four" : "photos-multi"}">
           ${p.photos
             .map(
               (img) => `
-              <div class="work-sample-item frameless" style="${
+              <div class="work-sample-item frameless ${img.maxWidth ? "custom-max-w" : ""}" style="${
                 isSingle
                   ? "max-width: 680px; width: 100%;"
                   : isFour
-                    ? "width: 100%; max-width: 100%;"
+                    ? "width: 100%;"
                     : img.maxWidth
                       ? `max-width: ${img.maxWidth}; width: 100%; flex: 1 1 ${img.maxWidth};`
                       : `max-width: ${minColWidth}; width: 100%; flex: 1 1 ${minColWidth};`

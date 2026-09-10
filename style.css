@@ -1461,6 +1461,35 @@ body {
   text-decoration: underline;
 }
 
+/* Project Detail Photos Wrap Base Styles */
+.project-photos-wrap.photos-single {
+  max-width: 680px;
+  margin: 0 auto;
+  display: block;
+}
+
+.project-photos-wrap.photos-four {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: start;
+  width: 100%;
+}
+
+.project-photos-wrap.photos-multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  align-items: start;
+  width: 100%;
+}
+
+.project-photos-wrap.photos-multi .work-sample-item {
+  max-width: var(--item-max-w, 280px);
+  width: 100%;
+  flex: 1 1 var(--item-max-w, 280px);
+}
+
 /* ===== KỸ NĂNG & BRAND COLORS ===== */
 .skills-grid {
   display: grid;
@@ -3317,14 +3346,29 @@ body {
 
 /* =========================================================
    TỐI ƯU HIỂN THỊ TOÀN DIỆN TRÊN ĐIỆN THOẠI & MÁY TÍNH BẢNG
+   Đặc biệt tối ưu cho iPhone XR (414px) và các thiết bị iOS/Android.
    Ghi đè tất cả các rule phía trên để bảo đảm giao diện điện thoại hoàn hảo.
    ========================================================= */
 
-/* Ngăn ngừa tràn trang theo chiều ngang */
+/* Ngăn ngừa tràn trang theo chiều ngang và tối ưu cảm ứng */
 html,
 body {
   overflow-x: hidden;
-  max-width: 100vw;
+  max-width: 100%;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+a,
+.slider-arrow,
+.nav-toggle,
+.cv-btn,
+.contact-btn,
+.pdh-sheet-btn,
+.cmp-cta-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img {
@@ -3370,10 +3414,13 @@ img {
   }
 }
 
-/* ---------- TOÀN BỘ THIẾT BỊ DI ĐỘNG (DƯỚI 768px) ---------- */
+/* ---------- TOÀN BỘ THIẾT BỊ DI ĐỘNG (DƯỚI 768px - ĐẶC BIỆT IPHONE XR 414px) ---------- */
 @media (max-width: 768px) {
   body {
-    padding: 0.5rem 0.5rem 2.5rem 0.5rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+    padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
+    padding-left: max(0.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.5rem, env(safe-area-inset-right, 0px));
   }
 
   .container {
@@ -3382,6 +3429,7 @@ img {
     border-radius: 0.9rem;
     width: 100%;
     max-width: 100%;
+    overflow: hidden;
   }
 
   /* Fixed Header */
@@ -3452,7 +3500,7 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     width: 100%;
   }
 
@@ -3474,21 +3522,30 @@ img {
   }
 
   .info-details {
-    flex-direction: row;
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.4rem 0.8rem;
+    gap: 0.4rem 0.5rem;
     width: 100%;
   }
 
   .info-details span {
-    font-size: 0.82rem;
-    white-space: normal;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.65rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #475569;
+    white-space: nowrap;
   }
 
   /* Section Title */
   .section-title {
-    font-size: 1.35rem;
+    font-size: 1.32rem;
     text-align: center;
     margin-bottom: 1.2rem;
   }
@@ -3499,16 +3556,17 @@ img {
     width: 50px;
   }
 
-  /* 3 Thẻ Dashboard: 2 cột gọn gàng */
+  /* 3 Thẻ Dashboard: 2 cột gọn gàng, số không bị gãy dòng */
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.6rem;
+    gap: 0.55rem;
     margin-bottom: 1.5rem;
   }
 
   .dash-card {
-    padding: 0.85rem 0.7rem;
+    padding: 0.8rem 0.6rem;
     border-radius: 0.85rem;
+    text-align: center;
   }
 
   .dash-card:last-child {
@@ -3516,91 +3574,124 @@ img {
   }
 
   .dash-num {
-    font-size: 1.45rem;
+    font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+    white-space: nowrap;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
   }
 
   .dash-label {
     font-size: 0.78rem;
+    font-weight: 700;
     line-height: 1.35;
+    margin-bottom: 0.25rem;
   }
 
   .dash-sub {
     font-size: 0.72rem;
     line-height: 1.4;
+    color: #64748b;
   }
 
-  /* Marketer DNA */
+  /* Marketer DNA: Tối ưu kích thước icon và căn chỉnh */
   .dna-grid {
     grid-template-columns: 1fr;
-    gap: 0.85rem;
+    gap: 0.75rem;
   }
 
   .dna-card {
-    padding: 1rem 0.95rem;
+    padding: 0.95rem 0.85rem;
     border-radius: 0.95rem;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .dna-icon {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.15rem !important;
+    border-radius: 0.75rem !important;
+    flex-shrink: 0 !important;
   }
 
   .dna-title {
-    font-size: 1.02rem;
+    font-size: 0.98rem;
   }
 
   .dna-desc {
-    font-size: 0.84rem;
-    line-height: 1.55;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .dna-tag {
+    font-size: 0.78rem;
   }
 
   /* Kỹ năng */
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.6rem;
+    gap: 0.55rem;
   }
 
   .skill-item {
-    padding: 0.75rem 0.6rem;
+    padding: 0.75rem 0.5rem;
     border-radius: 0.85rem;
   }
 
   .skill-name {
-    font-size: 0.82rem;
-    gap: 0.4rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    line-height: 1.35;
   }
 
   .skill-name i,
   .skill-name .icon-meta-svg {
-    font-size: 1.5rem !important;
+    font-size: 1.45rem !important;
     width: 24px !important;
     height: 24px !important;
   }
 
   /* Học vấn */
   .education-card {
-    padding: 1.1rem 1rem;
-    border-radius: 1rem;
-    gap: 0.85rem;
+    padding: 1rem 0.9rem;
+    border-radius: 0.95rem;
+    gap: 0.8rem;
   }
 
   .edu-card-top {
-    gap: 0.85rem;
+    gap: 0.75rem;
   }
 
   .edu-badge-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.15rem;
     border-radius: 10px;
+    flex-shrink: 0;
   }
 
   .edu-degree {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
+    line-height: 1.35;
   }
 
   .edu-school {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .edu-pill-row {
+    gap: 0.4rem;
+    width: 100%;
   }
 
   .edu-pill {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.78rem;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
   }
 
   /* Danh sách chiến dịch (campaigns.html) */
@@ -3641,14 +3732,14 @@ img {
   }
 
   .cmp-list {
-    gap: 2.2rem;
-    margin-bottom: 2.5rem;
+    gap: 2rem;
+    margin-bottom: 2.2rem;
   }
 
   .cmp-block,
   .cmp-block-reverse {
     grid-template-columns: 1fr !important;
-    gap: 1.1rem;
+    gap: 1rem;
   }
 
   .cmp-block-reverse .cmp-block-img-col {
@@ -3660,30 +3751,31 @@ img {
   }
 
   .cmp-block-img-wrap {
-    border-radius: 1rem;
+    border-radius: 0.95rem;
     aspect-ratio: 16 / 9;
   }
 
   .cmp-block-title {
-    font-size: 1.22rem;
+    font-size: 1.2rem;
+    line-height: 1.35;
   }
 
   .cmp-block-desc {
-    font-size: 0.86rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.55;
   }
 
   .cmp-stats-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.45rem;
+    gap: 0.4rem;
     width: 100%;
   }
 
   .cmp-stat-card {
     min-width: 0;
-    padding: 0.65rem 0.35rem;
-    border-radius: 0.85rem;
+    padding: 0.6rem 0.25rem;
+    border-radius: 0.75rem;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -3692,13 +3784,13 @@ img {
   }
 
   .cmp-stat-val {
-    font-size: 1.18rem;
+    font-size: 1.12rem;
     font-weight: 800;
     line-height: 1.15;
   }
 
   .cmp-stat-lbl {
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     line-height: 1.25;
     text-align: center;
     white-space: normal;
@@ -3707,47 +3799,55 @@ img {
   .cmp-cta-btn {
     width: 100%;
     justify-content: center;
-    padding: 0.75rem 1.2rem;
-    font-size: 0.88rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.86rem;
     border-radius: 999px;
   }
 
   /* Chi tiết chiến dịch (project.html) */
   .pdh-card {
-    padding: 1.2rem 1.1rem;
-    border-radius: 1.1rem;
-    gap: 1rem;
-    margin-bottom: 1.6rem;
+    padding: 1.1rem 0.95rem;
+    border-radius: 1rem;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
   }
 
   .pdh-title {
-    font-size: 1.32rem;
-    line-height: 1.3;
+    font-size: 1.25rem;
+    line-height: 1.35;
   }
 
   .pdh-meta-row {
-    gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.6rem;
+    align-items: center;
+  }
+
+  .pdh-date {
+    font-size: 0.78rem;
   }
 
   .pdh-sheet-btn {
-    font-size: 0.75rem;
-    padding: 0.28rem 0.75rem;
+    font-size: 0.74rem;
+    padding: 0.28rem 0.7rem;
+    white-space: nowrap;
   }
 
   .pdh-tagline {
-    font-size: 0.85rem;
-    padding: 0.75rem 0.85rem;
-    line-height: 1.6;
+    font-size: 0.82rem;
+    padding: 0.65rem 0.75rem;
+    line-height: 1.55;
   }
 
   .pdh-psr-grid {
     grid-template-columns: 1fr !important;
-    gap: 0.65rem;
+    gap: 0.6rem;
   }
 
   .pdh-psr-box {
-    padding: 0.75rem 0.85rem;
-    border-radius: 0.8rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 0.75rem;
   }
 
   .pdh-psr-label {
@@ -3755,7 +3855,7 @@ img {
   }
 
   .pdh-psr-text {
-    font-size: 0.84rem;
+    font-size: 0.82rem;
     line-height: 1.55;
   }
 
@@ -3768,6 +3868,7 @@ img {
   .brief-edge-card {
     border-radius: 1rem;
     width: 100% !important;
+    max-width: 100% !important;
   }
 
   .brief-edge-gallery {
@@ -3775,25 +3876,96 @@ img {
   }
 
   .brief-edge-body {
-    padding: 0.95rem 1rem;
-    gap: 0.75rem;
+    padding: 0.9rem 0.95rem;
+    gap: 0.65rem;
   }
 
   .brief-edge-title {
-    font-size: 0.98rem;
+    font-size: 0.94rem;
+    line-height: 1.45;
   }
 
   .brief-edge-note {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .brief-edge-footer {
-    padding-top: 0.65rem;
+    padding-top: 0.6rem;
   }
 
   .brief-stat-pill {
-    font-size: 0.78rem;
-    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    padding: 0.28rem 0.65rem;
+  }
+
+  /* Video Reels trên Mobile: 2 cột đối xứng, không trống cạnh, video landscape chiếm full hàng */
+  .reels-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+    margin: 1.2rem 0 !important;
+    align-items: start !important;
+    justify-content: stretch !important;
+  }
+
+  .reel-card {
+    border-radius: 0.85rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .reel-card.landscape-card,
+  .reel-card.landscape-reel {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .reel-caption {
+    font-size: 0.76rem !important;
+    padding: 0.55rem 0.6rem !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Kết quả chiến dịch (Photos Grid): Luôn 2 cột cân đối trên điện thoại, không ép 4 cột */
+  .project-photos-wrap.photos-four {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+  }
+
+  .project-photos-wrap.photos-multi {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+    width: 100% !important;
+  }
+
+  .project-photos-wrap.photos-single {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .project-photos-wrap .work-sample-item {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  .project-photos-wrap .work-sample-item img {
+    border-radius: 0.75rem;
+    background-color: #f8fafc;
+  }
+
+  .project-photos-wrap .work-sample-item span {
+    font-size: 0.78rem !important;
+    padding: 0.6rem 0.65rem !important;
+    line-height: 1.4 !important;
   }
 
   /* Design Gallery (design.html): Hiển thị thông tin rõ ràng dưới ảnh thay vì ẩn hover */
@@ -3808,21 +3980,21 @@ img {
     opacity: 1;
     transform: none;
     background: #ffffff;
-    padding: 0.9rem 1rem 1rem;
+    padding: 0.85rem 0.95rem;
     pointer-events: auto;
     border-top: 1px solid #f1f5f9;
   }
 
   .design-info h3 {
     color: #0f172a;
-    font-size: 0.98rem;
+    font-size: 0.94rem;
     margin-bottom: 0.25rem;
   }
 
   .design-info p {
     color: #475569;
-    font-size: 0.82rem;
-    margin-bottom: 0.6rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.55rem;
     -webkit-line-clamp: 3;
   }
 
@@ -3830,79 +4002,75 @@ img {
     background: #f0f9ff;
     color: #0284c7;
     border: 1px solid #bae6fd;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
+    font-size: 0.68rem;
+    padding: 0.18rem 0.55rem;
   }
 
   .design-link {
     background: #f0f9ff;
     color: #0284c7;
     border: 1px solid #bae6fd;
-    font-size: 0.78rem;
-    padding: 0.35rem 0.85rem;
+    font-size: 0.76rem;
+    padding: 0.35rem 0.8rem;
     width: 100%;
     justify-content: center;
   }
 
   /* AI Automation (ai.html) */
   .ai-hero-card {
-    padding: 1.4rem 1.1rem;
-    border-radius: 1.1rem;
-    margin-bottom: 1.5rem;
+    padding: 1.2rem 1rem;
+    border-radius: 1rem;
+    margin-bottom: 1.4rem;
   }
 
   .ai-hero-title {
-    font-size: 1.35rem;
-    line-height: 1.3;
+    font-size: 1.28rem;
+    line-height: 1.35;
   }
 
   .ai-hero-desc {
-    font-size: 0.85rem;
-    line-height: 1.6;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .ai-tech-stack {
+    gap: 0.45rem;
   }
 
   .tech-pill {
-    padding: 0.32rem 0.7rem;
-    font-size: 0.76rem;
+    padding: 0.28rem 0.65rem;
+    font-size: 0.74rem;
   }
 
   .ai-project-card {
     grid-template-columns: 1fr !important;
     border-radius: 1rem;
+    margin-bottom: 1.3rem;
   }
 
   .ai-project-img-wrapper {
-    min-height: 180px;
-    max-height: 240px;
+    min-height: unset !important;
+    max-height: unset !important;
+    aspect-ratio: 16 / 9;
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
   }
 
   .ai-project-content {
-    padding: 1.1rem 1rem;
+    padding: 1rem 0.95rem;
   }
 
   .ai-project-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .ai-project-desc {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
   }
 
   .ai-project-features span {
-    font-size: 0.8rem;
-  }
-
-  /* Video Reels */
-  .reels-grid {
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .reel-card {
-    border-radius: 0.85rem;
-    max-width: 100%;
+    font-size: 0.78rem;
   }
 
   /* Lightbox Overlay */
@@ -3939,11 +4107,11 @@ img {
     max-height: 80vh;
   }
 
-  /* Nút Back to Top (Nằm trên Chatbot Tawk.to) */
+  /* Nút Back to Top (Nằm an toàn trên Chatbot Tawk.to và thanh điều hướng Safari) */
   #back-to-top,
   .back-to-top {
-    bottom: 90px;
-    right: 20px;
+    bottom: calc(85px + env(safe-area-inset-bottom, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -3956,7 +4124,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem 0.6rem;
+    gap: 0.45rem 0.55rem;
     flex-wrap: wrap;
     width: 100%;
   }
@@ -3966,15 +4134,15 @@ img {
     width: auto;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.95rem;
-    font-size: 0.82rem;
+    gap: 0.35rem;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     border-radius: 999px;
   }
 }
 
-/* ---------- ĐIỆN THOẠI THÔNG DỤNG (DƯỚI 560px) ---------- */
+/* ---------- ĐIỆN THOẠI THÔNG DỤNG (DƯỚI 560px - BAO GỒM IPHONE XR 414px) ---------- */
 @media (max-width: 559px) {
   /* Chiến dịch tiêu biểu trên trang chủ xếp 1 cột rõ nét, thumbnail lớn 16:9 */
   .work-samples {
@@ -3987,14 +4155,14 @@ img {
   }
 
   .work-sample-item span {
-    padding: 0.85rem 1rem;
-    font-size: 0.92rem;
+    padding: 0.8rem 0.95rem;
+    font-size: 0.9rem;
   }
 
   /* Meme grid 1 cột để đọc chữ caption rõ ràng */
   .meme-grid {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
+    grid-template-columns: 1fr !important;
+    gap: 1.1rem !important;
   }
 
   /* Design grid 1 cột masonry */
@@ -4002,6 +4170,10 @@ img {
     column-count: 1 !important;
   }
 
+  /* Ảnh báo cáo kích thước lớn trên trang chi tiết chiếm trọn hàng để dễ đọc */
+  .project-photos-wrap.photos-multi .custom-max-w {
+    grid-column: 1 / -1 !important;
+  }
 }
 
 /* ---------- MÀN HÌNH RẤT HẸP (DƯỚI 360px) ---------- */
@@ -4017,5 +4189,15 @@ img {
   .dash-card:last-child {
     grid-column: auto;
   }
+
+  .reels-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .project-photos-wrap.photos-four,
+  .project-photos-wrap.photos-multi {
+    grid-template-columns: 1fr !important;
+  }
 }
+
 
