@@ -24,34 +24,38 @@ body {
   color: #0f172a;
   background: #ffffff;
   min-height: 100vh;
-  padding: 0 1.5rem 3rem 1.5rem;
+  padding: 68px 1.5rem 3rem 1.5rem;
 }
 
-/* ===== HEADER CỐ ĐỊNH (STICKY FROSTED GLASS HEADER) ===== */
+/* ===== HEADER CỐ ĐỊNH (FIXED FROSTED GLASS HEADER) ===== */
 .fixed-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  margin: 0 0 1.2rem 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  padding: 0.48rem 0;
-  background: rgba(255, 255, 255, 0.94);
+  margin: 0;
+  padding: 0.45rem 0;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 2px 14px rgba(15, 23, 42, 0.04);
   z-index: 1000;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
-.nav-container {
+.fixed-header .nav-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .nav-brand {
@@ -2783,9 +2787,9 @@ body {
 
 /* ===== RESPONSIVE TABLET & MOBILE ===== */
 @media (max-width: 992px) {
-  body { padding: 0 0.5rem 2.5rem 0.5rem; }
-  .fixed-header { margin-bottom: 1rem; width: 100%; padding: 0.42rem 0; }
-  .nav-container { position: relative; padding: 0; border-radius: 0; background: transparent; }
+  body { padding: 66px 0.5rem 2.5rem 0.5rem; }
+  .fixed-header { margin: 0; width: 100%; padding: 0.42rem 0; }
+  .fixed-header .nav-container { padding: 0 0.85rem; }
   .campaign-card {
     grid-template-columns: 1fr;
     gap: 1.2rem;
@@ -3944,7 +3948,7 @@ img {
 /* ---------- TOÀN BỘ THIẾT BỊ DI ĐỘNG (DƯỚI 768px - ĐẶC BIỆT IPHONE XR 414px) ---------- */
 @media (max-width: 768px) {
   body {
-    padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+    padding-top: max(58px, calc(env(safe-area-inset-top, 0px) + 52px)) !important;
     padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
     padding-left: max(0.5rem, env(safe-area-inset-left, 0px));
     padding-right: max(0.5rem, env(safe-area-inset-right, 0px));
@@ -3956,13 +3960,16 @@ img {
     border-radius: 0.9rem;
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
   }
 
   /* Fixed Header */
   .fixed-header {
-    margin-bottom: 0.75rem;
+    margin: 0;
     padding: 0.35rem 0;
+  }
+
+  .fixed-header .nav-container {
+    padding: 0 0.65rem;
   }
 
   .nav-container {
