@@ -1629,7 +1629,7 @@ function initProjectDetailPage() {
                 .map(
                   (imgSrc, idx) => `
                 <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                  <img src="${imgSrc}" alt="${b.title}" class="brief-edge-img" />
+                  <img src="${imgSrc}" alt="${b.title}" class="brief-edge-img" loading="lazy" decoding="async" />
                 </div>
               `,
                 )
@@ -1677,7 +1677,7 @@ function initProjectDetailPage() {
                   .map(
                     (imgSrc, idx) => `
                   <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" />
+                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" loading="lazy" decoding="async" />
                   </div>
                 `,
                   )
@@ -1717,7 +1717,7 @@ function initProjectDetailPage() {
               return `
             <div class="reel-card ${isVertical ? "vertical-reel" : "landscape-reel"}">
               <div class="reel-embed" style="width: 100%; aspect-ratio: ${origW} / ${origH};">
-                <iframe src="${v.src}" width="${origW}" height="${origH}" style="border: none; overflow: hidden; width: 100%; height: 100%;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <iframe loading="lazy" src="${v.src}" width="${origW}" height="${origH}" style="border: none; overflow: hidden; width: 100%; height: 100%;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
               </div>
               <div class="reel-caption">${formatCaptionHTML(v.title)}</div>
             </div>
@@ -1753,7 +1753,7 @@ function initProjectDetailPage() {
                       ? `max-width: ${img.maxWidth}; width: 100%; flex: 1 1 ${img.maxWidth};`
                       : `max-width: ${minColWidth}; width: 100%; flex: 1 1 ${minColWidth};`
               }">
-                <img src="${img.src}" alt="${img.title}" />
+                <img src="${img.src}" alt="${img.title}" loading="lazy" decoding="async" />
                 ${
                   img.link
                     ? `

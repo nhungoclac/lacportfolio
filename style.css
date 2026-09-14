@@ -2636,7 +2636,9 @@ body {
   position: relative;
   width: 100%;
   max-width: 100%;
-  background: #f8fafc;
+  background: linear-gradient(90deg, #f1f5f9 0%, #f8fafc 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: mediaShimmer 2s infinite linear;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -2647,14 +2649,37 @@ body {
   max-width: 100%;
   border: none;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .landscape-embed {
   position: relative;
   width: 100%;
   aspect-ratio: 560 / 314;
-  background: #f8fafc;
+  background: linear-gradient(90deg, #f1f5f9 0%, #f8fafc 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: mediaShimmer 2s infinite linear;
   overflow: hidden;
+  margin: 0 auto;
+}
+
+@keyframes mediaShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Tối ưu render các khối dài giúp cuộn trang siêu mượt */
+.cmp-block,
+.design-item,
+.meme-card,
+.brief-edge-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 380px;
 }
 
 .landscape-embed iframe {
