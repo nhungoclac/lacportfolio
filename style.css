@@ -2713,7 +2713,6 @@ body {
 }
 
 /* Tối ưu render các khối dài giúp cuộn trang siêu mượt */
-.cmp-block,
 .design-item,
 .meme-card,
 .brief-edge-card {
@@ -3698,9 +3697,11 @@ body {
   font-size: 0.82rem;
   color: #94a3b8;
   font-weight: 500;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  white-space: nowrap;
+  text-decoration: none !important;
 }
 
 /* --- Title --- */
@@ -3948,7 +3949,7 @@ img {
 /* ---------- TOÀN BỘ THIẾT BỊ DI ĐỘNG (DƯỚI 768px - ĐẶC BIỆT IPHONE XR 414px) ---------- */
 @media (max-width: 768px) {
   body {
-    padding-top: max(58px, calc(env(safe-area-inset-top, 0px) + 52px)) !important;
+    padding-top: calc(max(0px, env(safe-area-inset-top, 0px)) + 56px) !important;
     padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
     padding-left: max(0.5rem, env(safe-area-inset-left, 0px));
     padding-right: max(0.5rem, env(safe-area-inset-right, 0px));
@@ -3965,7 +3966,8 @@ img {
   /* Fixed Header */
   .fixed-header {
     margin: 0;
-    padding: 0.35rem 0;
+    padding-top: max(0.4rem, env(safe-area-inset-top, 0px));
+    padding-bottom: 0.4rem;
   }
 
   .fixed-header .nav-container {
@@ -4385,14 +4387,22 @@ img {
   }
 
   .cmp-list {
-    gap: 2rem;
-    margin-bottom: 2.2rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
   }
 
   .cmp-block,
   .cmp-block-reverse {
-    grid-template-columns: 1fr !important;
-    gap: 1rem;
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 1.15rem !important;
+    width: 100% !important;
+    position: relative !important;
+    contain: none !important;
+    content-visibility: visible !important;
   }
 
   .cmp-block-reverse .cmp-block-img-col {
@@ -4406,6 +4416,32 @@ img {
   .cmp-block-img-wrap {
     border-radius: 0.95rem;
     aspect-ratio: 16 / 9;
+  }
+
+  .cmp-block-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+  }
+
+  .cmp-block-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 0.45rem !important;
+    width: 100% !important;
+  }
+
+  .cmp-block-date {
+    font-size: 0.76rem !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    color: #64748b !important;
+    text-decoration: none !important;
   }
 
   .cmp-block-title {
@@ -4452,9 +4488,12 @@ img {
   .cmp-cta-btn {
     width: 100%;
     justify-content: center;
-    padding: 0.7rem 1.1rem;
-    font-size: 0.86rem;
+    padding: 0.72rem 1.1rem;
+    font-size: 0.88rem;
     border-radius: 999px;
+    margin-top: 0.35rem;
+    position: relative;
+    z-index: 1;
   }
 
   /* Chi tiết chiến dịch (project.html) */
@@ -4773,6 +4812,14 @@ img {
   }
 
   /* Nút liên hệ thu gọn tinh tế */
+  #contact {
+    margin-top: 2.5rem !important;
+    padding-top: 1rem !important;
+    clear: both !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
   .contact-links {
     display: flex;
     justify-content: center;
