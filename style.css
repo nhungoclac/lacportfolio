@@ -3,6 +3,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 75px;
 }
 
 * {
@@ -23,19 +24,23 @@ body {
   color: #0f172a;
   background: #ffffff;
   min-height: 100vh;
-  padding: 0.8rem 1.5rem 3rem 1.5rem;
+  padding: 0 1.5rem 3rem 1.5rem;
 }
 
-/* ===== HEADER HỢP NHẤT TRONG KHUNG TRẮNG (UNIFIED SINGLE CONTAINER) ===== */
+/* ===== HEADER CỐ ĐỊNH (STICKY FROSTED GLASS HEADER) ===== */
 .fixed-header {
-  position: relative;
+  position: sticky;
   top: 0;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.2rem 0;
   width: 100%;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #f1f5f9;
-  z-index: 100;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0.48rem 0;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.04);
+  z-index: 1000;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-container {
@@ -68,8 +73,8 @@ body {
 }
 
 .nav-mascot-wrap {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -99,7 +104,7 @@ body {
 .nav-wordmark {
   font-family: "Dancing Script", cursive;
   font-weight: 700;
-  font-size: 2.05rem;
+  font-size: 1.85rem;
   line-height: 0.95;
   color: #0284c7;
   letter-spacing: 0.5px;
@@ -243,8 +248,8 @@ body {
   align-items: center;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.4rem 0.75rem;
+  font-size: 0.92rem;
+  padding: 0.32rem 0.65rem;
   border-radius: 0;
   color: #64748b;
   background: transparent;
@@ -546,7 +551,7 @@ body {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 999px;
-  padding: 0.32rem 0.85rem;
+  padding: 0.25rem 0.72rem;
   user-select: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
@@ -2778,8 +2783,8 @@ body {
 
 /* ===== RESPONSIVE TABLET & MOBILE ===== */
 @media (max-width: 992px) {
-  body { padding: 1rem 0.5rem; }
-  .fixed-header { margin-bottom: 1.2rem; width: 100%; }
+  body { padding: 0 0.5rem 2.5rem 0.5rem; }
+  .fixed-header { margin-bottom: 1rem; width: 100%; padding: 0.42rem 0; }
   .nav-container { position: relative; padding: 0; border-radius: 0; background: transparent; }
   .campaign-card {
     grid-template-columns: 1fr;
@@ -2815,7 +2820,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  body { padding: 0.6rem 0.4rem; }
+  body { padding: 0 0.4rem 2.5rem 0.4rem; }
   .container { padding: 1.4rem 1rem; margin: 0.5rem auto; border-radius: 1rem; }
   .intro { flex-direction: column; text-align: center; align-items: center; gap: 1.2rem; padding-bottom: 1.5rem; }
   .avatar { margin: 0 auto; width: 125px; height: 125px; flex: 0 0 125px; }
@@ -3956,8 +3961,8 @@ img {
 
   /* Fixed Header */
   .fixed-header {
-    margin-bottom: 0.9rem;
-    padding-bottom: 0.65rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0;
   }
 
   .nav-container {
