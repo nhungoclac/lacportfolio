@@ -47,7 +47,85 @@ function initPortfolioEngine() {
   initRealtimeClock();
   initCounterAnimation();
   initPeanutMascot();
+  initEmailCopy();
 }
+
+// ===== CLICK TO COPY EMAIL INTERACTION =====
+function initEmailCopy() {
+  const btn = document.getElementById("emailCopyBtn");
+  if (!btn) return;
+
+  const email = btn.getAttribute("data-email") || "nhulacngoc@gmail.com";
+  const tooltip = document.getElementById("emailTooltip");
+  const icon = btn.querySelector("i");
+  let resetTimer = null;
+
+  async function copyEmail(e) {
+    if (e) e.preventDefault();
+    let copied = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(email);
+        copied = true;
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = email;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        copied = document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+    } catch (err) {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = email;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        copied = document.execCommand("copy");
+        document.body.removeChild(textarea);
+      } catch (fallbackErr) {
+        console.error("Copy failed", fallbackErr);
+      }
+    }
+
+    if (copied) {
+      btn.classList.add("copied");
+      if (icon) {
+        icon.className = "fas fa-check";
+      }
+      if (tooltip) {
+        tooltip.textContent = "Đã sao chép email! ✓";
+      }
+
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        btn.classList.remove("copied");
+        if (icon) {
+          icon.className = "fas fa-envelope";
+        }
+        if (tooltip) {
+          tooltip.textContent = "Click để copy email";
+        }
+      }, 2000);
+    }
+  }
+
+  btn.addEventListener("click", copyEmail);
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      copyEmail(e);
+    }
+  });
+}
+
 
 // ===== BÉ LẠC ANIME MASCOT & TYPOGRAPHY INTERACTION ENGINE =====
 function initPeanutMascot() {
@@ -1148,12 +1226,16 @@ const PROJECTS_DATA = {
         "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1725098248137253%2F&show_text=false&width=267&t=0"
       },
       {
+        "title": "Quay source và chỉnh sửa video",
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F638233139360856%2F&show_text=false&width=267&t=0"
+      },
+      {
         "title": "Quảng cáo chiến dịch Xoay Đi Chờ Chi",
-        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F24538925582408921%2F&show_text=false&width=267&t=0"
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F796570512734331%2F&show_text=false&width=267&t=0"
       },
       {
         "title": "Quảng cáo túi chống sốc & chiến dịch Xoay Đi Chờ Chi",
-        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F798628676364303%2F&show_text=false&width=267&t=0"
+        "src": "https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1110318384082275%2F&show_text=false&width=267&t=0"
       },
       {
         "title": "Clip vui cho chiến dịch Xoay Đi Chờ Chi",
