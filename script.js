@@ -305,6 +305,14 @@ if (document.readyState === "loading") {
 
 // 2. Xử lý Locket Gallery trên các khung ảnh
 function initLocketGalleries() {
+  const loadImage = (item) => {
+    const image = item?.querySelector("img[data-src]");
+    if (image) {
+      image.src = image.dataset.src;
+      delete image.dataset.src;
+    }
+  };
+
   document.querySelectorAll(".locket-gallery").forEach((gallery) => {
     if (gallery.dataset.locketInitialized === "true") return;
     gallery.dataset.locketInitialized = "true";
@@ -347,11 +355,13 @@ function initLocketGalleries() {
       item.style.zIndex = index === 0 ? 2 : 1;
       if (index === 0) item.classList.add("active");
     });
+    loadImage(items[0]);
 
     function nextSlide() {
       const currentItem = items[currentIndex];
       currentIndex = (currentIndex + 1) % items.length;
       const nextItem = items[currentIndex];
+      loadImage(nextItem);
 
       items.forEach((item) => {
         item.classList.remove("slide-down", "next-ready", "showing", "active");
@@ -375,6 +385,7 @@ function initLocketGalleries() {
       const currentItem = items[currentIndex];
       currentIndex = (currentIndex - 1 + items.length) % items.length;
       const prevItem = items[currentIndex];
+      loadImage(prevItem);
 
       items.forEach((item) => {
         item.classList.remove("slide-down", "next-ready", "showing", "active");
@@ -568,7 +579,9 @@ function initImageLightbox() {
     const img = e.target.closest(
       ".brief-img-wrapper img, .slide-item img, .gallery-item img, .zoomable-img, .work-sample-item img, .ai-project-img-wrapper img, .campaign-thumb-wrapper img",
     );
-    if (!img || !img.src) return;
+    const imageSource = (image) =>
+      image?.dataset.src || image?.currentSrc || image?.getAttribute("src") || "";
+    if (!img || !imageSource(img)) return;
     if (img.closest("a[href]")) return;
 
     // Ảnh thuộc trang AI Automation
@@ -577,7 +590,7 @@ function initImageLightbox() {
       const aiImgs = Array.from(
         aiProjects.querySelectorAll(".ai-project-img-wrapper img"),
       );
-      const gallerySrcs = aiImgs.map((i) => i.src);
+      const gallerySrcs = aiImgs.map(imageSource);
       const clickedIdx = aiImgs.indexOf(img);
       openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, null);
       return;
@@ -591,7 +604,7 @@ function initImageLightbox() {
       const sampleImgs = Array.from(
         workSamples.querySelectorAll(".work-sample-item img"),
       );
-      const gallerySrcs = sampleImgs.map((i) => i.src);
+      const gallerySrcs = sampleImgs.map(imageSource);
       const clickedIdx = sampleImgs.indexOf(img);
       openLightbox(gallerySrcs, clickedIdx >= 0 ? clickedIdx : 0, null);
       return;
@@ -601,7 +614,7 @@ function initImageLightbox() {
     if (workSampleItem) {
       e.preventDefault();
       e.stopPropagation();
-      openLightbox([img.src], 0, null);
+      openLightbox([imageSource(img)], 0, null);
       return;
     }
 
@@ -610,7 +623,7 @@ function initImageLightbox() {
       const locketImgs = Array.from(
         locket.querySelectorAll(".gallery-item img"),
       );
-      const gallerySrcs = locketImgs.map((i) => i.src);
+      const gallerySrcs = locketImgs.map(imageSource);
       const activeItem = locket.querySelector(".gallery-item.active");
       const activeImg = activeItem ? activeItem.querySelector("img") : null;
       let clickedIdx = locketImgs.indexOf(img);
@@ -624,7 +637,7 @@ function initImageLightbox() {
     const slider = img.closest(".brief-slider");
     if (slider) {
       const slideImgs = Array.from(slider.querySelectorAll(".slide-item img"));
-      const gallerySrcs = slideImgs.map((i) => i.src);
+      const gallerySrcs = slideImgs.map(imageSource);
       const clickedIdx = slideImgs.indexOf(img);
 
       const syncFn = (idx) => {
@@ -642,7 +655,7 @@ function initImageLightbox() {
       return;
     }
 
-    openLightbox([img.src], 0, null);
+    openLightbox([imageSource(img)], 0, null);
   });
 
   prevBtn.addEventListener("click", function (e) {
@@ -829,32 +842,32 @@ const PROJECTS_DATA = {
         "caption": "Caption cho clip quảng bá NutriBest Health (160.000 lượt xem)",
         "imgs": [
           "photo/thumb_bai_noi_bat_1.png",
-          "photo/90NTC/pdpvideo.png",
-          "photo/90NTC/pdpvideo-meta.png"
+          "photo/optimized/90NTC/pdpvideo.jpg",
+          "photo/optimized/90NTC/pdpvideo-meta.jpg"
         ]
       },
       {
         "caption": "Caption cho Sales Event - Ngày hội NutriBest Health 20/6 (63.000 lượt xem)",
         "imgs": [
           "photo/thumb_bai_noi_bat_2.png",
-          "photo/90NTC/2006.png",
-          "photo/90NTC/2006-meta.png"
+          "photo/optimized/90NTC/2006.jpg",
+          "photo/optimized/90NTC/2006-meta.jpg"
         ]
       },
       {
         "caption": "Caption cho Minigame Ngày hội NutriBest Health 23/5 (28.000 lượt xem)",
         "imgs": [
           "photo/thumb_bai_noi_bat_3.png",
-          "photo/90NTC/minigame.png",
-          "photo/90NTC/minigame-meta.png"
+          "photo/optimized/90NTC/minigame.jpg",
+          "photo/optimized/90NTC/minigame-meta.jpg"
         ]
       },
       {
         "caption": "Caption cho bài Nhìn lại 90 Ngày Tốc Chiến 2026 (2.400 lượt xem)",
         "imgs": [
           "photo/thumb_bai_noi_bat_4.png",
-          "photo/90NTC/nhinlai.png",
-          "photo/90NTC/nhinlai-meta.png"
+          "photo/optimized/90NTC/nhinlai.jpg",
+          "photo/optimized/90NTC/nhinlai-meta.jpg"
         ]
       }
     ],
@@ -863,51 +876,51 @@ const PROJECTS_DATA = {
         "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (1)",
         "link": "https://www.facebook.com/share/p/1JapKjw8bA/",
         "briefImgs": [
-          "photo/90NTC/branding1.png",
-          "photo/90NTC/branding12.png"
+          "photo/optimized/90NTC/branding1.jpg",
+          "photo/optimized/90NTC/branding12.jpg"
         ],
         "resultImgs": [
-          "photo/90NTC/branding1-meta.png",
-          "photo/90NTC/branding1-meta1.png",
-          "photo/90NTC/branding1-meta2.png"
+          "photo/optimized/90NTC/branding1-meta.jpg",
+          "photo/optimized/90NTC/branding1-meta1.jpg",
+          "photo/optimized/90NTC/branding1-meta2.jpg"
         ],
         "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
         "views": "> 3.000",
         "reach": "> 1.500",
-        "thumb": "photo/thumb_branding_1.png"
+        "thumb": "photo/optimized/thumb_branding_1.jpg"
       },
       {
         "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (2)",
         "link": "https://www.facebook.com/share/p/1DMgtAf6i3/",
         "briefImgs": [
-          "photo/90NTC/branding2-brief.png",
-          "photo/90NTC/branding2-brief1.png",
-          "photo/90NTC/branding2-brief2.png",
-          "photo/90NTC/branding2-brief3.png"
+          "photo/optimized/90NTC/branding2-brief.jpg",
+          "photo/optimized/90NTC/branding2-brief1.jpg",
+          "photo/optimized/90NTC/branding2-brief2.jpg",
+          "photo/optimized/90NTC/branding2-brief3.jpg"
         ],
         "resultImgs": [
-          "photo/90NTC/branding2.png",
-          "photo/90NTC/branding21.png",
-          "photo/90NTC/branding2-meta.png"
+          "photo/optimized/90NTC/branding2.jpg",
+          "photo/optimized/90NTC/branding21.jpg",
+          "photo/optimized/90NTC/branding2-meta.jpg"
         ],
         "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
         "views": "> 2.700",
         "reach": "> 1.300",
-        "thumb": "photo/thumb_branding_2.png"
+        "thumb": "photo/optimized/thumb_branding_2.jpg"
       },
       {
         "title": "Bài branding cho Nhà tài trợ độc quyền NutriBest Health (3)",
         "link": "https://www.facebook.com/share/p/1b5tBqBDZW/",
-        "thumb": "photo/thumb_branding_3.png",
+        "thumb": "photo/optimized/thumb_branding_3.jpg",
         "briefImgs": [
-          "photo/thumb/test.jpg",
-          "photo/brief-brand.png",
-          "photo/brief-brand01.png"
+          "photo/optimized/thumb/test.jpg",
+          "photo/optimized/brief-brand.jpg",
+          "photo/optimized/brief-brand01.jpg"
         ],
         "resultImgs": [
-          "photo/brief-brand-result.png",
-          "photo/brief-brand-result01.png",
-          "photo/brief-brand-meta.png"
+          "photo/optimized/brief-brand-result.jpg",
+          "photo/optimized/brief-brand-result01.jpg",
+          "photo/optimized/brief-brand-meta.jpg"
         ],
         "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
         "views": "> 2.200",
@@ -917,83 +930,83 @@ const PROJECTS_DATA = {
         "title": "Bài Minigame 90NTC",
         "link": "https://www.facebook.com/DroppiiOfficialPage/posts/pfbid02rx5NhLXYPphrjpZnDKow8MYjiEMAKwRYbfBpWo1ePSHsZaqfUMbDw74TvthEGpwil",
         "briefImgs": [
-          "photo/brief-nu.png"
+          "photo/optimized/brief-nu.jpg"
         ],
         "resultImgs": [
-          "photo/brief-nu-result.png",
-          "photo/brief-nu01.png",
-          "photo/brief-nu-meta.png"
+          "photo/optimized/brief-nu-result.jpg",
+          "photo/optimized/brief-nu01.jpg",
+          "photo/optimized/brief-nu-meta.jpg"
         ],
         "note": "Bài viết nằm trong chiến dịch 90 Ngày Tốc Chiến 2026",
         "views": "> 2.900",
         "reach": "> 1.400",
-        "thumb": "photo/thumb_minigame.png"
+        "thumb": "photo/optimized/thumb_minigame.jpg"
       },
       {
         "title": "Double Day 7/7",
         "link": "https://www.facebook.com/share/p/199SHkXHek/",
         "briefImgs": [
-          "photo/brief-77.png"
+          "photo/optimized/brief-77.jpg"
         ],
         "resultImgs": [
-          "photo/brief-77-result.png",
-          "photo/brief-77-result01.png",
-          "photo/brief-77-meta.png"
+          "photo/optimized/brief-77-result.jpg",
+          "photo/optimized/brief-77-result01.jpg",
+          "photo/optimized/brief-77-meta.jpg"
         ],
         "note": "Sales event Siêu Sale 7/7 trong 90 Ngày Tốc Chiến",
         "views": "> 2.400",
         "reach": "> 1.100",
-        "thumb": "photo/thumb_77.png"
+        "thumb": "photo/optimized/thumb_77.jpg"
       },
       {
         "title": "News 7 ngày về đích",
         "link": "https://www.facebook.com/share/p/1Bk5cq4dXX/",
         "briefImgs": [
-          "photo/90NTC/gap.png"
+          "photo/optimized/90NTC/gap.jpg"
         ],
         "resultImgs": [
-          "photo/90NTC/gap-meta.png",
-          "photo/90NTC/gap-meta1.png"
+          "photo/optimized/90NTC/gap-meta.jpg",
+          "photo/optimized/90NTC/gap-meta1.jpg"
         ],
         "note": "Đếm ngược 7 ngày kết thúc 90 Ngày Tốc Chiến",
         "views": "> 1.700",
         "reach": "> 1.000",
-        "thumb": "photo/thumb_news_ve_dich.png"
+        "thumb": "photo/optimized/thumb_news_ve_dich.jpg"
       },
       {
         "title": "News Đại lộ tri ân",
         "link": "https://www.facebook.com/share/p/1E55y8iQWy/",
         "briefImgs": [
-          "photo/90NTC/dailotrian.png"
+          "photo/optimized/90NTC/dailotrian.jpg"
         ],
         "resultImgs": [
-          "photo/90NTC/dailotrian-meta.png",
-          "photo/90NTC/dailotrian-meta1.png"
+          "photo/optimized/90NTC/dailotrian-meta.jpg",
+          "photo/optimized/90NTC/dailotrian-meta1.jpg"
         ],
         "note": "Nhắc nhở vào app nhận vinh danh 90 Ngày Tốc Chiến",
         "views": "> 2.000",
         "reach": "> 1.200",
-        "thumb": "photo/thumb_news_dai_lo.png"
+        "thumb": "photo/optimized/thumb_news_dai_lo.jpg"
       }
     ],
     "photos": [
       {
-        "src": "photo/90NTC/tongketall.jpg",
+        "src": "photo/optimized/90NTC/tongketall.jpg",
         "title": "Tổng kết 90NTC",
         "link": "https://www.facebook.com/share/p/1C67HM1eAv/"
       },
       {
-        "src": "photo/90NTC/dhqs13.jpg",
+        "src": "photo/optimized/90NTC/dhqs13.jpg",
         "title": "Đại hội quay số Tuần 13",
         "link": "https://www.facebook.com/share/p/1FRwkzhHpj/"
       },
       {
-        "src": "photo/90NTC/nutribest.jpg",
+        "src": "photo/optimized/90NTC/nutribest.jpg",
         "title": "Tổng kết 90NTC cho riêng NutriBest Health",
         "link": "https://www.facebook.com/share/p/19Njf9wK2e/"
       },
       {
-        "src": "photo/90NTC/top6.jpg",
+        "src": "photo/optimized/90NTC/top6.jpg",
         "title": "Vinh danh Top 6 chung cuộc",
         "link": "https://www.facebook.com/share/p/1BjMzCm8ia/"
       }
@@ -1045,50 +1058,50 @@ const PROJECTS_DATA = {
       {
         "caption": "Caption cho tập 2 - short 1 (377.000 lượt xem)",
         "imgs": [
-          "photo/MEME/tldtep2.png",
-          "photo/MEME/tldtep2-meta.png"
+          "photo/optimized/MEME/tldtep2.jpg",
+          "photo/optimized/MEME/tldtep2-meta.jpg"
         ]
       },
       {
         "caption": "Caption cho tập 2 - short 2 (117.000 lượt xem)",
         "imgs": [
-          "photo/MEME/tldts22.png",
-          "photo/MEME/tldts22me.png"
+          "photo/optimized/MEME/tldts22.jpg",
+          "photo/optimized/MEME/tldts22me.jpg"
         ]
       },
       {
         "caption": "Caption cho tập 4 - short 1 (140.000 lượt xem)",
         "imgs": [
-          "photo/MEME/tldts14.png",
-          "photo/MEME/tldts14me.png"
+          "photo/optimized/MEME/tldts14.jpg",
+          "photo/optimized/MEME/tldts14me.jpg"
         ]
       },
       {
         "caption": "Caption cho tập 5 - short 1 (182.000 lượt xem)",
         "imgs": [
-          "photo/MEME/tldt5te.png",
-          "photo/MEME/tldt5teme.png"
+          "photo/optimized/MEME/tldt5te.jpg",
+          "photo/optimized/MEME/tldt5teme.jpg"
         ]
       },
       {
         "caption": "Caption cho album ảnh tập 3 (3.900 lượt xem)",
         "imgs": [
-          "photo/MEME/tldt3sto.png",
-          "photo/MEME/tldt3stome.png"
+          "photo/optimized/MEME/tldt3sto.jpg",
+          "photo/optimized/MEME/tldt3stome.jpg"
         ]
       },
       {
         "caption": "Caption cho official video tập 6 (5.100 lượt xem)",
         "imgs": [
-          "photo/MEME/tldt1.png",
-          "photo/MEME/tldtme1.png"
+          "photo/optimized/MEME/tldt1.jpg",
+          "photo/optimized/MEME/tldtme1.jpg"
         ]
       },
       {
         "caption": "Caption cho poster tập 5 (3.200 lượt xem)",
         "imgs": [
-          "photo/MEME/tldt5pos.png",
-          "photo/MEME/tldt5me.png"
+          "photo/optimized/MEME/tldt5pos.jpg",
+          "photo/optimized/MEME/tldt5me.jpg"
         ]
       }
     ],
@@ -1097,17 +1110,17 @@ const PROJECTS_DATA = {
         "title": "Album ảnh Tôi là đối tác Droppii tập 6",
         "link": "https://www.facebook.com/share/p/1Bxpe9QCBv/",
         "briefImgs": [
-          "photo/brief-tldt6.png"
+          "photo/optimized/brief-tldt6.jpg"
         ],
         "resultImgs": [
-          "photo/brief-tldt6-result.png",
-          "photo/brief-tldt6-01.png",
-          "photo/brief-tldt6-meta.png"
+          "photo/optimized/brief-tldt6-result.jpg",
+          "photo/optimized/brief-tldt6-01.jpg",
+          "photo/optimized/brief-tldt6-meta.jpg"
         ],
         "note": "Bài viết thuộc series Tôi là đối tác Droppii",
         "views": "> 2.400",
         "reach": "1.400",
-        "thumb": "photo/THUMB_SERIES.png"
+        "thumb": "photo/optimized/THUMB_SERIES.jpg"
       }
     ],
     "stats": [
@@ -1139,27 +1152,27 @@ const PROJECTS_DATA = {
     "execution": "Cấu hình RSS Feed, viết Prompt chuẩn hóa cho Gemini API, thiết lập Webhook tự động ghi log dữ liệu vào Google Sheet & Telegram Bot.",
     "photos": [
       {
-        "src": "photo/make1.png",
+        "src": "photo/optimized/make1.jpg",
         "title": "Overview Kịch bản Make.com"
       },
       {
-        "src": "photo/make2.png",
+        "src": "photo/optimized/make2.jpg",
         "title": "Google Sheet Quản lý dữ liệu"
       },
       {
-        "src": "photo/make4.png",
+        "src": "photo/optimized/make4.jpg",
         "title": "Leonardo API Tự động tạo ảnh"
       },
       {
-        "src": "photo/make5.png",
+        "src": "photo/optimized/make5.jpg",
         "title": "Google AI Studio / Gemini API"
       },
       {
-        "src": "photo/make6.png",
+        "src": "photo/optimized/make6.jpg",
         "title": "Telegram Bot Nhận thông báo bài"
       },
       {
-        "src": "photo/make7.png",
+        "src": "photo/optimized/make7.jpg",
         "title": "Bài đăng tự động hoàn chỉnh"
       }
     ],
@@ -1192,31 +1205,31 @@ const PROJECTS_DATA = {
       {
         "caption": "Bài đăng Khởi động chiến dịch Xoay Đi Chờ Chi",
         "imgs": [
-          "photo/XĐCC/thongbao.png"
+          "photo/optimized/XĐCC/thongbao.jpg"
         ]
       },
       {
         "caption": "Bài đăng Nhắc nhở ưu đãi Voucher & Vòng quay may mắn",
         "imgs": [
-          "photo/XĐCC/remind1.png"
+          "photo/optimized/XĐCC/remind1.jpg"
         ]
       },
       {
         "caption": "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (1)",
         "imgs": [
-          "photo/XĐCC/cuoingay1.png"
+          "photo/optimized/XĐCC/cuoingay1.jpg"
         ]
       },
       {
         "caption": "Bài đăng Cuối ngày - Tổng kết hình ảnh khách hàng (2)",
         "imgs": [
-          "photo/XĐCC/cuoingay2.png"
+          "photo/optimized/XĐCC/cuoingay2.jpg"
         ]
       }
     ],
     "photos": [
       {
-        "src": "photo/XĐCC/doanhthu.png",
+        "src": "photo/optimized/XĐCC/doanhthu.jpg",
         "title": "Báo cáo theo dõi doanh thu thực tế"
       }
     ],
@@ -1378,33 +1391,33 @@ const PROJECTS_DATA = {
       {
         "caption": "Bài đăng Khởi động & Thông báo chương trình",
         "imgs": [
-          "photo/2010/thongbao.png"
+          "photo/optimized/2010/thongbao.jpg"
         ]
       },
       {
         "caption": "Bài đăng Thông báo",
         "imgs": [
-          "photo/2010/thongbaoluon.png"
+          "photo/optimized/2010/thongbaoluon.jpg"
         ]
       },
       {
         "caption": "Bài đăng Hậu trường chuẩn bị quà & Mời khách hàng ghé nhận quà",
         "imgs": [
-          "photo/2010/keugoi1.png",
-          "photo/2010/keugoi2.png"
+          "photo/optimized/2010/keugoi1.jpg",
+          "photo/optimized/2010/keugoi2.jpg"
         ]
       },
       {
         "caption": "Bài đăng Khoe những bó hoa kẹo mút handmade",
         "imgs": [
-          "photo/2010/khoequa1.png",
-          "photo/2010/khoequa2.png"
+          "photo/optimized/2010/khoequa1.jpg",
+          "photo/optimized/2010/khoequa2.jpg"
         ]
       }
     ],
     "photos": [
       {
-        "src": "photo/2010/ketqua.png",
+        "src": "photo/optimized/2010/ketqua.jpg",
         "title": "Báo cáo doanh thu thực tế chiến dịch 20/10"
       }
     ],
@@ -1454,55 +1467,55 @@ const PROJECTS_DATA = {
       {
         "caption": "Bài đăng Nhá hàng MEGA LIVE 11/11 Tạp Hóa Content",
         "imgs": [
-          "photo/THC/thongbaomega.png"
+          "photo/optimized/THC/thongbaomega.jpg"
         ]
       },
       {
         "caption": "Bài đăng Tiết lộ Minigame phiên MEGA LIVE 17/12",
         "imgs": [
-          "photo/THC/thongbaolive.png"
+          "photo/optimized/THC/thongbaolive.jpg"
         ]
       },
       {
         "caption": "Bài đăng Series Mỗi ngày 1 Review sản phẩm",
         "imgs": [
-          "photo/THC/review.png"
+          "photo/optimized/THC/review.jpg"
         ]
       },
       {
         "caption": "Bài đăng Minigame Giải đề Tạp hóa nhận quà hóa to",
         "imgs": [
-          "photo/THC/minigame.png"
+          "photo/optimized/THC/minigame.jpg"
         ]
       },
       {
         "caption": "Bài đăng Quảng bá sản phẩm Chén sứ gia dụng",
         "imgs": [
-          "photo/THC/chensu.png"
+          "photo/optimized/THC/chensu.jpg"
         ]
       },
       {
         "caption": "Bài đăng Thông báo Livestream & Hậu trường săn deal",
         "imgs": [
-          "photo/THC/dailylive.png",
-          "photo/THC/dailylivee.png"
+          "photo/optimized/THC/dailylive.jpg",
+          "photo/optimized/THC/dailylivee.jpg"
         ]
       },
       {
         "caption": "Bài đăng Tổng kết phiên MEGA LIVE 17/12",
         "imgs": [
-          "photo/THC/tongket.png"
+          "photo/optimized/THC/tongket.jpg"
         ]
       }
     ],
     "photos": [
       {
-        "src": "photo/report1.png",
+        "src": "photo/optimized/report1.jpg",
         "title": "Overview báo cáo Fanpage Tạp Hóa Content",
         "maxWidth": "460px"
       },
       {
-        "src": "photo/THC/tongketreal.jpg",
+        "src": "photo/optimized/THC/tongketreal.jpg",
         "title": "Tổng kết báo cáo doanh thu & chỉ số thực tế MEGA LIVE 17/12",
         "maxWidth": "460px"
       }
@@ -1545,11 +1558,11 @@ const PROJECTS_DATA = {
     "strategy": "Thiết kế bộ nhận diện thương hiệu, Landing Page Figma, Website WordPress và các bài đăng quảng bá sản phẩm khô chay & khô bò.",
     "photos": [
       {
-        "src": "photo/khochay.jpg",
+        "src": "photo/optimized/khochay.jpg",
         "title": "Banner Quảng cáo Khô Chay Delifood"
       },
       {
-        "src": "photo/delifood2.jpg",
+        "src": "photo/optimized/delifood2.jpg",
         "title": "Khô Bò Cay Delifood - Visual Post"
       }
     ],
@@ -1629,7 +1642,7 @@ function initProjectDetailPage() {
                 .map(
                   (imgSrc, idx) => `
                 <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                  <img src="${imgSrc}" alt="${b.title}" class="brief-edge-img" loading="lazy" decoding="async" />
+                  <img ${idx === 0 ? `src="${imgSrc}"` : `data-src="${imgSrc}"`} alt="${b.title}" class="brief-edge-img" loading="lazy" decoding="async" />
                 </div>
               `,
                 )
@@ -1677,7 +1690,7 @@ function initProjectDetailPage() {
                   .map(
                     (imgSrc, idx) => `
                   <div class="gallery-item ${idx === 0 ? "active" : ""}">
-                    <img src="${imgSrc}" alt="${post.caption}" class="brief-edge-img" loading="lazy" decoding="async" />
+                    <img ${idx === 0 ? `src="${imgSrc}"` : `data-src="${imgSrc}"`} alt="${post.caption}" class="brief-edge-img" loading="lazy" decoding="async" />
                   </div>
                 `,
                   )

@@ -2153,6 +2153,15 @@ body {
   cursor: zoom-in;
 }
 
+/* Keep off-screen portfolio cards out of layout/paint work until needed. */
+.cmp-block,
+.design-card,
+.brief-edge-card,
+.reel-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
 .gallery-counter {
   position: absolute;
   bottom: 10px;
