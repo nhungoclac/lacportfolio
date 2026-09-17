@@ -101,77 +101,79 @@ function initCursorSpotlight() {
 
 // ===== CLICK TO COPY EMAIL INTERACTION =====
 function initEmailCopy() {
-  const btn = document.getElementById("emailCopyBtn");
-  if (!btn) return;
+  const btns = document.querySelectorAll(".email-copy-btn");
+  if (!btns.length) return;
 
-  const email = btn.getAttribute("data-email") || "nhulacngoc@gmail.com";
-  const tooltip = document.getElementById("emailTooltip");
-  const icon = btn.querySelector("i");
-  let resetTimer = null;
+  btns.forEach((btn) => {
+    const email = btn.getAttribute("data-email") || "nhulacngoc@gmail.com";
+    const tooltip = btn.querySelector(".email-copy-tooltip");
+    const icon = btn.querySelector("i");
+    let resetTimer = null;
 
-  async function copyEmail(e) {
-    if (e) e.preventDefault();
-    let copied = false;
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-        copied = true;
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = email;
-        textarea.style.position = "fixed";
-        textarea.style.left = "-9999px";
-        textarea.style.top = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        copied = document.execCommand("copy");
-        document.body.removeChild(textarea);
-      }
-    } catch (err) {
+    async function copyEmail(e) {
+      if (e) e.preventDefault();
+      let copied = false;
       try {
-        const textarea = document.createElement("textarea");
-        textarea.value = email;
-        textarea.style.position = "fixed";
-        textarea.style.left = "-9999px";
-        textarea.style.top = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        copied = document.execCommand("copy");
-        document.body.removeChild(textarea);
-      } catch (fallbackErr) {
-        console.error("Copy failed", fallbackErr);
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(email);
+          copied = true;
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = email;
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          textarea.style.top = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          copied = document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+      } catch (err) {
+        try {
+          const textarea = document.createElement("textarea");
+          textarea.value = email;
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          textarea.style.top = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          copied = document.execCommand("copy");
+          document.body.removeChild(textarea);
+        } catch (fallbackErr) {
+          console.error("Copy failed", fallbackErr);
+        }
       }
-    }
 
-    if (copied) {
-      btn.classList.add("copied");
-      if (icon) {
-        icon.className = "fas fa-check";
-      }
-      if (tooltip) {
-        tooltip.textContent = "Đã sao chép email! ✓";
-      }
-
-      clearTimeout(resetTimer);
-      resetTimer = setTimeout(() => {
-        btn.classList.remove("copied");
+      if (copied) {
+        btn.classList.add("copied");
         if (icon) {
-          icon.className = "fas fa-envelope";
+          icon.className = "fas fa-check";
         }
         if (tooltip) {
-          tooltip.textContent = "Click để copy email";
+          tooltip.textContent = "Đã sao chép email! ✓";
         }
-      }, 2000);
-    }
-  }
 
-  btn.addEventListener("click", copyEmail);
-  btn.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      copyEmail(e);
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          btn.classList.remove("copied");
+          if (icon) {
+            icon.className = "fas fa-envelope";
+          }
+          if (tooltip) {
+            tooltip.textContent = "Click để copy email";
+          }
+        }, 2000);
+      }
     }
+
+    btn.addEventListener("click", copyEmail);
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        copyEmail(e);
+      }
+    });
   });
 }
 

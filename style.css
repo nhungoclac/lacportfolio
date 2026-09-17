@@ -2507,6 +2507,14 @@ body {
   color: #0284c7;
 }
 
+.contact-btn.email-copy-btn {
+  cursor: pointer;
+}
+
+.contact-btn.email-copy-btn .email-copy-tooltip {
+  bottom: calc(100% + 10px);
+}
+
 .footer-note {
   text-align: center;
   margin-top: 2.5rem;
