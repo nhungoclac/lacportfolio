@@ -48,6 +48,55 @@ function initPortfolioEngine() {
   initCounterAnimation();
   initPeanutMascot();
   initEmailCopy();
+  initCursorSpotlight();
+}
+
+// ===== CURSOR SPOTLIGHT TRACKER (DESKTOP CREATIVE EFFECT) =====
+function initCursorSpotlight() {
+  if (window.matchMedia("(pointer: coarse)").matches) return; // Không kích hoạt trên màn hình cảm ứng điện thoại
+
+  let spotlight = document.querySelector(".cursor-spotlight");
+  if (!spotlight) {
+    spotlight = document.createElement("div");
+    spotlight.className = "cursor-spotlight";
+    document.body.appendChild(spotlight);
+  }
+
+  let rafId = null;
+  let mouseX = -500;
+  let mouseY = -500;
+  let currentX = -500;
+  let currentY = -500;
+
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateSpotlight);
+    }
+  });
+
+  function updateSpotlight() {
+    currentX += (mouseX - currentX) * 0.15;
+    currentY += (mouseY - currentY) * 0.15;
+
+    spotlight.style.left = currentX + "px";
+    spotlight.style.top = currentY + "px";
+
+    if (Math.abs(mouseX - currentX) > 0.5 || Math.abs(mouseY - currentY) > 0.5) {
+      rafId = requestAnimationFrame(updateSpotlight);
+    } else {
+      rafId = null;
+    }
+  }
+
+  document.addEventListener("mouseleave", () => {
+    spotlight.style.opacity = "0";
+  });
+  document.addEventListener("mouseenter", () => {
+    spotlight.style.opacity = "1";
+  });
 }
 
 // ===== CLICK TO COPY EMAIL INTERACTION =====
