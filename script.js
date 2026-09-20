@@ -48,6 +48,7 @@ function initPortfolioEngine() {
   initCounterAnimation();
   initPeanutMascot();
   initEmailCopy();
+  initCvDropdown();
   initCursorSpotlight();
 }
 
@@ -173,6 +174,50 @@ function initEmailCopy() {
       if (e.key === "Enter" || e.key === " ") {
         copyEmail(e);
       }
+    });
+  });
+}
+
+// ===== CV LANGUAGE DROPDOWN INTERACTION =====
+function initCvDropdown() {
+  const wrapper = document.getElementById("cvDropdown");
+  const btn = document.getElementById("cvDropdownBtn");
+  if (!wrapper || !btn) return;
+
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const isOpen = wrapper.classList.toggle("open");
+    btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  }
+
+  function closeDropdown() {
+    if (wrapper.classList.contains("open")) {
+      wrapper.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  btn.addEventListener("click", toggleDropdown);
+
+  // Close when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+
+  // Close when pressing Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeDropdown();
+    }
+  });
+
+  // Close when selecting an item
+  const items = wrapper.querySelectorAll(".cv-dropdown-item");
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      closeDropdown();
     });
   });
 }

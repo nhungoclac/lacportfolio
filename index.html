@@ -17,7 +17,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css?v=2.1" />
+    <link rel="stylesheet" href="style.css?v=2.2" />
   </head>
   <body>
     <div class="container">
@@ -79,14 +79,46 @@
           </div>
           <p class="slogan">"Lạc - thích truyền thông, yêu công nghệ"</p>
           <div class="info-details">
-            <a
-              href="https://drive.google.com/file/d/1qKOE1E1sUVJ6ggs33demFKsauCRrArzt/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="cv-btn"
-            >
-              <i class="fas fa-file-pdf"></i> Xem CV
-            </a>
+            <div class="cv-dropdown-wrapper" id="cvDropdown">
+              <button
+                type="button"
+                class="cv-btn cv-dropdown-btn"
+                id="cvDropdownBtn"
+                aria-expanded="false"
+                aria-haspopup="true"
+                title="Chọn ngôn ngữ CV để xem"
+              >
+                <i class="fas fa-file-pdf"></i> Xem CV <i class="fas fa-chevron-down cv-dropdown-arrow"></i>
+              </button>
+              <div class="cv-dropdown-menu" id="cvDropdownMenu">
+                <a
+                  href="https://drive.google.com/file/d/1qKOE1E1sUVJ6ggs33demFKsauCRrArzt/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cv-dropdown-item"
+                >
+                  <span class="cv-item-flag">🇻🇳</span>
+                  <div class="cv-item-info">
+                    <span class="cv-item-title">Tiếng Việt</span>
+                    <span class="cv-item-sub">Bản tiếng Việt (PDF)</span>
+                  </div>
+                  <i class="fas fa-arrow-up-right-from-square cv-item-ext"></i>
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1hUWguVP7KTFVj7xz7QDA1Qziu7MUJGKX/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cv-dropdown-item"
+                >
+                  <span class="cv-item-flag">🇬🇧</span>
+                  <div class="cv-item-info">
+                    <span class="cv-item-title">English</span>
+                    <span class="cv-item-sub">English version (PDF)</span>
+                  </div>
+                  <i class="fas fa-arrow-up-right-from-square cv-item-ext"></i>
+                </a>
+              </div>
+            </div>
             <span
               class="email-copy-btn"
               id="emailCopyBtn"
@@ -443,6 +475,6 @@
     >
       <i class="fas fa-arrow-up"></i>
     </button>
-    <script src="script.js?v=2.1"></script>
+    <script src="script.js?v=2.2"></script>
   </body>
 </html>
