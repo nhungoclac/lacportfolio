@@ -50,6 +50,7 @@ function initPortfolioEngine() {
   initEmailCopy();
   initCvDropdown();
   initCursorSpotlight();
+  initAnalyticsEventTracking();
 }
 
 // ===== CURSOR SPOTLIGHT TRACKER (DESKTOP CREATIVE EFFECT) =====
@@ -156,6 +157,14 @@ function initEmailCopy() {
           tooltip.textContent = "Đã sao chép email! ✓";
         }
 
+        // GA4: Track Copy Email Conversion Event
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "copy_email", {
+            event_category: "contact",
+            event_label: email
+          });
+        }
+
         clearTimeout(resetTimer);
         resetTimer = setTimeout(() => {
           btn.classList.remove("copied");
@@ -213,11 +222,55 @@ function initCvDropdown() {
     }
   });
 
-  // Close when selecting an item
+  // Close when selecting an item & Track GA4 Event
   const items = wrapper.querySelectorAll(".cv-dropdown-item");
   items.forEach((item) => {
     item.addEventListener("click", () => {
       closeDropdown();
+      const title = item.querySelector(".cv-item-title");
+      const lang = title && title.textContent.includes("English") ? "en" : "vi";
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "view_cv", {
+          event_category: "engagement",
+          language: lang,
+          cv_url: item.href
+        });
+      }
+    });
+  });
+}
+
+// ===== GA4 CUSTOM CONVERSION EVENTS TRACKING =====
+function initAnalyticsEventTracking() {
+  if (typeof window.gtag !== "function") return;
+
+  // Track contact social links
+  document.querySelectorAll(".contact-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const href = btn.getAttribute("href") || "";
+      let channel = "";
+      if (href.includes("zalo.me")) channel = "zalo";
+      else if (href.includes("facebook.com")) channel = "facebook";
+      else if (href.includes("linkedin.com")) channel = "linkedin";
+
+      if (channel) {
+        window.gtag("event", "contact_click", {
+          event_category: "contact",
+          channel: channel,
+          url: href
+        });
+      }
+    });
+  });
+
+  // Track campaign sample clicks
+  document.querySelectorAll(".work-sample-item, .cmp-block-title-link, .cmp-cta-btn").forEach((link) => {
+    link.addEventListener("click", () => {
+      const title = link.textContent.trim();
+      window.gtag("event", "view_campaign", {
+        event_category: "engagement",
+        campaign_name: title
+      });
     });
   });
 }
