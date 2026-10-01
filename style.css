@@ -2908,7 +2908,9 @@ body {
 
 .reel-embed {
   position: relative;
-  width: 100%;
+  width: 215px;
+  height: 382px;
+  aspect-ratio: 9 / 16;
   max-width: 100%;
   background: linear-gradient(90deg, #f1f5f9 0%, #f8fafc 50%, #f1f5f9 100%);
   background-size: 200% 100%;
